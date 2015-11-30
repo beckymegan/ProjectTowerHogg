@@ -36,7 +36,7 @@ public class CharacterSelect : MonoBehaviour {
             }
             else if (gVar.currentLocation == 4)
             {
-
+                Application.LoadLevel("Level 4");
             }
             else if (gVar.currentLocation == 5)
             {
