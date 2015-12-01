@@ -24,15 +24,15 @@ public class CharacterSelect : MonoBehaviour {
         {
             if(gVar.currentLocation == 1)
             {
-
+                Application.LoadLevel("Level 1");
             }
             else if (gVar.currentLocation == 2)
             {
-
+                Application.LoadLevel("Level 2");
             }
             else if (gVar.currentLocation == 3)
             {
-
+                Application.LoadLevel("Level 3");
             }
             else if (gVar.currentLocation == 4)
             {

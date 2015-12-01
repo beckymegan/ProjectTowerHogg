@@ -93,6 +93,7 @@ public class LevelSwitch : MonoBehaviour
             LEFT - Vector2.MoveTowards(l1.position, new Vector3(-1, 0.185f), 0.02f); new Vector3(l1.position.x, l1.position.y, 1);
             SCALE (GENERAL) - l3.localScale += new Vector3(0.01f, 0.01f, 0);
         */
+
         if (loadingDir.Equals("left"))
         {
             if (gVar.currentLocation == 5)

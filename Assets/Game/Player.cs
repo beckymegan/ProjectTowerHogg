@@ -52,24 +52,29 @@ public class Player : MonoBehaviour {
         stunTimer = stunTime;
         rocketShot = false;
 
-        rend = GetComponent<Renderer>();
+        SpriteRenderer rend = this.GetComponent<SpriteRenderer>();
 
         //character selection
-        if (playerNumber == 1) {
+        if (playerNumber == 1)
+        {
             if (gVar.player1 == "Green")
             {
+                rend.sprite = greenSprite;
                 anim.SetInteger("Color", 0);
             }
             else if (gVar.player1 == "Red")
             {
+                rend.sprite = redSprite;
                 anim.SetInteger("Color", 1);
             }
             else if (gVar.player1 == "Blue")
             {
+                rend.sprite = blueSprite;
                 anim.SetInteger("Color", 2);
             }
             else if (gVar.player1 == "Purple")
             {
+                rend.sprite = purpleSprite;
                 anim.SetInteger("Color", 3);
             }
         }
@@ -77,18 +82,22 @@ public class Player : MonoBehaviour {
         {
             if (gVar.player2 == "Green")
             {
+                rend.sprite = greenSprite;
                 anim.SetInteger("Color", 0);
             }
             else if (gVar.player2 == "Red")
             {
+                rend.sprite = redSprite;
                 anim.SetInteger("Color", 1);
             }
             else if (gVar.player2 == "Blue")
             {
+                rend.sprite = blueSprite;
                 anim.SetInteger("Color", 2);
             }
             else if (gVar.player2 == "Purple")
             {
+                rend.sprite = purpleSprite;
                 anim.SetInteger("Color", 3);
             }
         }
