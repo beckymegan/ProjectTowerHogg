@@ -33,7 +33,6 @@ public class Player : MonoBehaviour {
     public GameObject rocket;
     public GameObject heart5, heart4, heart3, heart2, heart1;
     public CanvasGroup gameOverScreen;
-    public Player otherPlayer1;
     public Sprite blueSprite, redSprite, greenSprite, purpleSprite;
 
     void Start ()
@@ -101,6 +100,52 @@ public class Player : MonoBehaviour {
                 anim.SetInteger("Color", 3);
             }
         }
+        else if (playerNumber == 3)
+        {
+            if (gVar.player3 == "Green")
+            {
+                rend.sprite = greenSprite;
+                anim.SetInteger("Color", 0);
+            }
+            else if (gVar.player3 == "Red")
+            {
+                rend.sprite = redSprite;
+                anim.SetInteger("Color", 1);
+            }
+            else if (gVar.player3 == "Blue")
+            {
+                rend.sprite = blueSprite;
+                anim.SetInteger("Color", 2);
+            }
+            else if (gVar.player3 == "Purple")
+            {
+                rend.sprite = purpleSprite;
+                anim.SetInteger("Color", 3);
+            }
+        }
+        else if (playerNumber == 4)
+        {
+            if (gVar.player4 == "Green")
+            {
+                rend.sprite = greenSprite;
+                anim.SetInteger("Color", 0);
+            }
+            else if (gVar.player4 == "Red")
+            {
+                rend.sprite = redSprite;
+                anim.SetInteger("Color", 1);
+            }
+            else if (gVar.player4 == "Blue")
+            {
+                rend.sprite = blueSprite;
+                anim.SetInteger("Color", 2);
+            }
+            else if (gVar.player4 == "Purple")
+            {
+                rend.sprite = purpleSprite;
+                anim.SetInteger("Color", 3);
+            }
+        }
         anim.SetBool("isWalkingLeft", false);
         anim.SetBool("isWalkingRight", false);
     }
@@ -137,7 +182,7 @@ public class Player : MonoBehaviour {
             if (playerNumber == 1)
             {
                 gVar.location1 = this.GetComponent<Transform>().position;
-                input = new Vector2(Input.GetAxisRaw("Horizontal1"), Input.GetAxisRaw("Vertical1"));
+                input = new Vector2(Input.GetAxisRaw("Horizontal1"), 0);
 
                 if (Input.GetAxisRaw("Horizontal1") > 0)
                 {
@@ -184,15 +229,6 @@ public class Player : MonoBehaviour {
                 if (rocketShot == false)
                 {
                     //depending on button pressed, spawn rocket that travels in direction chosen
-                    if (Input.GetButtonDown("ShootUp1"))
-                    {
-                        shotRocket = Instantiate(rocket, new Vector3(this.transform.position.x, this.transform.position.y + 1f), Quaternion.identity);
-                        gVar.direction = "up";
-                        rocketShot = true;
-                        //name and brand rocket
-                        shotRocket.name = "rocketP1";
-                    }
-
                     if (Input.GetButtonDown("ShootLeft1"))
                     {
                         shotRocket = Instantiate(rocket, new Vector3(this.transform.position.x - 1f, this.transform.position.y), Quaternion.identity);
@@ -219,7 +255,7 @@ public class Player : MonoBehaviour {
             else if (playerNumber == 2)
             {
                 gVar.location2 = this.GetComponent<Transform>().position;
-                input = new Vector2(Input.GetAxisRaw("Horizontal2"), Input.GetAxisRaw("Vertical2"));
+                input = new Vector2(Input.GetAxisRaw("Horizontal2"),0);
 
                 if (Input.GetAxisRaw("Horizontal2") > 0)
                 {
@@ -265,15 +301,6 @@ public class Player : MonoBehaviour {
                 if (rocketShot == false)
                 {
                     //depending on button pressed, spawn rocket that travels in direction chosen
-                    if (Input.GetButtonDown("ShootUp2"))
-                    {
-                        shotRocket = Instantiate(rocket, new Vector3(this.transform.position.x, this.transform.position.y + 1f), Quaternion.identity);
-                        gVar.direction = "up";
-                        rocketShot = true;
-                        //name rocket
-                        shotRocket.name = "rocketP2";
-                    }
-
                     if (Input.GetButtonDown("ShootLeft2"))
                     {
                         shotRocket = Instantiate(rocket, new Vector3(this.transform.position.x - 1f, this.transform.position.y), Quaternion.identity);
@@ -292,6 +319,150 @@ public class Player : MonoBehaviour {
                         anim.SetInteger("isShooting", 2);
                         //name rocket
                         shotRocket.name = "rocketP2";
+                    }
+                }
+            }
+
+            //Player #3
+            else if (playerNumber == 3)
+            {
+                gVar.location3 = this.GetComponent<Transform>().position;
+                input = new Vector2(Input.GetAxisRaw("Horizontal3"),0);
+
+                if (Input.GetAxisRaw("Horizontal3") > 0)
+                {
+                    anim.SetBool("isWalkingLeft", false);
+                    anim.SetBool("isWalkingRight", true);
+                }
+                else if (Input.GetAxisRaw("Horizontal3") < 0)
+                {
+                    anim.SetBool("isWalkingRight", false);
+                    anim.SetBool("isWalkingLeft", true);
+                }
+                else
+                {
+                    anim.SetBool("isWalkingLeft", false);
+                    anim.SetBool("isWalkingRight", false);
+                }
+
+                if (Input.GetButtonDown("Jump3") && Mathf.Abs(velocity.y) < 0.5)//jump
+                {
+                    velocity.y = jumpVelocity;
+                }
+
+                if (Mathf.Abs(velocity.y) > 1)//change to jump animation
+                {
+                    anim.SetBool("isJumping", true);
+                }
+                else if (controller.collisions.below == true)
+                {
+                    anim.SetBool("isJumping", false);
+                }
+
+                //if rocket shot by player still exists
+                if (GameObject.Find("rocketP3") != null)
+                {
+                    rocketShot = true;
+                }
+                else
+                {
+                    rocketShot = false;
+                }
+
+                //check if rocket hasn't been destroyed yet
+                if (rocketShot == false)
+                {
+                    //depending on button pressed, spawn rocket that travels in direction chosen
+                    if (Input.GetButtonDown("ShootLeft3"))
+                    {
+                        shotRocket = Instantiate(rocket, new Vector3(this.transform.position.x - 1f, this.transform.position.y), Quaternion.identity);
+                        gVar.direction = "left";
+                        rocketShot = true;
+                        anim.SetInteger("isShooting", 1);
+                        //name rocket
+                        shotRocket.name = "rocketP3";
+                    }
+
+                    if (Input.GetButtonDown("ShootRight3"))
+                    {
+                        shotRocket = Instantiate(rocket, new Vector3(this.transform.position.x + 1f, this.transform.position.y), Quaternion.identity);
+                        gVar.direction = "right";
+                        rocketShot = true;
+                        anim.SetInteger("isShooting", 2);
+                        //name rocket
+                        shotRocket.name = "rocketP3";
+                    }
+                }
+            }
+
+            //Player #4
+            else if (playerNumber == 4)
+            {
+                gVar.location2 = this.GetComponent<Transform>().position;
+                input = new Vector2(Input.GetAxisRaw("Horizontal4"),0);
+
+                if (Input.GetAxisRaw("Horizontal4") > 0)
+                {
+                    anim.SetBool("isWalkingLeft", false);
+                    anim.SetBool("isWalkingRight", true);
+                }
+                else if (Input.GetAxisRaw("Horizontal4") < 0)
+                {
+                    anim.SetBool("isWalkingRight", false);
+                    anim.SetBool("isWalkingLeft", true);
+                }
+                else
+                {
+                    anim.SetBool("isWalkingLeft", false);
+                    anim.SetBool("isWalkingRight", false);
+                }
+
+                if (Input.GetButtonDown("Jump4") && Mathf.Abs(velocity.y) < 0.5)//jump
+                {
+                    velocity.y = jumpVelocity;
+                }
+
+                if (Mathf.Abs(velocity.y) > 1)//change to jump animation
+                {
+                    anim.SetBool("isJumping", true);
+                }
+                else if (controller.collisions.below == true)
+                {
+                    anim.SetBool("isJumping", false);
+                }
+
+                //if rocket shot by player still exists
+                if (GameObject.Find("rocketP4") != null)
+                {
+                    rocketShot = true;
+                }
+                else
+                {
+                    rocketShot = false;
+                }
+
+                //check if rocket hasn't been destroyed yet
+                if (rocketShot == false)
+                {
+                    //depending on button pressed, spawn rocket that travels in direction chosen
+                    if (Input.GetButtonDown("ShootLeft4"))
+                    {
+                        shotRocket = Instantiate(rocket, new Vector3(this.transform.position.x - 1f, this.transform.position.y), Quaternion.identity);
+                        gVar.direction = "left";
+                        rocketShot = true;
+                        anim.SetInteger("isShooting", 1);
+                        //name rocket
+                        shotRocket.name = "rocketP4";
+                    }
+
+                    if (Input.GetButtonDown("ShootRight4"))
+                    {
+                        shotRocket = Instantiate(rocket, new Vector3(this.transform.position.x + 1f, this.transform.position.y), Quaternion.identity);
+                        gVar.direction = "right";
+                        rocketShot = true;
+                        anim.SetInteger("isShooting", 2);
+                        //name rocket
+                        shotRocket.name = "rocketP4";
                     }
                 }
             }
@@ -355,8 +526,7 @@ public class Player : MonoBehaviour {
             Time.timeScale = 0;
             gameOverScreen.alpha = 1;
             this.transform.Translate(-50, -50, 0);
-            otherPlayer1.transform.Translate(-50, -50, 0);
-            if (Input.GetButton("Jump1")||Input.GetButton("Jump2"))
+            if (Input.GetButton("Jump1")||Input.GetButton("Jump2") || Input.GetButton("Jump3") || Input.GetButton("Jump4"))
             {
                 Application.LoadLevel(Application.loadedLevelName);
                 Time.timeScale = 1;
