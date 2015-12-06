@@ -7,9 +7,7 @@ public class Rocket : MonoBehaviour {
     public float blastZone;
     public Sprite gRocket, rRocket, bRocket, pRocket;
 
-    Vector2 locSelf;
     string direction;
-    bool blewUp;
     SpriteRenderer spriter;
     
     
@@ -17,7 +15,6 @@ public class Rocket : MonoBehaviour {
 	void Start () {
         direction = gVar.direction;
         spriter = this.GetComponent<SpriteRenderer>();
-        blewUp = true;
         this.color();
         Destroy(gameObject, 0.4f);
     }
@@ -105,7 +102,6 @@ public class Rocket : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        locSelf = this.GetComponent<Transform>().position;
 
         //rocket travels in direction it was shot in
         if (direction == "up")
@@ -132,10 +128,6 @@ public class Rocket : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-        if(coll.gameObject.tag == "Player")
-        {
-            blewUp = false;
-        }
         Destroy(gameObject);
     }
 

@@ -8,7 +8,7 @@ public class LevelSwitch : MonoBehaviour
     public Sprite lSlide, lSlidePressed, rSlide, rSlidePressed, cPressed;
     private Transform l1, l5, l4, l3, l2;
     
-    private int level, buttonTime;
+    private int level;
     private string loadingDir;
     private bool canChange;
 
@@ -32,7 +32,7 @@ public class LevelSwitch : MonoBehaviour
     {
         levelPressed("stop");
 
-        if(Input.GetButtonDown("Jump1") || Input.GetButtonDown("Jump2"))//level select, go to character select
+        if(Input.GetButtonDown("GSelect"))//level select, go to character select
         {
             //continueButton.sprite = cPressed;
             gVar.level = gVar.currentLocation;
@@ -45,23 +45,21 @@ public class LevelSwitch : MonoBehaviour
     {
         //right arrow button OR right bumper on controller OR right arrow is pressed and levels are not currently in rotation ROTATE LEFT
         if (((Input.GetButtonDown("Horizontal1") && Input.GetAxisRaw("Horizontal1") == 1) || direction.Equals("right") ||
-            (Input.GetButtonDown("Horizontal2Menu") && Input.GetAxisRaw("Horizontal2Menu") == 1)) && canChange == true)
+            (Input.GetButtonDown("GMenu") && Input.GetAxisRaw("GMenu") == 1)) && canChange == true)
         {
             //rightSlider.sprite = rSlidePressed;
             gVar.currentLocation++;
             loadingDir = "left";
             canChange = false;
-            buttonTime = 0;
         }
         //left arrow button OR left bumper on controller OR left arrow is pressed and levels are not currently in rotation ROTATE RIGHT
         else if (((Input.GetButtonDown("Horizontal1") && Input.GetAxisRaw("Horizontal1") == -1) || direction.Equals("left") || 
-            (Input.GetButtonDown("Horizontal2Menu") && Input.GetAxisRaw("Horizontal2Menu") == -1)) && canChange == true)
+            (Input.GetButtonDown("GMenu") && Input.GetAxisRaw("GMenu") == -1)) && canChange == true)
         {
             //leftSlider.sprite = lSlidePressed;
             gVar.currentLocation--;
             loadingDir = "right";
             canChange = false;
-            buttonTime = 0;
         }
 
         //loops level select so gVar.currentLocation must be 1-5

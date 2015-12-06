@@ -54,7 +54,7 @@ public class Player : MonoBehaviour {
         SpriteRenderer rend = this.GetComponent<SpriteRenderer>();
 
         //character selection
-        if (playerNumber == 1)
+        if (playerNumber == 1 && gVar.player1Exists == true)
         {
             if (gVar.player1 == "Green")
             {
@@ -77,7 +77,7 @@ public class Player : MonoBehaviour {
                 anim.SetInteger("Color", 3);
             }
         }
-        else if (playerNumber == 2)
+        else if (playerNumber == 2 && gVar.player2Exists == true)
         {
             if (gVar.player2 == "Green")
             {
@@ -100,7 +100,7 @@ public class Player : MonoBehaviour {
                 anim.SetInteger("Color", 3);
             }
         }
-        else if (playerNumber == 3)
+        else if (playerNumber == 3 && gVar.player3Exists == true)
         {
             if (gVar.player3 == "Green")
             {
@@ -123,7 +123,7 @@ public class Player : MonoBehaviour {
                 anim.SetInteger("Color", 3);
             }
         }
-        else if (playerNumber == 4)
+        else if (playerNumber == 4 && gVar.player4Exists == true)
         {
             if (gVar.player4 == "Green")
             {
@@ -152,7 +152,6 @@ public class Player : MonoBehaviour {
 
     void Update()
     {
-        //Debug.Log(velocity.y);
         anim.SetInteger("isShooting", 0);
 
         //count through hit timer, revert to un hurt after finished
@@ -179,7 +178,7 @@ public class Player : MonoBehaviour {
         if (hurt == false)
         {
             //Player 1
-            if (playerNumber == 1)
+            if (playerNumber == 1 && gVar.player1Exists == true)
             {
                 gVar.location1 = this.GetComponent<Transform>().position;
                 input = new Vector2(Input.GetAxisRaw("Horizontal1"), 0);
@@ -201,7 +200,7 @@ public class Player : MonoBehaviour {
                 }
 
 
-                if (Input.GetButtonDown("Jump1") && Mathf.Abs(velocity.y) < 0.5)//jump
+                if (Input.GetButtonDown("Jump1") && Mathf.Abs(velocity.y) < 0.6f)//jump
                 {
                     velocity.y = jumpVelocity;
                 }
@@ -252,7 +251,7 @@ public class Player : MonoBehaviour {
 
             }
             //Player #2
-            else if (playerNumber == 2)
+            else if (playerNumber == 2 && gVar.player2Exists == true)
             {
                 gVar.location2 = this.GetComponent<Transform>().position;
                 input = new Vector2(Input.GetAxisRaw("Horizontal2"),0);
@@ -273,7 +272,7 @@ public class Player : MonoBehaviour {
                     anim.SetBool("isWalkingRight", false);
                 }
                 
-                if (Input.GetButtonDown("Jump2") && Mathf.Abs(velocity.y) < 0.5)//jump
+                if (Input.GetButtonDown("Jump2") && Mathf.Abs(velocity.y) < 0.6f)//jump
                 {
                     velocity.y = jumpVelocity;
                 }
@@ -324,7 +323,7 @@ public class Player : MonoBehaviour {
             }
 
             //Player #3
-            else if (playerNumber == 3)
+            else if (playerNumber == 3 && gVar.player3Exists == true)
             {
                 gVar.location3 = this.GetComponent<Transform>().position;
                 input = new Vector2(Input.GetAxisRaw("Horizontal3"),0);
@@ -345,7 +344,7 @@ public class Player : MonoBehaviour {
                     anim.SetBool("isWalkingRight", false);
                 }
 
-                if (Input.GetButtonDown("Jump3") && Mathf.Abs(velocity.y) < 0.5)//jump
+                if (Input.GetButtonDown("Jump3") && Mathf.Abs(velocity.y) < 0.6f)//jump
                 {
                     velocity.y = jumpVelocity;
                 }
@@ -396,7 +395,7 @@ public class Player : MonoBehaviour {
             }
 
             //Player #4
-            else if (playerNumber == 4)
+            else if (playerNumber == 4 && gVar.player4Exists == true)
             {
                 gVar.location2 = this.GetComponent<Transform>().position;
                 input = new Vector2(Input.GetAxisRaw("Horizontal4"),0);
@@ -417,7 +416,7 @@ public class Player : MonoBehaviour {
                     anim.SetBool("isWalkingRight", false);
                 }
 
-                if (Input.GetButtonDown("Jump4") && Mathf.Abs(velocity.y) < 0.5)//jump
+                if (Input.GetButtonDown("Jump4") && Mathf.Abs(velocity.y) < 0.6f)//jump
                 {
                     velocity.y = jumpVelocity;
                 }
