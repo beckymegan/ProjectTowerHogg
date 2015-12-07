@@ -178,12 +178,12 @@ public class CharacterSelect : MonoBehaviour
             
             if (locationP3 == 1)
             {
-                gVar.player2 = "Green";
+                gVar.player3 = "Green";
                 this.transform.position = new Vector2(-6f, this.transform.position.y);
             }
             else if (locationP3 == 2)
             {
-                gVar.player2 = "Red";
+                gVar.player3 = "Red";
                 this.transform.position = new Vector2(-2f, this.transform.position.y);
             }
             else if (locationP3 == 3)

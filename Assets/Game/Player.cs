@@ -272,7 +272,7 @@ public class Player : MonoBehaviour {
                     anim.SetBool("isWalkingRight", false);
                 }
                 
-                if (Input.GetButtonDown("Jump2") && Mathf.Abs(velocity.y) < 0.6f)//jump
+                if (Input.GetButtonDown("Jump2") && Mathf.Abs(velocity.y) < 1f)//jump
                 {
                     velocity.y = jumpVelocity;
                 }
@@ -535,9 +535,14 @@ public class Player : MonoBehaviour {
         
     void OnBecameInvisible()//if invisible loop to other x/y direction
     {
-        if(this.GetComponent<Transform>().position.y>10 || this.GetComponent<Transform>().position.y < -10)//if invisible and above 5/under -5 (eg top or bottom) reverse y
+        if(this.GetComponent<Transform>().position.y < -11)//if invisible under -11 (bottom) reverse y
         {
             Vector3 location = new Vector3(this.GetComponent<Transform>().position.x, (-1) * (this.GetComponent<Transform>().position.y), 0);
+            this.GetComponent<Transform>().position = location;
+        }
+        else if (this.GetComponent<Transform>().position.y > 12)//if invisible above 12 (top) reverse y and subtract a bit
+        {
+            Vector3 location = new Vector3(this.GetComponent<Transform>().position.x, (-1) * (this.GetComponent<Transform>().position.y-1), 0);
             this.GetComponent<Transform>().position = location;
         }
         else //if invisible and  between 5 and -5 (eg left or right) reverse x
