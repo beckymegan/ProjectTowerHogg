@@ -30,8 +30,7 @@ public class Player : MonoBehaviour {
     Object shotRocket;
     Animator anim;
 
-    public GameObject rocket;
-    public GameObject heart5, heart4, heart3, heart2, heart1;
+    public GameObject rocket, objLives;
     public CanvasGroup gameOverScreen;
     public Sprite blueSprite, redSprite, greenSprite, purpleSprite;
 
@@ -503,29 +502,18 @@ public class Player : MonoBehaviour {
     //calculates and displays number of hearts for each character
     void health()
     {
-        if (lives == 4)
+        objLives.GetComponent<Transform>().position = new Vector2(this.GetComponent<Transform>().position.x, this.GetComponent<Transform>().position.y + 1.3f);
+        if (lives > 0)
         {
-            Destroy(heart5);
-        }
-        else if (lives == 3)
-        {
-            Destroy(heart4);
-        }
-        else if (lives == 2)
-        {
-            Destroy(heart3);
-        }
-        else if (lives == 1)
-        {
-            Destroy(heart2);
+            objLives.GetComponent<updateLives>().livesUpdate(playerNumber, lives);
         }
         else if (lives == 0)
         {
-            Destroy(heart1);
+            Destroy(objLives);
             Time.timeScale = 0;
             gameOverScreen.alpha = 1;
             this.transform.Translate(-50, -50, 0);
-            if (Input.GetButton("Jump1")||Input.GetButton("Jump2") || Input.GetButton("Jump3") || Input.GetButton("Jump4"))
+            if (Input.GetButton("GSelect"))
             {
                 Application.LoadLevel(Application.loadedLevelName);
                 Time.timeScale = 1;

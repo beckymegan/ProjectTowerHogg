@@ -19,7 +19,7 @@ public class CharacterSelect : MonoBehaviour
     {
         checkPlayers();
 
-        if (gVar.readyPlayers == gVar.requiredReadyPlayers && gVar.requiredReadyPlayers > 1 && Input.GetButton("GSelect")) //more than one player have joined and all joined players are ready to play
+        if (gVar.readyPlayers == gVar.requiredReadyPlayers && gVar.requiredReadyPlayers > 1 && Input.GetButton("GStart")) //more than one player have joined and all joined players are ready to play
         {
             if (gVar.currentLocation == 1)
             {
