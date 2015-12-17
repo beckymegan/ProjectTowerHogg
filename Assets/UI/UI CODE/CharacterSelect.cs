@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class CharacterSelect : MonoBehaviour
@@ -23,23 +24,23 @@ public class CharacterSelect : MonoBehaviour
         {
             if (gVar.currentLocation == 1)
             {
-                Application.LoadLevel("Level 1");
+                SceneManager.LoadScene("Level 1");
             }
             else if (gVar.currentLocation == 2)
             {
-                Application.LoadLevel("Level 2");
+                SceneManager.LoadScene("Level 2");
             }
             else if (gVar.currentLocation == 3)
             {
-                Application.LoadLevel("Level 3");
+                SceneManager.LoadScene("Level 3");
             }
             else if (gVar.currentLocation == 4)
             {
-                Application.LoadLevel("Level 4");
+                SceneManager.LoadScene("Level 4");
             }
             else if (gVar.currentLocation == 5)
             {
-                Application.LoadLevel("Level 5");
+                SceneManager.LoadScene("Level 5");
             }
         }
 

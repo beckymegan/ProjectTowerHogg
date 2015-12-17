@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class Player : MonoBehaviour {
@@ -515,7 +516,7 @@ public class Player : MonoBehaviour {
             this.transform.Translate(-50, -50, 0);
             if (Input.GetButton("GSelect"))
             {
-                Application.LoadLevel(Application.loadedLevelName);
+                SceneManager.LoadScene(SceneManager.sceneCount);
                 Time.timeScale = 1;
             }
         }

@@ -30,6 +30,7 @@ public class updateLives : MonoBehaviour
         }
     }
 
+    //change lives number to correct lives number + color
     void livesUpdate1(int lives)
     {
         if (gVar.player1 == "Green")
