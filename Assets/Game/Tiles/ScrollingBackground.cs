@@ -37,17 +37,16 @@ public class ScrollingBackground : MonoBehaviour {
         {
             sr.sprite = back5;
         }
-    }
-
-    void OnBecameInvisible()
-    {
-        if (Application.loadedLevel.Equals("Character Select"))
+        
+        //loop background
+        if ((this.GetComponent<Transform>().position.x < -20) && (SceneManager.GetActiveScene().name.Equals("Character Select")))
         {
-            this.transform.position = new Vector3(21.56f, this.transform.position.y, 2);
+            this.GetComponent<Transform>().position = new Vector3(19.67f, this.transform.position.y, 2);
         }
-        else if (Application.loadedLevel.Equals("Level Select"))
+
+        if((this.GetComponent<Transform>().position.x < -6) && (SceneManager.GetActiveScene().name.Equals("Level Select")))
         {
-            this.transform.position = new Vector3(6.45f, this.transform.position.y, 5);
+            this.GetComponent<Transform>().position = new Vector3(5.9f, this.transform.position.y, 2);
         }
     }
 }

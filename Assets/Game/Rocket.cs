@@ -4,7 +4,7 @@ using System.Collections;
 public class Rocket : MonoBehaviour {
 
     public int shootSpeed;
-    public float blastZone;
+    public float blastZone, xVelocity, yVelocity;
     public Sprite gRocket, rRocket, bRocket, pRocket;
 
     string direction;
@@ -16,7 +16,6 @@ public class Rocket : MonoBehaviour {
         direction = gVar.direction;
         spriter = this.GetComponent<SpriteRenderer>();
         this.color();
-        Destroy(gameObject, 0.4f);
     }
 
     //render sprite image to match shooter
@@ -102,28 +101,21 @@ public class Rocket : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (direction == "right")
+        {
+            float xvalue = this.GetComponent<Transform>().position.x + (xVelocity*Time.deltaTime);
+            float yvalue = this.GetComponent<Transform>().position.y + (-yVelocity * Time.deltaTime * Time.deltaTime) + (yVelocity * Time.deltaTime);
+            Vector2 shootLocation = new Vector2(xvalue, yvalue);
+            this.GetComponent<Transform>().position = shootLocation;
+        }
+        else if (direction == "left")
+        {
+            float xvalue = this.GetComponent<Transform>().position.x + (-xVelocity * Time.deltaTime);
+            float yvalue = this.GetComponent<Transform>().position.y + (-yVelocity * Time.deltaTime * Time.deltaTime) + (yVelocity * Time.deltaTime);
+            Vector2 shootLocation = new Vector2(xvalue, yvalue);
+            this.GetComponent<Transform>().position = shootLocation;
+        }
 
-        //rocket travels in direction it was shot in
-        if (direction == "up")
-        {
-            transform.Translate(Vector3.up * Time.deltaTime * shootSpeed);
-        }
-        else if (direction == "right")
-        {
-            transform.Translate(Vector3.right * Time.deltaTime * shootSpeed);
-        }
-        else if (direction == "left")
-        {
-            transform.Translate(Vector3.left * Time.deltaTime * shootSpeed);
-        }
-        else if (direction == "left")
-        {
-            transform.Translate(Vector3.left * Time.deltaTime * shootSpeed);
-        }
-        else if (direction == "down")
-        {
-            transform.Translate(Vector3.down * Time.deltaTime * shootSpeed);
-        }
     }
 
     void OnCollisionEnter2D(Collision2D coll)
@@ -149,5 +141,4 @@ public class Rocket : MonoBehaviour {
             this.GetComponent<Transform>().position = location;
         }
     }
-
 }
