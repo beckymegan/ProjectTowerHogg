@@ -7,8 +7,9 @@ public class Rocket : MonoBehaviour {
     public float blastZone, xVelocity, yVelocity;
     public Sprite gRocket, rRocket, bRocket, pRocket;
 
-    string direction;
-    SpriteRenderer spriter;
+    private string direction;
+    private bool wallcheck = false;
+    private SpriteRenderer spriter;
     
     
     // Use this for initialization
@@ -101,36 +102,39 @@ public class Rocket : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (direction == "right")
+
+        //if direction is right rotate rocket and shoot right
+        if (direction == "right" && wallcheck == false)
         {
-            float xvalue = this.GetComponent<Transform>().position.x + (xVelocity*Time.deltaTime);
-            float yvalue = this.GetComponent<Transform>().position.y + (-yVelocity * Time.deltaTime * Time.deltaTime) + (yVelocity * Time.deltaTime);
-            Vector2 shootLocation = new Vector2(xvalue, yvalue);
-            this.GetComponent<Transform>().position = shootLocation;
+            this.GetComponent<Transform>().Rotate(new Vector3(0, 0, -330));
+            this.GetComponent<Rigidbody2D>().AddForce(this.transform.right * shootSpeed);
+            wallcheck = true;
         }
-        else if (direction == "left")
+        else if (direction == "left" && wallcheck == false)
         {
-            float xvalue = this.GetComponent<Transform>().position.x + (-xVelocity * Time.deltaTime);
-            float yvalue = this.GetComponent<Transform>().position.y + (-yVelocity * Time.deltaTime * Time.deltaTime) + (yVelocity * Time.deltaTime);
-            Vector2 shootLocation = new Vector2(xvalue, yvalue);
-            this.GetComponent<Transform>().position = shootLocation;
+            this.GetComponent<Transform>().Rotate(new Vector3(0, 0, 330));
+            this.GetComponent<Rigidbody2D>().AddForce(-this.transform.right * shootSpeed);
+            wallcheck = true;
         }
 
     }
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-        Destroy(gameObject);
+        if (coll.gameObject.tag.Equals("Player"))
+        {
+           Destroy(gameObject);
+        }
     }
 
-    public string getDirection()
+    public string Direction()
     {
         return direction;
     }
 
     void OnBecameInvisible()//if invisible loop to other x/y direction
     {
-        if (this.GetComponent<Transform>().position.y > 5 || this.GetComponent<Transform>().position.y < -5)//if invisible and above 5/under -5 (eg top or bottom) reverse y
+        if (this.GetComponent<Transform>().position.y > 10 || this.GetComponent<Transform>().position.y < -10)//if invisible and above 5/under -5 (eg top or bottom) reverse y
         {
             Vector3 location = new Vector3(this.GetComponent<Transform>().position.x, (-1) * (this.GetComponent<Transform>().position.y), 0);
             this.GetComponent<Transform>().position = location;

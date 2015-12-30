@@ -481,21 +481,21 @@ public class Player : MonoBehaviour {
     {
         if (coll.gameObject.tag == "Rocket")//if hit by rocket, lose life & play sound
         {
-            if(coll.gameObject.GetComponent<Rocket>().getDirection() == "right")
+            if(coll.gameObject.GetComponent<Rocket>().Direction() == "right")
             {
                 anim.SetBool("isHurtRight", true);
                 controller.Move(new Vector2(20, 15) * Time.deltaTime);
             }
-            else if (coll.gameObject.GetComponent<Rocket>().getDirection() == "left")
+            else if (coll.gameObject.GetComponent<Rocket>().Direction() == "left")
             {
                 anim.SetBool("isHurtLeft", true);
                 controller.Move(new Vector2(-20, 15) * Time.deltaTime);
             }
-            else if (coll.gameObject.GetComponent<Rocket>().getDirection() == "up")
+            else if (coll.gameObject.GetComponent<Rocket>().Direction() == "stop")
             {
                 controller.Move(new Vector2(0, 15) * Time.deltaTime);
             }
-            lives--;
+            //lives--;
             stunTimer = 0;
         }
     }
