@@ -7,8 +7,11 @@ public class Rocket : MonoBehaviour
     public int shootSpeed, colorShot;
     public float blastZone, xVelocity, yVelocity;
     public Sprite gRocket, rRocket, bRocket, pRocket;
+    public GameObject particleSystem;
+    public Material shotColor;
     
     private string direction;
+    private Color GREEN, RED, BLUE, PURPLE;
     private bool wallcheck = false;
 
 
@@ -16,6 +19,11 @@ public class Rocket : MonoBehaviour
     void Start()
     {
         direction = gVar.direction;
+        //set colors
+        GREEN = new Color(0.435f, 0.768f, 0.662f);
+        RED = new Color(0.945f, 0.611f, 0.717f);
+        BLUE = new Color(0.553f, 0.710f, 0.906f);
+        PURPLE = new Color(0.615f, 0.611f, 0.945f);
     }
 
     //render sprite image to match shooter
@@ -61,24 +69,33 @@ public class Rocket : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D coll)
     {
+        Material particleColor = new Material(shotColor);
         if (coll.gameObject.tag.Equals("Player"))
         {
             if (colorShot == 0)//if ball is green increase greenshots by one
             {
                 gVar.greenShots++;
+                particleColor = new Material(shotColor);
+                particleColor.SetColor("_EmissionColor", GREEN);
             }
             else if (colorShot == 1)
             {
                 gVar.redShots++;
+                particleColor.SetColor("_EmissionColor", RED);
             }
             else if (colorShot == 2)
             {
                 gVar.blueShots++;
+                particleColor.SetColor("_EmissionColor", BLUE);
             }
             else if (colorShot == 3)
             {
                 gVar.purpleShots++;
+                particleColor.SetColor("_EmissionColor", PURPLE);
             }
+            GameObject particles = (GameObject)Instantiate(particleSystem, this.GetComponent<Transform>().position, Quaternion.identity);
+            particles.GetComponent<Renderer>().material = particleColor;
+            Destroy(particles, 0.5f);
             Destroy(gameObject);
         }
     }
