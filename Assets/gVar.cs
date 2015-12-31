@@ -19,6 +19,11 @@ public class gVar : MonoBehaviour {
     public static int readyPlayers = 0;
     public static int requiredReadyPlayers = 0;
 
+    public static int greenShots;
+    public static int redShots;
+    public static int blueShots;
+    public static int purpleShots;
+
     public static Vector2 location1, location2, location3, location4;
 
 }

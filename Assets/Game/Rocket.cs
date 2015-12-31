@@ -1,108 +1,48 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Rocket : MonoBehaviour {
+public class Rocket : MonoBehaviour
+{
 
-    public int shootSpeed;
+    public int shootSpeed, colorShot;
     public float blastZone, xVelocity, yVelocity;
     public Sprite gRocket, rRocket, bRocket, pRocket;
-
+    
     private string direction;
     private bool wallcheck = false;
-    private SpriteRenderer spriter;
-    
-    
+
+
     // Use this for initialization
-	void Start () {
+    void Start()
+    {
         direction = gVar.direction;
-        spriter = this.GetComponent<SpriteRenderer>();
-        this.color();
     }
 
     //render sprite image to match shooter
-    void color()
+    public void color(int colorShot)
     {
-        if (name.Equals("rocketP1"))
+        this.colorShot = colorShot;
+        if (colorShot == 0)//color sprite green
         {
-            if(gVar.player1.Equals("Green"))
-            {
-                spriter.sprite = gRocket;
-            }
-            else if (gVar.player1.Equals("Red"))
-            {
-                spriter.sprite = rRocket;
-            }
-            else if (gVar.player1.Equals("Blue"))
-            {
-                spriter.sprite = bRocket;
-            }
-            else if (gVar.player1.Equals("Purple"))
-            {
-                spriter.sprite = pRocket;
-            }
+            this.GetComponent<SpriteRenderer>().sprite = gRocket;
         }
-        else if (name.Equals("rocketP2"))
+        else if (colorShot == 1)
         {
-            if (gVar.player2.Equals("Green"))
-            {
-                spriter.sprite = gRocket;
-            }
-            else if (gVar.player2.Equals("Red"))
-            {
-                spriter.sprite = rRocket;
-            }
-            else if (gVar.player2.Equals("Blue"))
-            {
-                spriter.sprite = bRocket;
-            }
-            else if (gVar.player2.Equals("Purple"))
-            {
-                spriter.sprite = pRocket;
-            }
+            this.GetComponent<SpriteRenderer>().sprite = rRocket;
         }
-        else if (name.Equals("rocketP3"))
+        else if (colorShot == 2)
         {
-            if (gVar.player3.Equals("Green"))
-            {
-                spriter.sprite = gRocket;
-            }
-            else if (gVar.player3.Equals("Red"))
-            {
-                spriter.sprite = rRocket;
-            }
-            else if (gVar.player3.Equals("Blue"))
-            {
-                spriter.sprite = bRocket;
-            }
-            else if (gVar.player3.Equals("Purple"))
-            {
-                spriter.sprite = pRocket;
-            }
+            this.GetComponent<SpriteRenderer>().sprite = bRocket;
         }
-        else if (name.Equals("rocketP4"))
+        else if (colorShot == 3)
         {
-            if (gVar.player4.Equals("Green"))
-            {
-                spriter.sprite = gRocket;
-            }
-            else if (gVar.player4.Equals("Red"))
-            {
-                spriter.sprite = rRocket;
-            }
-            else if (gVar.player4.Equals("Blue"))
-            {
-                spriter.sprite = bRocket;
-            }
-            else if (gVar.player4.Equals("Purple"))
-            {
-                spriter.sprite = pRocket;
-            }
+            this.GetComponent<SpriteRenderer>().sprite = pRocket;
         }
     }
-	
-	// Update is called once per frame
-	void Update () {
 
+    // Update is called once per frame
+    void Update()
+    {
         //if direction is right rotate rocket and shoot right
         if (direction == "right" && wallcheck == false)
         {
@@ -123,7 +63,23 @@ public class Rocket : MonoBehaviour {
     {
         if (coll.gameObject.tag.Equals("Player"))
         {
-           Destroy(gameObject);
+            if (colorShot == 0)//if ball is green increase greenshots by one
+            {
+                gVar.greenShots++;
+            }
+            else if (colorShot == 1)
+            {
+                gVar.redShots++;
+            }
+            else if (colorShot == 2)
+            {
+                gVar.blueShots++;
+            }
+            else if (colorShot == 3)
+            {
+                gVar.purpleShots++;
+            }
+            Destroy(gameObject);
         }
     }
 

@@ -2,12 +2,14 @@
 using UnityEngine.SceneManagement;
 using System.Collections;
 
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour
+{
 
     public bool isInvisible = false;
     public float jumpHeight = 4;
     public float timeToJumpApex = .4f;
     public int stunTime;
+    public int rocketShots;
     float accelerationTimeAirborne = .2f;
     float accelerationTimeGrounded = .1f;
     float moveSpeed = 6;
@@ -16,10 +18,9 @@ public class Player : MonoBehaviour {
 
     public int playerNumber;
 
-    int lives;
+    int lives, color;
     int stunTimer;
     bool hurt = false;
-    bool rocketShot;
     float gravity;
     float jumpVelocity;
     Vector2 input = new Vector2(0, 0);
@@ -35,7 +36,7 @@ public class Player : MonoBehaviour {
     public CanvasGroup gameOverScreen;
     public Sprite blueSprite, redSprite, greenSprite, purpleSprite;
 
-    void Start ()
+    void Start()
     {
         Time.timeScale = 1;//start time
         gameOverScreen.alpha = 0;
@@ -49,32 +50,40 @@ public class Player : MonoBehaviour {
 
         lives = 5;
         stunTimer = stunTime;
-        rocketShot = false;
 
         SpriteRenderer rend = this.GetComponent<SpriteRenderer>();
 
         //character selection
-        if (playerNumber == 1 && gVar.player1Exists == true)
+        if (playerNumber == 1 && gVar.player1Exists == true)//if player is player1 and player1 exists
         {
-            if (gVar.player1 == "Green")
+            if (gVar.player1 == "Green")//check if player1 is registered as green
             {
+                //if green, change sprite to green, increase number of possible green team shots by one and start
                 rend.sprite = greenSprite;
+                gVar.greenShots++;
                 anim.SetInteger("Color", 0);
+                color = 0;
             }
             else if (gVar.player1 == "Red")
             {
                 rend.sprite = redSprite;
+                gVar.redShots++;
                 anim.SetInteger("Color", 1);
+                color = 1;
             }
             else if (gVar.player1 == "Blue")
             {
                 rend.sprite = blueSprite;
+                gVar.blueShots++;
                 anim.SetInteger("Color", 2);
+                color = 2;
             }
             else if (gVar.player1 == "Purple")
             {
                 rend.sprite = purpleSprite;
+                gVar.purpleShots++;
                 anim.SetInteger("Color", 3);
+                color = 3;
             }
         }
         else if (playerNumber == 2 && gVar.player2Exists == true)
@@ -82,22 +91,30 @@ public class Player : MonoBehaviour {
             if (gVar.player2 == "Green")
             {
                 rend.sprite = greenSprite;
+                gVar.greenShots++;
                 anim.SetInteger("Color", 0);
+                color = 0;
             }
             else if (gVar.player2 == "Red")
             {
                 rend.sprite = redSprite;
+                gVar.redShots++;
                 anim.SetInteger("Color", 1);
+                color = 1;
             }
             else if (gVar.player2 == "Blue")
             {
                 rend.sprite = blueSprite;
+                gVar.blueShots++;
                 anim.SetInteger("Color", 2);
+                color = 2;
             }
             else if (gVar.player2 == "Purple")
             {
                 rend.sprite = purpleSprite;
+                gVar.purpleShots++;
                 anim.SetInteger("Color", 3);
+                color = 3;
             }
         }
         else if (playerNumber == 3 && gVar.player3Exists == true)
@@ -105,22 +122,30 @@ public class Player : MonoBehaviour {
             if (gVar.player3 == "Green")
             {
                 rend.sprite = greenSprite;
+                gVar.greenShots++;
                 anim.SetInteger("Color", 0);
+                color = 0;
             }
             else if (gVar.player3 == "Red")
             {
                 rend.sprite = redSprite;
+                gVar.redShots++;
                 anim.SetInteger("Color", 1);
+                color = 1;
             }
             else if (gVar.player3 == "Blue")
             {
                 rend.sprite = blueSprite;
+                gVar.blueShots++;
                 anim.SetInteger("Color", 2);
+                color = 2;
             }
             else if (gVar.player3 == "Purple")
             {
                 rend.sprite = purpleSprite;
+                gVar.purpleShots++;
                 anim.SetInteger("Color", 3);
+                color = 3;
             }
         }
         else if (playerNumber == 4 && gVar.player4Exists == true)
@@ -128,31 +153,40 @@ public class Player : MonoBehaviour {
             if (gVar.player4 == "Green")
             {
                 rend.sprite = greenSprite;
+                gVar.greenShots++;
                 anim.SetInteger("Color", 0);
+                color = 0;
             }
             else if (gVar.player4 == "Red")
             {
                 rend.sprite = redSprite;
+                gVar.redShots++;
                 anim.SetInteger("Color", 1);
+                color = 1;
             }
             else if (gVar.player4 == "Blue")
             {
                 rend.sprite = blueSprite;
+                gVar.blueShots++;
                 anim.SetInteger("Color", 2);
+                color = 2;
             }
             else if (gVar.player4 == "Purple")
             {
                 rend.sprite = purpleSprite;
+                gVar.purpleShots++;
                 anim.SetInteger("Color", 3);
+                color = 3;
             }
         }
+        //set player to standing by making both isWalkingLeft and isWalkingRight false
         anim.SetBool("isWalkingLeft", false);
         anim.SetBool("isWalkingRight", false);
     }
 
     void Update()
     {
-        anim.SetInteger("isShooting", 0);
+        anim.SetInteger("isShooting", 0);//timer to 
 
         //count through hit timer, revert to un hurt after finished
         if (stunTimer != stunTime)
@@ -166,13 +200,14 @@ public class Player : MonoBehaviour {
             anim.SetBool("isHurtRight", false);
             anim.SetBool("isHurtLeft", false);
         }
-            //is player hitting roof or on ground
-            if (controller.collisions.above || controller.collisions.below)
-            {
-                velocity.y = 0;
-            }
 
-            this.health(); //calculate health
+        //is player hitting roof or on ground
+        if (controller.collisions.above || controller.collisions.below)
+        {
+            velocity.y = 0;
+        }
+
+        this.health(); //calculate health
 
 
         if (hurt == false)
@@ -180,6 +215,7 @@ public class Player : MonoBehaviour {
             //Player 1
             if (playerNumber == 1 && gVar.player1Exists == true)
             {
+                //move player and set animations for movement
                 gVar.location1 = this.GetComponent<Transform>().position;
                 input = new Vector2(Input.GetAxisRaw("Horizontal1"), 0);
 
@@ -199,7 +235,6 @@ public class Player : MonoBehaviour {
                     anim.SetBool("isWalkingRight", false);
                 }
 
-
                 if (Input.GetButtonDown("Jump1") && Mathf.Abs(velocity.y) < 1f)//jump
                 {
                     velocity.y = jumpVelocity;
@@ -214,47 +249,22 @@ public class Player : MonoBehaviour {
                     anim.SetBool("isJumping", false);
                 }
 
-                //if rocket shot by player still exists
-                if (GameObject.Find("rocketP1") != null)
+                if (Input.GetButtonDown("ShootLeft1"))
                 {
-                    rocketShot = true;
-                }
-                else
-                {
-                    rocketShot = false;
+                    shootLeft();
                 }
 
-                //check if rocket hasn't been destroyed yet
-                if (rocketShot == false)
+                if (Input.GetButtonDown("ShootRight1"))
                 {
-                    //depending on button pressed, spawn rocket that travels in direction chosen
-                    if (Input.GetButtonDown("ShootLeft1"))
-                    {
-                        shotRocket = Instantiate(rocket, new Vector3(this.transform.position.x - 1f, this.transform.position.y), Quaternion.identity);
-                        gVar.direction = "left";
-                        rocketShot = true;
-                        anim.SetInteger("isShooting", 1);
-                        //name rocket
-                        shotRocket.name = "rocketP1";
-                    }
-
-                    if (Input.GetButtonDown("ShootRight1"))
-                    {
-                        shotRocket = Instantiate(rocket, new Vector3(this.transform.position.x + 1f, this.transform.position.y), Quaternion.identity);
-                        gVar.direction = "right";
-                        rocketShot = true;
-                        anim.SetInteger("isShooting", 2);
-                        //name rocket
-                        shotRocket.name = "rocketP1";
-                    }
+                    shootRight();
                 }
-
             }
+
             //Player #2
             else if (playerNumber == 2 && gVar.player2Exists == true)
             {
                 gVar.location2 = this.GetComponent<Transform>().position;
-                input = new Vector2(Input.GetAxisRaw("Horizontal2"),0);
+                input = new Vector2(Input.GetAxisRaw("Horizontal2"), 0);
 
                 if (Input.GetAxisRaw("Horizontal2") > 0)
                 {
@@ -271,7 +281,7 @@ public class Player : MonoBehaviour {
                     anim.SetBool("isWalkingLeft", false);
                     anim.SetBool("isWalkingRight", false);
                 }
-                
+
                 if (Input.GetButtonDown("Jump2") && Mathf.Abs(velocity.y) < 1f)//jump
                 {
                     velocity.y = jumpVelocity;
@@ -286,47 +296,23 @@ public class Player : MonoBehaviour {
                     anim.SetBool("isJumping", false);
                 }
 
-                //if rocket shot by player still exists
-                if (GameObject.Find("rocketP2") != null)
+                if (Input.GetButtonDown("ShootLeft2"))
                 {
-                    rocketShot = true;
-                }
-                else
-                {
-                    rocketShot = false;
+                    shootLeft();
                 }
 
-                //check if rocket hasn't been destroyed yet
-                if (rocketShot == false)
+                if (Input.GetButtonDown("ShootRight2"))
                 {
-                    //depending on button pressed, spawn rocket that travels in direction chosen
-                    if (Input.GetButtonDown("ShootLeft2"))
-                    {
-                        shotRocket = Instantiate(rocket, new Vector3(this.transform.position.x - 1f, this.transform.position.y), Quaternion.identity);
-                        gVar.direction = "left";
-                        rocketShot = true;
-                        anim.SetInteger("isShooting", 1);
-                        //name rocket
-                        shotRocket.name = "rocketP2";
-                    }
-
-                    if (Input.GetButtonDown("ShootRight2"))
-                    {
-                        shotRocket = Instantiate(rocket, new Vector3(this.transform.position.x + 1f, this.transform.position.y), Quaternion.identity);
-                        gVar.direction = "right";
-                        rocketShot = true;
-                        anim.SetInteger("isShooting", 2);
-                        //name rocket
-                        shotRocket.name = "rocketP2";
-                    }
+                    shootRight();
                 }
+
             }
 
             //Player #3
             else if (playerNumber == 3 && gVar.player3Exists == true)
             {
                 gVar.location3 = this.GetComponent<Transform>().position;
-                input = new Vector2(Input.GetAxisRaw("Horizontal3"),0);
+                input = new Vector2(Input.GetAxisRaw("Horizontal3"), 0);
 
                 if (Input.GetAxisRaw("Horizontal3") > 0)
                 {
@@ -358,39 +344,14 @@ public class Player : MonoBehaviour {
                     anim.SetBool("isJumping", false);
                 }
 
-                //if rocket shot by player still exists
-                if (GameObject.Find("rocketP3") != null)
+                if (Input.GetButtonDown("ShootLeft3"))
                 {
-                    rocketShot = true;
-                }
-                else
-                {
-                    rocketShot = false;
+                    shootLeft();
                 }
 
-                //check if rocket hasn't been destroyed yet
-                if (rocketShot == false)
+                if (Input.GetButtonDown("ShootRight3"))
                 {
-                    //depending on button pressed, spawn rocket that travels in direction chosen
-                    if (Input.GetButtonDown("ShootLeft3"))
-                    {
-                        shotRocket = Instantiate(rocket, new Vector3(this.transform.position.x - 1f, this.transform.position.y), Quaternion.identity);
-                        gVar.direction = "left";
-                        rocketShot = true;
-                        anim.SetInteger("isShooting", 1);
-                        //name rocket
-                        shotRocket.name = "rocketP3";
-                    }
-
-                    if (Input.GetButtonDown("ShootRight3"))
-                    {
-                        shotRocket = Instantiate(rocket, new Vector3(this.transform.position.x + 1f, this.transform.position.y), Quaternion.identity);
-                        gVar.direction = "right";
-                        rocketShot = true;
-                        anim.SetInteger("isShooting", 2);
-                        //name rocket
-                        shotRocket.name = "rocketP3";
-                    }
+                    shootRight();
                 }
             }
 
@@ -398,7 +359,7 @@ public class Player : MonoBehaviour {
             else if (playerNumber == 4 && gVar.player4Exists == true)
             {
                 gVar.location2 = this.GetComponent<Transform>().position;
-                input = new Vector2(Input.GetAxisRaw("Horizontal4"),0);
+                input = new Vector2(Input.GetAxisRaw("Horizontal4"), 0);
 
                 if (Input.GetAxisRaw("Horizontal4") > 0)
                 {
@@ -430,73 +391,99 @@ public class Player : MonoBehaviour {
                     anim.SetBool("isJumping", false);
                 }
 
-                //if rocket shot by player still exists
-                if (GameObject.Find("rocketP4") != null)
+                if (Input.GetButtonDown("ShootLeft4"))
                 {
-                    rocketShot = true;
-                }
-                else
-                {
-                    rocketShot = false;
+                    shootLeft();
                 }
 
-                //check if rocket hasn't been destroyed yet
-                if (rocketShot == false)
+                if (Input.GetButtonDown("ShootRight4"))
                 {
-                    //depending on button pressed, spawn rocket that travels in direction chosen
-                    if (Input.GetButtonDown("ShootLeft4"))
-                    {
-                        shotRocket = Instantiate(rocket, new Vector3(this.transform.position.x - 1f, this.transform.position.y), Quaternion.identity);
-                        gVar.direction = "left";
-                        rocketShot = true;
-                        anim.SetInteger("isShooting", 1);
-                        //name rocket
-                        shotRocket.name = "rocketP4";
-                    }
-
-                    if (Input.GetButtonDown("ShootRight4"))
-                    {
-                        shotRocket = Instantiate(rocket, new Vector3(this.transform.position.x + 1f, this.transform.position.y), Quaternion.identity);
-                        gVar.direction = "right";
-                        rocketShot = true;
-                        anim.SetInteger("isShooting", 2);
-                        //name rocket
-                        shotRocket.name = "rocketP4";
-                    }
+                    shootRight();
                 }
             }
             //smooth movements
             float targetVelocityX = input.x * moveSpeed;
             //                                                                                 if player is on the ground use ATGrounded, if in the air use ATAirbourne
             velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
-        } else
+        }
+        else
         {
             velocity.x = input.x * 1.5f;
         }
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
+        this.GetComponent<Rigidbody2D>().velocity = new Vector2(0, this.GetComponent<Rigidbody2D>().velocity.y);
+
+    }
+
+    void shootLeft()//shoot ball left (shootRight is the same with directions changed)
+    {
+        gVar.direction = "left";
+        if (color == 0 && gVar.greenShots > 0)
+        {//if color is green and green has more than one shot left
+            gVar.greenShots--;//drop shots by one
+            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x - 1f, this.transform.position.y), Quaternion.identity);//create green ball moving left
+            shotRocket.GetComponent<Rocket>().color(color);//color ball green
+        }
+        else if (color == 1 && gVar.redShots > 0)
+        {
+            gVar.redShots--;
+            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x - 1f, this.transform.position.y), Quaternion.identity);
+            shotRocket.GetComponent<Rocket>().color(color);
+        }
+        else if (color == 2 && gVar.blueShots > 0)
+        {
+            gVar.blueShots--;
+            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x - 1f, this.transform.position.y), Quaternion.identity);
+            shotRocket.GetComponent<Rocket>().color(color);
+        }
+        else if (color == 3 && gVar.purpleShots > 0)
+        {
+            gVar.purpleShots--;
+            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x - 1f, this.transform.position.y), Quaternion.identity);
+            shotRocket.GetComponent<Rocket>().color(color);
+        }
+        anim.SetInteger("isShooting", 1);
+    }
+
+    void shootRight()
+    {
+        gVar.direction = "right";
+        if (color == 0 && gVar.greenShots > 0)
+        {
+            gVar.greenShots--;
+            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x + 1f, this.transform.position.y), Quaternion.identity);
+            shotRocket.GetComponent<Rocket>().color(color);
+        }
+        else if (color == 1 && gVar.redShots > 0)
+        {
+            gVar.redShots--;
+            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x + 1f, this.transform.position.y), Quaternion.identity);
+            shotRocket.GetComponent<Rocket>().color(color);
+        }
+        else if (color == 2 && gVar.blueShots > 0)
+        {
+            gVar.blueShots--;
+            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x + 1f, this.transform.position.y), Quaternion.identity);
+            shotRocket.GetComponent<Rocket>().color(color);
+        }
+        else if (color == 3 && gVar.purpleShots > 0)
+        {
+            gVar.purpleShots--;
+            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x + 1f, this.transform.position.y), Quaternion.identity);
+            shotRocket.GetComponent<Rocket>().color(color);
+        }
+        anim.SetInteger("isShooting", 2);
     }
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-        if (coll.gameObject.tag == "Rocket")//if hit by rocket, lose life & play sound
+        if (coll.gameObject.tag.Equals("Ball"))
         {
-            if(coll.gameObject.GetComponent<Rocket>().Direction() == "right")
+            if (coll.gameObject.gameObject.GetComponent<Rocket>().colorShot != this.color)//if player color doesn't match ball color, lose health
             {
-                anim.SetBool("isHurtRight", true);
-                controller.Move(new Vector2(20, 15) * Time.deltaTime);
+                loseHealth();
             }
-            else if (coll.gameObject.GetComponent<Rocket>().Direction() == "left")
-            {
-                anim.SetBool("isHurtLeft", true);
-                controller.Move(new Vector2(-20, 15) * Time.deltaTime);
-            }
-            else if (coll.gameObject.GetComponent<Rocket>().Direction() == "stop")
-            {
-                controller.Move(new Vector2(0, 15) * Time.deltaTime);
-            }
-            //lives--;
-            stunTimer = 0;
         }
     }
 
@@ -521,22 +508,22 @@ public class Player : MonoBehaviour {
             }
         }
     }
-        
+
     void OnBecameInvisible()//if invisible loop to other x/y direction
     {
-        if(this.GetComponent<Transform>().position.y < -11)//if invisible under -11 (bottom) reverse y
+        if (this.GetComponent<Transform>().position.y < -11)//if invisible under -11 (bottom) reverse y
         {
             Vector3 location = new Vector3(this.GetComponent<Transform>().position.x, (-1) * (this.GetComponent<Transform>().position.y), 0);
             this.GetComponent<Transform>().position = location;
         }
         else if (this.GetComponent<Transform>().position.y > 12)//if invisible above 12 (top) reverse y and subtract a bit
         {
-            Vector3 location = new Vector3(this.GetComponent<Transform>().position.x, (-1) * (this.GetComponent<Transform>().position.y-1), 0);
+            Vector3 location = new Vector3(this.GetComponent<Transform>().position.x, (-1) * (this.GetComponent<Transform>().position.y - 1), 0);
             this.GetComponent<Transform>().position = location;
         }
         else //if invisible and  between 5 and -5 (eg left or right) reverse x
         {
-            Vector3 location = new Vector3((-1)*(this.GetComponent<Transform>().position.x),this.GetComponent<Transform>().position.y, 0);
+            Vector3 location = new Vector3((-1) * (this.GetComponent<Transform>().position.x), this.GetComponent<Transform>().position.y, 0);
             this.GetComponent<Transform>().position = location;
         }
     }
