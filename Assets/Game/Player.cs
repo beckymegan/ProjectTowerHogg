@@ -422,25 +422,25 @@ public class Player : MonoBehaviour
         if (color == 0 && gVar.greenShots > 0)
         {//if color is green and green has more than one shot left
             gVar.greenShots--;//drop shots by one
-            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x - 1f, this.transform.position.y), Quaternion.identity);//create green ball moving left
+            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x - 0.95f, this.transform.position.y), Quaternion.identity);//create green ball moving left
             shotRocket.GetComponent<Rocket>().color(color);//color ball green
         }
         else if (color == 1 && gVar.redShots > 0)
         {
             gVar.redShots--;
-            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x - 1f, this.transform.position.y), Quaternion.identity);
+            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x - 0.95f, this.transform.position.y), Quaternion.identity);
             shotRocket.GetComponent<Rocket>().color(color);
         }
         else if (color == 2 && gVar.blueShots > 0)
         {
             gVar.blueShots--;
-            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x - 1f, this.transform.position.y), Quaternion.identity);
+            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x - 0.95f, this.transform.position.y), Quaternion.identity);
             shotRocket.GetComponent<Rocket>().color(color);
         }
         else if (color == 3 && gVar.purpleShots > 0)
         {
             gVar.purpleShots--;
-            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x - 1f, this.transform.position.y), Quaternion.identity);
+            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x - 0.95f, this.transform.position.y), Quaternion.identity);
             shotRocket.GetComponent<Rocket>().color(color);
         }
         anim.SetInteger("isShooting", 1);
@@ -452,25 +452,25 @@ public class Player : MonoBehaviour
         if (color == 0 && gVar.greenShots > 0)
         {
             gVar.greenShots--;
-            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x + 1f, this.transform.position.y), Quaternion.identity);
+            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x + 0.95f, this.transform.position.y), Quaternion.identity);
             shotRocket.GetComponent<Rocket>().color(color);
         }
         else if (color == 1 && gVar.redShots > 0)
         {
             gVar.redShots--;
-            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x + 1f, this.transform.position.y), Quaternion.identity);
+            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x + 0.95f, this.transform.position.y), Quaternion.identity);
             shotRocket.GetComponent<Rocket>().color(color);
         }
         else if (color == 2 && gVar.blueShots > 0)
         {
             gVar.blueShots--;
-            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x + 1f, this.transform.position.y), Quaternion.identity);
+            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x + 0.95f, this.transform.position.y), Quaternion.identity);
             shotRocket.GetComponent<Rocket>().color(color);
         }
         else if (color == 3 && gVar.purpleShots > 0)
         {
             gVar.purpleShots--;
-            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x + 1f, this.transform.position.y), Quaternion.identity);
+            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x + 0.95f, this.transform.position.y), Quaternion.identity);
             shotRocket.GetComponent<Rocket>().color(color);
         }
         anim.SetInteger("isShooting", 2);

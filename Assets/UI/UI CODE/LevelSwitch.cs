@@ -7,6 +7,8 @@ public class LevelSwitch : MonoBehaviour
     public GameObject level1, level2, level3, level4, level5;
     public SpriteRenderer leftSlider, rightSlider, continueButton;
     public Sprite lSlide, lSlidePressed, rSlide, rSlidePressed, cPressed;
+    public float speedTime, speedScale;
+
     private Transform l1, l5, l4, l3, l2;
     
     private int level;
@@ -79,10 +81,10 @@ public class LevelSwitch : MonoBehaviour
     public void levelSwitch()
     {
         /* COORDS
-            BACK - Vector2.MoveTowards(l4.position, new Vector2(0, 0.5f), 0.02f); new Vector3(l4.position.x, l4.position.y, 3);
-            RIGHT - Vector2.MoveTowards(l5.position, new Vector2(1, 0.185f), 0.02f); new Vector3(l5.position.x, l5.position.y, 2);
-            CENTER - Vector2.MoveTowards(l1.position, new Vector2(0, -0.125F), 0.02f); new Vector3(l1.position.x, l1.position.y, 1);
-            LEFT - Vector2.MoveTowards(l1.position, new Vector3(-1, 0.185f), 0.02f); new Vector3(l1.position.x, l1.position.y, 1);
+            BACK - Vector2.MoveTowards(l4.position, new Vector2(0, 0.5f), speedTime); new Vector3(l4.position.x, l4.position.y, 3);
+            RIGHT - Vector2.MoveTowards(l5.position, new Vector2(1, 0.185f), speedTime); new Vector3(l5.position.x, l5.position.y, 2);
+            CENTER - Vector2.MoveTowards(l1.position, new Vector2(0, -0.125F), speedTime); new Vector3(l1.position.x, l1.position.y, 1);
+            LEFT - Vector2.MoveTowards(l1.position, new Vector3(-1, 0.185f), speedTime); new Vector3(l1.position.x, l1.position.y, 1);
             SCALE (GENERAL) - l4.localScale += new Vector3(0.01f, 0.01f, 0);
         */
 
@@ -91,176 +93,176 @@ public class LevelSwitch : MonoBehaviour
             if (gVar.currentLocation == 2)
             {
                 //back to right
-                l3.position = Vector2.MoveTowards(l3.position, new Vector2(1, 0.31f), 0.02f);
+                l3.position = Vector2.MoveTowards(l3.position, new Vector2(1, 0.31f), speedTime);
                 l3.position = new Vector3(l3.position.x, l3.position.y, 2);
-                if (l3.localScale.x < 0.62)
+                if (l3.localScale.x < 0.50f)
                 {
-                    l3.localScale += new Vector3(0.0098f, 0.0098f, 0);
+                    l3.localScale += new Vector3(speedScale, speedScale, 0);
                 }
                 else
                 {
                     canChange = true;
                 }
                 //right to center
-                l2.position = Vector2.MoveTowards(l2.position, new Vector2(0, 0), 0.02f);
+                l2.position = Vector2.MoveTowards(l2.position, new Vector2(0, 0), speedTime);
                 l2.position = new Vector3(l2.position.x, l2.position.y, 1);
                 if (l2.localScale.x < 1)
                 {
-                    l2.localScale += new Vector3(0.0098f, 0.0098f, 0);
+                    l2.localScale += new Vector3(speedScale, speedScale, 0);
                 }
                 //center to left
-                l1.position = Vector2.MoveTowards(l1.position, new Vector3(-1, 0.31f), 0.02f);
+                l1.position = Vector2.MoveTowards(l1.position, new Vector3(-1, 0.31f), speedTime);
                 l1.position = new Vector3(l1.position.x, l1.position.y, 1);
-                if (l1.localScale.x > 0.62)
+                if (l1.localScale.x > 0.50f)
                 {
-                    l1.localScale -= new Vector3(0.0098f, 0.0098f, 0);
+                    l1.localScale -= new Vector3(speedScale, speedScale, 0);
                 }
                 //left to back
-                l5.position = Vector2.MoveTowards(l5.position, new Vector2(0, 0.62f), 0.02f);
+                l5.position = Vector2.MoveTowards(l5.position, new Vector2(0, 0.50f), speedTime);
                 l5.position = new Vector3(l5.position.x, l5.position.y, 3);
                 if (l5.localScale.x > 0)
                 {
-                    l5.localScale -= new Vector3(0.0098f, 0.0098f, 0);
+                    l5.localScale -= new Vector3(speedScale, speedScale, 0);
                 }
             }
             else if (gVar.currentLocation == 3)
             {
                 //back to right
-                l4.position = Vector2.MoveTowards(l4.position, new Vector2(1, 0.31f), 0.02f);
+                l4.position = Vector2.MoveTowards(l4.position, new Vector2(1, 0.31f), speedTime);
                 l4.position = new Vector3(l4.position.x, l4.position.y, 2);
-                if (l4.localScale.x < 0.62)
+                if (l4.localScale.x < 0.50f)
                 {
-                    l4.localScale += new Vector3(0.0098f, 0.0098f, 0);
+                    l4.localScale += new Vector3(speedScale, speedScale, 0);
                 }
                 else
                 {
                     canChange = true;
                 }
                 //right to center
-                l3.position = Vector2.MoveTowards(l3.position, new Vector2(0, 0), 0.02f);
+                l3.position = Vector2.MoveTowards(l3.position, new Vector2(0, 0), speedTime);
                 l3.position = new Vector3(l3.position.x, l3.position.y, 1);
                 if (l3.localScale.x < 1)
                 {
-                    l3.localScale += new Vector3(0.0098f, 0.0098f, 0);
+                    l3.localScale += new Vector3(speedScale, speedScale, 0);
                 }
                 //center to left
-                l2.position = Vector2.MoveTowards(l2.position, new Vector3(-1, 0.31f), 0.02f);
+                l2.position = Vector2.MoveTowards(l2.position, new Vector3(-1, 0.31f), speedTime);
                 l2.position = new Vector3(l2.position.x, l2.position.y, 1);
-                if (l2.localScale.x > 0.62)
+                if (l2.localScale.x > 0.50f)
                 {
-                    l2.localScale -= new Vector3(0.0098f, 0.0098f, 0);
+                    l2.localScale -= new Vector3(speedScale, speedScale, 0);
                 }
                 //left to back
-                l1.position = Vector2.MoveTowards(l1.position, new Vector2(0, 0.62f), 0.02f);
+                l1.position = Vector2.MoveTowards(l1.position, new Vector2(0, 0.50f), speedTime);
                 l1.position = new Vector3(l1.position.x, l1.position.y, 3);
                 if (l1.localScale.x > 0)
                 {
-                    l1.localScale -= new Vector3(0.0098f, 0.0098f, 0);
+                    l1.localScale -= new Vector3(speedScale, speedScale, 0);
                 }
             }
             else if (gVar.currentLocation == 4)
             {
                 //back to right
-                l5.position = Vector2.MoveTowards(l5.position, new Vector2(1, 0.31f), 0.02f);
+                l5.position = Vector2.MoveTowards(l5.position, new Vector2(1, 0.31f), speedTime);
                 l5.position = new Vector3(l5.position.x, l5.position.y, 2);
-                if (l5.localScale.x < 0.62)
+                if (l5.localScale.x < 0.50f)
                 {
-                    l5.localScale += new Vector3(0.0098f, 0.0098f, 0);
+                    l5.localScale += new Vector3(speedScale, speedScale, 0);
                 }
                 else
                 {
                     canChange = true;
                 }
                 //right to center
-                l4.position = Vector2.MoveTowards(l4.position, new Vector2(0, 0), 0.02f);
+                l4.position = Vector2.MoveTowards(l4.position, new Vector2(0, 0), speedTime);
                 l4.position = new Vector3(l4.position.x, l4.position.y, 1);
                 if (l4.localScale.x < 1)
                 {
-                    l4.localScale += new Vector3(0.0098f, 0.0098f, 0);
+                    l4.localScale += new Vector3(speedScale, speedScale, 0);
                 }
                 //center to left
-                l3.position = Vector2.MoveTowards(l3.position, new Vector3(-1, 0.31f), 0.02f);
+                l3.position = Vector2.MoveTowards(l3.position, new Vector3(-1, 0.31f), speedTime);
                 l3.position = new Vector3(l3.position.x, l3.position.y, 1);
-                if (l3.localScale.x > 0.62)
+                if (l3.localScale.x > 0.50f)
                 {
-                    l3.localScale -= new Vector3(0.0098f, 0.0098f, 0);
+                    l3.localScale -= new Vector3(speedScale, speedScale, 0);
                 }
                 //left to back
-                l2.position = Vector2.MoveTowards(l2.position, new Vector2(0, 0.62f), 0.02f);
+                l2.position = Vector2.MoveTowards(l2.position, new Vector2(0, 0.50f), speedTime);
                 l2.position = new Vector3(l2.position.x, l2.position.y, 3);
                 if (l2.localScale.x > 0)
                 {
-                    l2.localScale -= new Vector3(0.0098f, 0.0098f, 0);
+                    l2.localScale -= new Vector3(speedScale, speedScale, 0);
                 }
             }
             else if (gVar.currentLocation == 5)
             {
                 //back to right
-                l1.position = Vector2.MoveTowards(l1.position, new Vector2(1, 0.31f), 0.02f);
+                l1.position = Vector2.MoveTowards(l1.position, new Vector2(1, 0.31f), speedTime);
                 l1.position = new Vector3(l1.position.x, l1.position.y, 2);
-                if (l1.localScale.x < 0.62)
+                if (l1.localScale.x < 0.50f)
                 {
-                    l1.localScale += new Vector3(0.0098f, 0.0098f, 0);
+                    l1.localScale += new Vector3(speedScale, speedScale, 0);
                 }
                 else
                 {
                     canChange = true;
                 }
                 //right to center
-                l5.position = Vector2.MoveTowards(l5.position, new Vector2(0, 0), 0.02f);
+                l5.position = Vector2.MoveTowards(l5.position, new Vector2(0, 0), speedTime);
                 l5.position = new Vector3(l5.position.x, l5.position.y, 1);
                 if (l5.localScale.x < 1)
                 {
-                    l5.localScale += new Vector3(0.0098f, 0.0098f, 0);
+                    l5.localScale += new Vector3(speedScale, speedScale, 0);
                 }
                 //center to left
-                l4.position = Vector2.MoveTowards(l4.position, new Vector3(-1, 0.31f), 0.02f);
+                l4.position = Vector2.MoveTowards(l4.position, new Vector3(-1, 0.31f), speedTime);
                 l4.position = new Vector3(l4.position.x, l4.position.y, 1);
-                if (l4.localScale.x > 0.62)
+                if (l4.localScale.x > 0.50f)
                 {
-                    l4.localScale -= new Vector3(0.0098f, 0.0098f, 0);
+                    l4.localScale -= new Vector3(speedScale, speedScale, 0);
                 }
                 //left to back
-                l3.position = Vector2.MoveTowards(l3.position, new Vector2(0, 0.62f), 0.02f);
+                l3.position = Vector2.MoveTowards(l3.position, new Vector2(0, 0.50f), speedTime);
                 l3.position = new Vector3(l3.position.x, l3.position.y, 3);
                 if (l3.localScale.x > 0)
                 {
-                    l3.localScale -= new Vector3(0.0098f, 0.0098f, 0);
+                    l3.localScale -= new Vector3(speedScale, speedScale, 0);
                 }
             }
             else if (gVar.currentLocation == 1)
             {
                 //back to right
-                l2.position = Vector2.MoveTowards(l2.position, new Vector2(1, 0.31f), 0.02f);
+                l2.position = Vector2.MoveTowards(l2.position, new Vector2(1, 0.31f), speedTime);
                 l2.position = new Vector3(l2.position.x, l2.position.y, 2);
-                if (l2.localScale.x < 0.62)
+                if (l2.localScale.x < 0.50f)
                 {
-                    l2.localScale += new Vector3(0.0098f, 0.0098f, 0);
+                    l2.localScale += new Vector3(speedScale, speedScale, 0);
                 }
                 else
                 {
                     canChange = true;
                 }
                 //right to center
-                l1.position = Vector2.MoveTowards(l1.position, new Vector2(0, 0), 0.02f);
+                l1.position = Vector2.MoveTowards(l1.position, new Vector2(0, 0), speedTime);
                 l1.position = new Vector3(l1.position.x, l1.position.y, 1);
                 if (l1.localScale.x < 1)
                 {
-                    l1.localScale += new Vector3(0.0098f, 0.0098f, 0);
+                    l1.localScale += new Vector3(speedScale, speedScale, 0);
                 }
                 //center to left
-                l5.position = Vector2.MoveTowards(l5.position, new Vector3(-1, 0.31f), 0.02f);
+                l5.position = Vector2.MoveTowards(l5.position, new Vector3(-1, 0.31f), speedTime);
                 l5.position = new Vector3(l5.position.x, l5.position.y, 1);
-                if (l5.localScale.x > 0.62)
+                if (l5.localScale.x > 0.50f)
                 {
-                    l5.localScale -= new Vector3(0.0098f, 0.0098f, 0);
+                    l5.localScale -= new Vector3(speedScale, speedScale, 0);
                 }
                 //left to back
-                l4.position = Vector2.MoveTowards(l4.position, new Vector2(0, 0.62f), 0.02f);
+                l4.position = Vector2.MoveTowards(l4.position, new Vector2(0, 0.50f), speedTime);
                 l4.position = new Vector3(l4.position.x, l4.position.y, 3);
                 if (l4.localScale.x > 0)
                 {
-                    l4.localScale -= new Vector3(0.0098f, 0.0098f, 0);
+                    l4.localScale -= new Vector3(speedScale, speedScale, 0);
                 }
             }
         }
@@ -269,176 +271,176 @@ public class LevelSwitch : MonoBehaviour
             if (gVar.currentLocation == 1)
             {
                 //back to left
-                l5.position = Vector2.MoveTowards(l5.position, new Vector2(-1, 0.31f), 0.02f);
+                l5.position = Vector2.MoveTowards(l5.position, new Vector2(-1, 0.31f), speedTime);
                 l5.position = new Vector3(l5.position.x, l5.position.y, 2);
-                if (l5.localScale.x < 0.62)
+                if (l5.localScale.x < 0.50f)
                 {
-                    l5.localScale += new Vector3(0.0098f, 0.0098f, 0);
+                    l5.localScale += new Vector3(speedScale, speedScale, 0);
                 }
                 else
                 {
                     canChange = true;
                 }
                 //left to center
-                l1.position = Vector2.MoveTowards(l1.position, new Vector2(0, 0), 0.02f);
+                l1.position = Vector2.MoveTowards(l1.position, new Vector2(0, 0), speedTime);
                 l1.position = new Vector3(l1.position.x, l1.position.y, 1);
                 if (l1.localScale.x < 1)
                 {
-                    l1.localScale += new Vector3(0.0098f, 0.0098f, 0);
+                    l1.localScale += new Vector3(speedScale, speedScale, 0);
                 }
                 //center to right
-                l2.position = Vector2.MoveTowards(l2.position, new Vector3(1, 0.31f), 0.02f);
+                l2.position = Vector2.MoveTowards(l2.position, new Vector3(1, 0.31f), speedTime);
                 l2.position = new Vector3(l2.position.x, l2.position.y, 1);
-                if (l2.localScale.x > 0.62)
+                if (l2.localScale.x > 0.50f)
                 {
-                    l2.localScale -= new Vector3(0.0098f, 0.0098f, 0);
+                    l2.localScale -= new Vector3(speedScale, speedScale, 0);
                 }
                 //right to back
-                l3.position = Vector2.MoveTowards(l3.position, new Vector2(0, 0.62f), 0.02f);
+                l3.position = Vector2.MoveTowards(l3.position, new Vector2(0, 0.50f), speedTime);
                 l3.position = new Vector3(l3.position.x, l3.position.y, 3);
                 if (l3.localScale.x > 0)
                 {
-                    l3.localScale -= new Vector3(0.0098f, 0.0098f, 0);
+                    l3.localScale -= new Vector3(speedScale, speedScale, 0);
                 }
             }
             else if (gVar.currentLocation == 5)
             {
                 //back to left
-                l4.position = Vector2.MoveTowards(l4.position, new Vector2(-1, 0.31f), 0.02f);
+                l4.position = Vector2.MoveTowards(l4.position, new Vector2(-1, 0.31f), speedTime);
                 l4.position = new Vector3(l4.position.x, l4.position.y, 2);
-                if (l4.localScale.x < 0.62)
+                if (l4.localScale.x < 0.50f)
                 {
-                    l4.localScale += new Vector3(0.0098f, 0.0098f, 0);
+                    l4.localScale += new Vector3(speedScale, speedScale, 0);
                 }
                 else
                 {
                     canChange = true;
                 }
                 //left to center
-                l5.position = Vector2.MoveTowards(l5.position, new Vector2(0, 0), 0.02f);
+                l5.position = Vector2.MoveTowards(l5.position, new Vector2(0, 0), speedTime);
                 l5.position = new Vector3(l5.position.x, l5.position.y, 1);
                 if (l5.localScale.x < 1)
                 {
-                    l5.localScale += new Vector3(0.0098f, 0.0098f, 0);
+                    l5.localScale += new Vector3(speedScale, speedScale, 0);
                 }
                 //center to right
-                l1.position = Vector2.MoveTowards(l1.position, new Vector3(1, 0.31f), 0.02f);
+                l1.position = Vector2.MoveTowards(l1.position, new Vector3(1, 0.31f), speedTime);
                 l1.position = new Vector3(l1.position.x, l1.position.y, 1);
-                if (l1.localScale.x > 0.62)
+                if (l1.localScale.x > 0.50f)
                 {
-                    l1.localScale -= new Vector3(0.0098f, 0.0098f, 0);
+                    l1.localScale -= new Vector3(speedScale, speedScale, 0);
                 }
                 //right to back
-                l2.position = Vector2.MoveTowards(l2.position, new Vector2(0, 0.62f), 0.02f);
+                l2.position = Vector2.MoveTowards(l2.position, new Vector2(0, 0.50f), speedTime);
                 l2.position = new Vector3(l2.position.x, l2.position.y, 3);
                 if (l2.localScale.x > 0)
                 {
-                    l2.localScale -= new Vector3(0.0098f, 0.0098f, 0);
+                    l2.localScale -= new Vector3(speedScale, speedScale, 0);
                 }
             }
             else if (gVar.currentLocation == 4)
             {
                 //back to left
-                l3.position = Vector2.MoveTowards(l3.position, new Vector2(-1, 0.31f), 0.02f);
+                l3.position = Vector2.MoveTowards(l3.position, new Vector2(-1, 0.31f), speedTime);
                 l3.position = new Vector3(l3.position.x, l3.position.y, 2);
-                if (l3.localScale.x < 0.62)
+                if (l3.localScale.x < 0.50f)
                 {
-                    l3.localScale += new Vector3(0.0098f, 0.0098f, 0);
+                    l3.localScale += new Vector3(speedScale, speedScale, 0);
                 }
                 else
                 {
                     canChange = true;
                 }
                 //left to center
-                l4.position = Vector2.MoveTowards(l4.position, new Vector2(0, 0), 0.02f);
+                l4.position = Vector2.MoveTowards(l4.position, new Vector2(0, 0), speedTime);
                 l4.position = new Vector3(l4.position.x, l4.position.y, 1);
                 if (l4.localScale.x < 1)
                 {
-                    l4.localScale += new Vector3(0.0098f, 0.0098f, 0);
+                    l4.localScale += new Vector3(speedScale, speedScale, 0);
                 }
                 //center to right
-                l5.position = Vector2.MoveTowards(l5.position, new Vector3(1, 0.31f), 0.02f);
+                l5.position = Vector2.MoveTowards(l5.position, new Vector3(1, 0.31f), speedTime);
                 l5.position = new Vector3(l5.position.x, l5.position.y, 1);
-                if (l5.localScale.x > 0.62)
+                if (l5.localScale.x > 0.50f)
                 {
-                    l5.localScale -= new Vector3(0.0098f, 0.0098f, 0);
+                    l5.localScale -= new Vector3(speedScale, speedScale, 0);
                 }
                 //right to back
-                l1.position = Vector2.MoveTowards(l1.position, new Vector2(0, 0.62f), 0.02f);
+                l1.position = Vector2.MoveTowards(l1.position, new Vector2(0, 0.50f), speedTime);
                 l1.position = new Vector3(l1.position.x, l1.position.y, 3);
                 if (l1.localScale.x > 0)
                 {
-                    l1.localScale -= new Vector3(0.0098f, 0.0098f, 0);
+                    l1.localScale -= new Vector3(speedScale, speedScale, 0);
                 }
             }
             else if (gVar.currentLocation == 3)
             {
                 //back to left
-                l2.position = Vector2.MoveTowards(l2.position, new Vector2(-1, 0.31f), 0.02f);
+                l2.position = Vector2.MoveTowards(l2.position, new Vector2(-1, 0.31f), speedTime);
                 l2.position = new Vector3(l2.position.x, l2.position.y, 2);
-                if (l2.localScale.x < 0.62)
+                if (l2.localScale.x < 0.50f)
                 {
-                    l2.localScale += new Vector3(0.0098f, 0.0098f, 0);
+                    l2.localScale += new Vector3(speedScale, speedScale, 0);
                 }
                 else
                 {
                     canChange = true;
                 }
                 //left to center
-                l3.position = Vector2.MoveTowards(l3.position, new Vector2(0, 0), 0.02f);
+                l3.position = Vector2.MoveTowards(l3.position, new Vector2(0, 0), speedTime);
                 l3.position = new Vector3(l3.position.x, l3.position.y, 1);
                 if (l3.localScale.x < 1)
                 {
-                    l3.localScale += new Vector3(0.0098f, 0.0098f, 0);
+                    l3.localScale += new Vector3(speedScale, speedScale, 0);
                 }
                 //center to right
-                l4.position = Vector2.MoveTowards(l4.position, new Vector3(1, 0.31f), 0.02f);
+                l4.position = Vector2.MoveTowards(l4.position, new Vector3(1, 0.31f), speedTime);
                 l4.position = new Vector3(l4.position.x, l4.position.y, 1);
-                if (l4.localScale.x > 0.62)
+                if (l4.localScale.x > 0.50f)
                 {
-                    l4.localScale -= new Vector3(0.0098f, 0.0098f, 0);
+                    l4.localScale -= new Vector3(speedScale, speedScale, 0);
                 }
                 //right to back
-                l5.position = Vector2.MoveTowards(l5.position, new Vector2(0, 0.62f), 0.02f);
+                l5.position = Vector2.MoveTowards(l5.position, new Vector2(0, 0.50f), speedTime);
                 l5.position = new Vector3(l5.position.x, l5.position.y, 3);
                 if (l5.localScale.x > 0)
                 {
-                    l5.localScale -= new Vector3(0.0098f, 0.0098f, 0);
+                    l5.localScale -= new Vector3(speedScale, speedScale, 0);
                 }
             }
             else if (gVar.currentLocation == 2)
             {
                 //back to left
-                l1.position = Vector2.MoveTowards(l1.position, new Vector2(-1, 0.31f), 0.02f);
+                l1.position = Vector2.MoveTowards(l1.position, new Vector2(-1, 0.31f), speedTime);
                 l1.position = new Vector3(l1.position.x, l1.position.y, 2);
-                if (l1.localScale.x < 0.62)
+                if (l1.localScale.x < 0.50f)
                 {
-                    l1.localScale += new Vector3(0.0098f, 0.0098f, 0);
+                    l1.localScale += new Vector3(speedScale, speedScale, 0);
                 }
                 else
                 {
                     canChange = true;
                 }
                 //left to center
-                l2.position = Vector2.MoveTowards(l2.position, new Vector2(0, 0), 0.02f);
+                l2.position = Vector2.MoveTowards(l2.position, new Vector2(0, 0), speedTime);
                 l2.position = new Vector3(l2.position.x, l2.position.y, 1);
                 if (l2.localScale.x < 1)
                 {
-                    l2.localScale += new Vector3(0.0098f, 0.0098f, 0);
+                    l2.localScale += new Vector3(speedScale, speedScale, 0);
                 }
                 //center to right
-                l3.position = Vector2.MoveTowards(l3.position, new Vector3(1, 0.31f), 0.02f);
+                l3.position = Vector2.MoveTowards(l3.position, new Vector3(1, 0.31f), speedTime);
                 l3.position = new Vector3(l3.position.x, l3.position.y, 1);
-                if (l3.localScale.x > 0.62)
+                if (l3.localScale.x > 0.50f)
                 {
-                    l3.localScale -= new Vector3(0.0098f, 0.0098f, 0);
+                    l3.localScale -= new Vector3(speedScale, speedScale, 0);
                 }
                 //right to back
-                l4.position = Vector2.MoveTowards(l4.position, new Vector2(0, 0.62f), 0.02f);
+                l4.position = Vector2.MoveTowards(l4.position, new Vector2(0, 0.50f), speedTime);
                 l4.position = new Vector3(l4.position.x, l4.position.y, 3);
                 if (l4.localScale.x > 0)
                 {
-                    l4.localScale -= new Vector3(0.0098f, 0.0098f, 0);
+                    l4.localScale -= new Vector3(speedScale, speedScale, 0);
                 }
             }
         }
