@@ -5,20 +5,21 @@ using System.Collections;
 public class LevelSwitch : MonoBehaviour
 {
     public GameObject level1, level2, level3, level4, level5;
-    public SpriteRenderer leftSlider, rightSlider, continueButton;
-    public Sprite lSlide, lSlidePressed, rSlide, rSlidePressed, cPressed;
     public float speedTime, speedScale;
+    public AudioClip switchLevel;
 
     private Transform l1, l5, l4, l3, l2;
     
     private int level;
     private string loadingDir;
     private bool canChange;
+    private AudioSource audio;
 
 
     // Use this for initialization
     void Start()
     {
+        audio = GetComponent<AudioSource>();
         l1 = level1.GetComponent<Transform>();
         l5 = level5.GetComponent<Transform>();
         l4 = level4.GetComponent<Transform>();
@@ -35,7 +36,7 @@ public class LevelSwitch : MonoBehaviour
     {
         levelPressed("stop");
 
-        if(Input.GetButtonDown("GSelect"))//level select, go to character select
+        if (Input.GetButtonDown("GSelect"))//level select, go to character select
         {
             //continueButton.sprite = cPressed;
             gVar.level = gVar.currentLocation;
@@ -54,6 +55,9 @@ public class LevelSwitch : MonoBehaviour
             gVar.currentLocation++;
             loadingDir = "left";
             canChange = false;
+
+            //play switching sound
+            audio.PlayOneShot(switchLevel, 1f);
         }
         //left arrow button OR left bumper on controller OR left arrow is pressed and levels are not currently in rotation ROTATE RIGHT
         else if (((Input.GetButtonDown("Horizontal1") && Input.GetAxisRaw("Horizontal1") == -1) || direction.Equals("left") || 
@@ -63,6 +67,9 @@ public class LevelSwitch : MonoBehaviour
             gVar.currentLocation--;
             loadingDir = "right";
             canChange = false;
+
+            //play switching sound
+            audio.PlayOneShot(switchLevel, 1f);
         }
 
         //loops level select so gVar.currentLocation must be 1-5

@@ -10,6 +10,9 @@ public class Player : MonoBehaviour
     public float timeToJumpApex = .4f;
     public int stunTime;
     public int rocketShots;
+    public AudioClip pickupsound;
+
+
     float accelerationTimeAirborne = .2f;
     float accelerationTimeGrounded = .1f;
     float moveSpeed = 6;
@@ -31,6 +34,7 @@ public class Player : MonoBehaviour
     Renderer rend;
     Object shotRocket;
     Animator anim;
+    AudioSource audio;
 
     public GameObject rocket, objLives;
     public CanvasGroup gameOverScreen;
@@ -38,6 +42,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        audio = GetComponent<AudioSource>();
         Time.timeScale = 1;//start time
         gameOverScreen.alpha = 0;
         anim = this.GetComponent<Animator>();
@@ -480,6 +485,7 @@ public class Player : MonoBehaviour
     {
         if (coll.gameObject.tag.Equals("Ball"))
         {
+            audio.PlayOneShot(pickupsound, 1f);
             if (coll.gameObject.gameObject.GetComponent<Rocket>().colorShot != this.color)//if player color doesn't match ball color, lose health
             {
                 loseHealth();
