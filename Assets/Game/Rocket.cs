@@ -7,7 +7,7 @@ public class Rocket : MonoBehaviour
     public int shootSpeed, colorShot;
     public float blastZone, xVelocity, yVelocity;
     public Sprite gRocket, rRocket, bRocket, pRocket;
-    public GameObject particleSystem;
+    public GameObject ballParticleSystem;
     public Material shotColor;
     
     private string direction;
@@ -75,7 +75,6 @@ public class Rocket : MonoBehaviour
             if (colorShot == 0)//if ball is green increase greenshots by one
             {
                 gVar.greenShots++;
-                particleColor = new Material(shotColor);
                 particleColor.SetColor("_EmissionColor", GREEN);
             }
             else if (colorShot == 1)
@@ -93,7 +92,7 @@ public class Rocket : MonoBehaviour
                 gVar.purpleShots++;
                 particleColor.SetColor("_EmissionColor", PURPLE);
             }
-            GameObject particles = (GameObject)Instantiate(particleSystem, this.GetComponent<Transform>().position, Quaternion.identity);
+            GameObject particles = (GameObject)Instantiate(ballParticleSystem, this.GetComponent<Transform>().position, Quaternion.identity);
             particles.GetComponent<Renderer>().material = particleColor;
             Destroy(particles, 0.5f);
             Destroy(gameObject);

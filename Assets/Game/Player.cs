@@ -4,43 +4,51 @@ using System.Collections;
 
 public class Player : MonoBehaviour
 {
-
     public bool isInvisible = false;
     public float jumpHeight = 4;
     public float timeToJumpApex = .4f;
-    public int stunTime;
-    public int rocketShots;
+    public float startX, startY;
+    public int stunTime, playerNumber;
+
     public AudioClip pickupsound;
-    
+    public GameObject playerParticleSystem, rocket, objLives;
+    public CanvasGroup gameOverScreen;
+    public Sprite blueSprite, redSprite, greenSprite, purpleSprite;
+    public Material materialSelf;
+
     float accelerationTimeAirborne = .2f;
     float accelerationTimeGrounded = .1f;
-    float moveSpeed = 6;
-
-    Controller2D controller;
-
-    public int playerNumber;
-
-    int lives, color;
-    int stunTimer;
-    bool hurt = false;
     float gravity;
     float jumpVelocity;
-    Vector2 input = new Vector2(0, 0);
-    Vector3 velocity;
     float velocityXSmoothing;
+    float moveSpeed = 6;
+    int lives = 5, color;
+    int stunTimer;
+    bool hurt = false;
 
+    Controller2D controller;
+    Vector2 input = new Vector2(0, 0);
+    Vector2 startLocation;
+    Vector3 velocity;
     Material material;
     Renderer rend;
     Object shotRocket;
     Animator anim;
     AudioSource audio;
-
-    public GameObject rocket, objLives;
-    public CanvasGroup gameOverScreen;
-    public Sprite blueSprite, redSprite, greenSprite, purpleSprite;
+    Color GREEN, RED, BLUE, PURPLE;
+    Color colorSelf;
 
     void Start()
     {
+        //set start location
+        startLocation = new Vector2(startX, startY);
+
+        //set colors
+        GREEN = new Color(0.435f, 0.768f, 0.662f);
+        RED = new Color(0.945f, 0.611f, 0.717f);
+        BLUE = new Color(0.553f, 0.710f, 0.906f);
+        PURPLE = new Color(0.615f, 0.611f, 0.945f);
+
         audio = GetComponent<AudioSource>();
         Time.timeScale = 1;//start time
         gameOverScreen.alpha = 0;
@@ -52,9 +60,6 @@ public class Player : MonoBehaviour
         gravity = -(2 * jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
         jumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
 
-        lives = 5;
-        stunTimer = stunTime;
-
         SpriteRenderer rend = this.GetComponent<SpriteRenderer>();
 
         //character selection
@@ -62,11 +67,12 @@ public class Player : MonoBehaviour
         {
             if (gVar.player1 == "Green")//check if player1 is registered as green
             {
-                //if green, change sprite to green, increase number of possible green team shots by one and start
+                //if green, change sprite to green, increase number of possible green team shots by one, set particle color and start
                 rend.sprite = greenSprite;
                 gVar.greenShots++;
                 anim.SetInteger("Color", 0);
                 color = 0;
+                colorSelf = GREEN;
             }
             else if (gVar.player1 == "Red")
             {
@@ -74,6 +80,7 @@ public class Player : MonoBehaviour
                 gVar.redShots++;
                 anim.SetInteger("Color", 1);
                 color = 1;
+                colorSelf = RED;
             }
             else if (gVar.player1 == "Blue")
             {
@@ -81,6 +88,7 @@ public class Player : MonoBehaviour
                 gVar.blueShots++;
                 anim.SetInteger("Color", 2);
                 color = 2;
+                colorSelf = BLUE;
             }
             else if (gVar.player1 == "Purple")
             {
@@ -88,6 +96,7 @@ public class Player : MonoBehaviour
                 gVar.purpleShots++;
                 anim.SetInteger("Color", 3);
                 color = 3;
+                colorSelf = PURPLE;
             }
         }
         else if (playerNumber == 2 && gVar.player2Exists == true)
@@ -98,6 +107,7 @@ public class Player : MonoBehaviour
                 gVar.greenShots++;
                 anim.SetInteger("Color", 0);
                 color = 0;
+                colorSelf = GREEN;
             }
             else if (gVar.player2 == "Red")
             {
@@ -105,6 +115,7 @@ public class Player : MonoBehaviour
                 gVar.redShots++;
                 anim.SetInteger("Color", 1);
                 color = 1;
+                colorSelf = RED;
             }
             else if (gVar.player2 == "Blue")
             {
@@ -112,6 +123,7 @@ public class Player : MonoBehaviour
                 gVar.blueShots++;
                 anim.SetInteger("Color", 2);
                 color = 2;
+                colorSelf = BLUE;
             }
             else if (gVar.player2 == "Purple")
             {
@@ -119,6 +131,7 @@ public class Player : MonoBehaviour
                 gVar.purpleShots++;
                 anim.SetInteger("Color", 3);
                 color = 3;
+                colorSelf = PURPLE;
             }
         }
         else if (playerNumber == 3 && gVar.player3Exists == true)
@@ -129,6 +142,7 @@ public class Player : MonoBehaviour
                 gVar.greenShots++;
                 anim.SetInteger("Color", 0);
                 color = 0;
+                colorSelf = GREEN;
             }
             else if (gVar.player3 == "Red")
             {
@@ -136,6 +150,7 @@ public class Player : MonoBehaviour
                 gVar.redShots++;
                 anim.SetInteger("Color", 1);
                 color = 1;
+                colorSelf = RED;
             }
             else if (gVar.player3 == "Blue")
             {
@@ -143,6 +158,7 @@ public class Player : MonoBehaviour
                 gVar.blueShots++;
                 anim.SetInteger("Color", 2);
                 color = 2;
+                colorSelf = BLUE;
             }
             else if (gVar.player3 == "Purple")
             {
@@ -150,6 +166,7 @@ public class Player : MonoBehaviour
                 gVar.purpleShots++;
                 anim.SetInteger("Color", 3);
                 color = 3;
+                colorSelf = PURPLE;
             }
         }
         else if (playerNumber == 4 && gVar.player4Exists == true)
@@ -160,6 +177,7 @@ public class Player : MonoBehaviour
                 gVar.greenShots++;
                 anim.SetInteger("Color", 0);
                 color = 0;
+                colorSelf = GREEN;
             }
             else if (gVar.player4 == "Red")
             {
@@ -167,6 +185,7 @@ public class Player : MonoBehaviour
                 gVar.redShots++;
                 anim.SetInteger("Color", 1);
                 color = 1;
+                colorSelf = RED;
             }
             else if (gVar.player4 == "Blue")
             {
@@ -174,6 +193,7 @@ public class Player : MonoBehaviour
                 gVar.blueShots++;
                 anim.SetInteger("Color", 2);
                 color = 2;
+                colorSelf = BLUE;
             }
             else if (gVar.player4 == "Purple")
             {
@@ -181,6 +201,7 @@ public class Player : MonoBehaviour
                 gVar.purpleShots++;
                 anim.SetInteger("Color", 3);
                 color = 3;
+                colorSelf = PURPLE;
             }
         }
         //set player to standing by making both isWalkingLeft and isWalkingRight false
@@ -197,12 +218,11 @@ public class Player : MonoBehaviour
         {
             stunTimer++;
             hurt = true;
+
         }
         else
         {
             hurt = false;
-            anim.SetBool("isHurtRight", false);
-            anim.SetBool("isHurtLeft", false);
         }
 
         //is player hitting roof or on ground
@@ -490,11 +510,17 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D coll)
     {
+        Material particleColor = new Material(materialSelf);
+        particleColor.SetColor("_EmissionColor", colorSelf);
         if (coll.gameObject.tag.Equals("Ball"))
         {
             audio.PlayOneShot(pickupsound, 1f);
             if (coll.gameObject.gameObject.GetComponent<Rocket>().colorShot != this.color)//if player color doesn't match ball color, lose health
             {
+                GameObject particles = (GameObject)Instantiate(playerParticleSystem, this.GetComponent<Transform>().position, Quaternion.identity);
+                particles.GetComponent<Renderer>().material = particleColor;
+                Destroy(particles, 1f);
+                this.GetComponent<Transform>().position = startLocation;
                 loseHealth();
             }
         }
