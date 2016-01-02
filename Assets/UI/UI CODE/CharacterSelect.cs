@@ -7,13 +7,16 @@ public class CharacterSelect : MonoBehaviour
     public CharacterSelectLogic logic;
     public int playerNumber;
     public Sprite oriSprite, selectedSprite;
+    public AudioClip switchCharacter, selectCharacter;
 
     private int locationP1 = 1, locationP2 = 1, locationP3 = 1, locationP4 = 1;
     private bool isReadyToPlay = false;
     private bool changedMind = false; //prevents infinite changes to readyPlayers if a player selects a character then moves again
+    private AudioSource audio;
 
     void Start()
     {
+        audio = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -49,6 +52,9 @@ public class CharacterSelect : MonoBehaviour
         {
             if (Input.GetButtonDown("Horizontal1") && Input.GetAxisRaw("Horizontal1") == 1)
             {
+                //play switching sound
+                audio.PlayOneShot(switchCharacter, 1f);
+
                 isReadyToPlay = false;//moved selection therefore not ready to play
                 this.GetComponent<SpriteRenderer>().sprite = oriSprite;
                 locationP1++;
@@ -57,6 +63,9 @@ public class CharacterSelect : MonoBehaviour
             }
             else if (Input.GetButtonDown("Horizontal1") && Input.GetAxisRaw("Horizontal1") == -1)
             {
+                //play switching sound
+                audio.PlayOneShot(switchCharacter, 1f);
+
                 isReadyToPlay = false;//moved selection therefore not ready to play
                 this.GetComponent<SpriteRenderer>().sprite = oriSprite;
                 locationP1--;
@@ -88,6 +97,9 @@ public class CharacterSelect : MonoBehaviour
             //select character "i'm ready to play"
             if (Input.GetButton("Jump1") && isReadyToPlay == false)
             {
+                //play select sound
+                audio.PlayOneShot(selectCharacter, 1f);
+
                 this.GetComponent<SpriteRenderer>().sprite = selectedSprite;
                 isReadyToPlay = true; changedMind = true;
                 gVar.readyPlayers++; //increase number of players that are confirmed "ready" to start game
@@ -106,6 +118,9 @@ public class CharacterSelect : MonoBehaviour
         {
             if (Input.GetButtonDown("Horizontal2Menu") && Input.GetAxisRaw("Horizontal2Menu") == 1)
             {
+                //play switching sound
+                audio.PlayOneShot(switchCharacter, 1f);
+
                 isReadyToPlay = false;//moved selection therefore not ready to play
                 this.GetComponent<SpriteRenderer>().sprite = oriSprite;
                 locationP2++;
@@ -114,6 +129,9 @@ public class CharacterSelect : MonoBehaviour
             }
             else if (Input.GetButtonDown("Horizontal2Menu") && Input.GetAxisRaw("Horizontal2Menu") == -1)
             {
+                //play switching sound
+                audio.PlayOneShot(switchCharacter, 1f);
+
                 isReadyToPlay = false;//moved selection therefore not ready to play
                 this.GetComponent<SpriteRenderer>().sprite = oriSprite;
                 locationP2--;
@@ -144,6 +162,9 @@ public class CharacterSelect : MonoBehaviour
             //select character "i'm ready to play"
             if (Input.GetButton("Jump2") && isReadyToPlay == false)
             {
+                //play select sound
+                audio.PlayOneShot(selectCharacter, 1f);
+
                 this.GetComponent<SpriteRenderer>().sprite = selectedSprite;
                 isReadyToPlay = true; changedMind = true;
                 gVar.readyPlayers++; //increase number of players that are confirmed "ready" to start game
@@ -163,6 +184,9 @@ public class CharacterSelect : MonoBehaviour
         {
             if (Input.GetButtonDown("Horizontal3Menu") && Input.GetAxisRaw("Horizontal3Menu") == 1)
             {
+                //play switching sound
+                audio.PlayOneShot(switchCharacter, 1f);
+
                 isReadyToPlay = false;//moved selection therefore not ready to play
                 this.GetComponent<SpriteRenderer>().sprite = oriSprite;
                 locationP3++;
@@ -171,6 +195,9 @@ public class CharacterSelect : MonoBehaviour
             }
             else if (Input.GetButtonDown("Horizontal3Menu") && Input.GetAxisRaw("Horizontal3Menu") == -1)
             {
+                //play switching sound
+                audio.PlayOneShot(switchCharacter, 1f);
+
                 isReadyToPlay = false;//moved selection therefore not ready to play
                 this.GetComponent<SpriteRenderer>().sprite = oriSprite;
                 locationP3--;
@@ -201,6 +228,9 @@ public class CharacterSelect : MonoBehaviour
             //select character "i'm ready to play"
             if (Input.GetButton("Jump3") && isReadyToPlay == false)
             {
+                //play select sound
+                audio.PlayOneShot(selectCharacter, 1f);
+
                 this.GetComponent<SpriteRenderer>().sprite = selectedSprite;
                 isReadyToPlay= true; changedMind = true;
                 gVar.readyPlayers++; //increase number of players that are confirmed "ready" to start game
@@ -220,6 +250,9 @@ public class CharacterSelect : MonoBehaviour
         {
             if (Input.GetButtonDown("Horizontal4Menu") && Input.GetAxisRaw("Horizontal4Menu") == 1)
             {
+                //play switching sound
+                audio.PlayOneShot(switchCharacter, 1f);
+
                 isReadyToPlay = false;//moved selection therefore not ready to play
                 this.GetComponent<SpriteRenderer>().sprite = oriSprite;
                 locationP4++;
@@ -228,6 +261,9 @@ public class CharacterSelect : MonoBehaviour
             }
             else if (Input.GetButtonDown("Horizontal4Menu") && Input.GetAxisRaw("Horizontal4Menu") == -1)
             {
+                //play switching sound
+                audio.PlayOneShot(switchCharacter, 1f);
+
                 isReadyToPlay = false;//moved selection therefore not ready to play
                 this.GetComponent<SpriteRenderer>().sprite = oriSprite;
                 locationP4--;
@@ -258,6 +294,9 @@ public class CharacterSelect : MonoBehaviour
             //select character "i'm ready to play"
             if (Input.GetButton("Jump4") && isReadyToPlay == false)
             {
+                //play select sound
+                audio.PlayOneShot(selectCharacter, 1f);
+
                 this.GetComponent<SpriteRenderer>().sprite = selectedSprite;
                 isReadyToPlay = true; changedMind = true;
                 gVar.readyPlayers++; //increase number of players that are confirmed "ready" to start game

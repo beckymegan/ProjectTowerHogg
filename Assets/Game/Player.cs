@@ -11,8 +11,7 @@ public class Player : MonoBehaviour
     public int stunTime;
     public int rocketShots;
     public AudioClip pickupsound;
-
-
+    
     float accelerationTimeAirborne = .2f;
     float accelerationTimeGrounded = .1f;
     float moveSpeed = 6;
@@ -419,6 +418,14 @@ public class Player : MonoBehaviour
         controller.Move(velocity * Time.deltaTime);
         this.GetComponent<Rigidbody2D>().velocity = new Vector2(0, this.GetComponent<Rigidbody2D>().velocity.y);
 
+        //Reset level if health is equal to 0 and A/Space is pressed
+        if (Input.GetButton("GStart") && lives == 0)
+        {
+            gVar.resetVars();
+            SceneManager.LoadScene("Level Select");
+            Time.timeScale = 1;
+        }
+
     }
 
     void shootLeft()//shoot ball left (shootRight is the same with directions changed)
@@ -496,9 +503,9 @@ public class Player : MonoBehaviour
     //calculates and displays number of hearts for each character
     void health()
     {
-        objLives.GetComponent<Transform>().position = new Vector2(this.GetComponent<Transform>().position.x, this.GetComponent<Transform>().position.y + 1.3f);
         if (lives > 0)
         {
+            objLives.GetComponent<Transform>().position = new Vector2(this.GetComponent<Transform>().position.x, this.GetComponent<Transform>().position.y + 1.3f);
             objLives.GetComponent<updateLives>().livesUpdate(playerNumber, lives);
         }
         else if (lives == 0)
@@ -507,11 +514,6 @@ public class Player : MonoBehaviour
             Time.timeScale = 0;
             gameOverScreen.alpha = 1;
             this.transform.Translate(-50, -50, 0);
-            if (Input.GetButton("GSelect"))
-            {
-                SceneManager.LoadScene(SceneManager.sceneCount);
-                Time.timeScale = 1;
-            }
         }
     }
 

@@ -6,13 +6,13 @@ public class LevelSwitch : MonoBehaviour
 {
     public GameObject level1, level2, level3, level4, level5;
     public float speedTime, speedScale;
-    public AudioClip switchLevel;
+    public AudioClip switchLevel, selectLevel;
 
     private Transform l1, l5, l4, l3, l2;
     
     private int level;
     private string loadingDir;
-    private bool canChange;
+    private bool canChange, switchToCharacter;
     private AudioSource audio;
 
 
@@ -28,7 +28,7 @@ public class LevelSwitch : MonoBehaviour
 
         gVar.currentLocation = 1;
         loadingDir = "stop";
-        canChange = true;
+        canChange = true; switchToCharacter = false;
     }
 
     // Update is called once per frame
@@ -36,11 +36,18 @@ public class LevelSwitch : MonoBehaviour
     {
         levelPressed("stop");
 
-        if (Input.GetButtonDown("GSelect"))//level select, go to character select
+        if (Input.GetButtonDown("GStart"))//level select, go to character select
         {
-            //continueButton.sprite = cPressed;
+            //play select sound
+            audio.PlayOneShot(selectLevel, 1f);
+            switchToCharacter = true;
+        }
+
+        //switch to character select after sound is finished
+        if (!audio.isPlaying && switchToCharacter)
+        {
             gVar.level = gVar.currentLocation;
-            Application.LoadLevel("Character Select");
+            SceneManager.LoadScene("Character Select");
         }
 
     }
@@ -81,6 +88,7 @@ public class LevelSwitch : MonoBehaviour
         {
             gVar.currentLocation = 5;
         }
+
         levelSwitch();
     }
 
