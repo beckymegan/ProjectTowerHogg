@@ -46,6 +46,7 @@ public class Shield : MonoBehaviour
         if (hurtTimer >= shieldTime)
         {
             //remove shield and make player unhurt
+            player.GetComponent<Player>().Unhurt();
             GameObject.Destroy(gameObject);
         }
 

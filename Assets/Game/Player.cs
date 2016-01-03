@@ -18,10 +18,7 @@ public class Player : MonoBehaviour
 
     float accelerationTimeAirborne = .2f;
     float accelerationTimeGrounded = .1f;
-    float hurtTimer;
-    float gravity;
-    float jumpVelocity;
-    float velocityXSmoothing;
+    float gravity, jumpVelocity, velocityXSmoothing, bufferDistance;
     float moveSpeed = 6;
     int lives = 5;
     int stunTimer;
@@ -223,202 +220,199 @@ public class Player : MonoBehaviour
 
         this.health(); //calculate health
 
-        if (hurt == false)
+        //Player 1
+        if (playerNumber == 1 && gVar.player1Exists == true)
         {
-            //Player 1
-            if (playerNumber == 1 && gVar.player1Exists == true)
+            //move player and set animations for movement
+            gVar.location1 = this.GetComponent<Transform>().position;
+            input = new Vector2(Input.GetAxisRaw("Horizontal1"), 0);
+
+            if (Input.GetAxisRaw("Horizontal1") > 0)
             {
-                //move player and set animations for movement
-                gVar.location1 = this.GetComponent<Transform>().position;
-                input = new Vector2(Input.GetAxisRaw("Horizontal1"), 0);
-
-                if (Input.GetAxisRaw("Horizontal1") > 0)
-                {
-                    anim.SetBool("isWalkingLeft", false);
-                    anim.SetBool("isWalkingRight", true);
-                }
-                else if (Input.GetAxisRaw("Horizontal1") < 0)
-                {
-                    anim.SetBool("isWalkingRight", false);
-                    anim.SetBool("isWalkingLeft", true);
-                }
-                else
-                {
-                    anim.SetBool("isWalkingLeft", false);
-                    anim.SetBool("isWalkingRight", false);
-                }
-
-                if (Input.GetButtonDown("Jump1") && Mathf.Abs(velocity.y) < 1f)//jump
-                {
-                    velocity.y = jumpVelocity;
-                }
-
-                if (Mathf.Abs(velocity.y) > 1)//change to jump animation
-                {
-                    anim.SetBool("isJumping", true);
-                }
-                else if (controller.collisions.below == true)
-                {
-                    anim.SetBool("isJumping", false);
-                }
-
-                if (Input.GetButtonDown("ShootLeft1"))
-                {
-                    shootLeft();
-                }
-
-                if (Input.GetButtonDown("ShootRight1"))
-                {
-                    shootRight();
-                }
+                anim.SetBool("isWalkingLeft", false);
+                anim.SetBool("isWalkingRight", true);
+            }
+            else if (Input.GetAxisRaw("Horizontal1") < 0)
+            {
+                anim.SetBool("isWalkingRight", false);
+                anim.SetBool("isWalkingLeft", true);
+            }
+            else
+            {
+                anim.SetBool("isWalkingLeft", false);
+                anim.SetBool("isWalkingRight", false);
             }
 
-            //Player #2
-            else if (playerNumber == 2 && gVar.player2Exists == true)
+            if (Input.GetButtonDown("Jump1") && Mathf.Abs(velocity.y) < 1f)//jump
             {
-                gVar.location2 = this.GetComponent<Transform>().position;
-                input = new Vector2(Input.GetAxisRaw("Horizontal2"), 0);
-
-                if (Input.GetAxisRaw("Horizontal2") > 0)
-                {
-                    anim.SetBool("isWalkingLeft", false);
-                    anim.SetBool("isWalkingRight", true);
-                }
-                else if (Input.GetAxisRaw("Horizontal2") < 0)
-                {
-                    anim.SetBool("isWalkingRight", false);
-                    anim.SetBool("isWalkingLeft", true);
-                }
-                else
-                {
-                    anim.SetBool("isWalkingLeft", false);
-                    anim.SetBool("isWalkingRight", false);
-                }
-
-                if (Input.GetButtonDown("Jump2") && Mathf.Abs(velocity.y) < 1f)//jump
-                {
-                    velocity.y = jumpVelocity;
-                }
-
-                if (Mathf.Abs(velocity.y) > 1)//change to jump animation
-                {
-                    anim.SetBool("isJumping", true);
-                }
-                else if (controller.collisions.below == true)
-                {
-                    anim.SetBool("isJumping", false);
-                }
-
-                if (Input.GetButtonDown("ShootLeft2"))
-                {
-                    shootLeft();
-                }
-
-                if (Input.GetButtonDown("ShootRight2"))
-                {
-                    shootRight();
-                }
-
+                velocity.y = jumpVelocity;
             }
 
-            //Player #3
-            else if (playerNumber == 3 && gVar.player3Exists == true)
+            if (Mathf.Abs(velocity.y) > 1)//change to jump animation
             {
-                gVar.location3 = this.GetComponent<Transform>().position;
-                input = new Vector2(Input.GetAxisRaw("Horizontal3"), 0);
-
-                if (Input.GetAxisRaw("Horizontal3") > 0)
-                {
-                    anim.SetBool("isWalkingLeft", false);
-                    anim.SetBool("isWalkingRight", true);
-                }
-                else if (Input.GetAxisRaw("Horizontal3") < 0)
-                {
-                    anim.SetBool("isWalkingRight", false);
-                    anim.SetBool("isWalkingLeft", true);
-                }
-                else
-                {
-                    anim.SetBool("isWalkingLeft", false);
-                    anim.SetBool("isWalkingRight", false);
-                }
-
-                if (Input.GetButtonDown("Jump3") && Mathf.Abs(velocity.y) < 1f)//jump
-                {
-                    velocity.y = jumpVelocity;
-                }
-
-                if (Mathf.Abs(velocity.y) > 1)//change to jump animation
-                {
-                    anim.SetBool("isJumping", true);
-                }
-                else if (controller.collisions.below == true)
-                {
-                    anim.SetBool("isJumping", false);
-                }
-
-                if (Input.GetButtonDown("ShootLeft3"))
-                {
-                    shootLeft();
-                }
-
-                if (Input.GetButtonDown("ShootRight3"))
-                {
-                    shootRight();
-                }
+                anim.SetBool("isJumping", true);
+            }
+            else if (controller.collisions.below == true)
+            {
+                anim.SetBool("isJumping", false);
             }
 
-            //Player #4
-            else if (playerNumber == 4 && gVar.player4Exists == true)
+            if (Input.GetButtonDown("ShootLeft1"))
             {
-                gVar.location2 = this.GetComponent<Transform>().position;
-                input = new Vector2(Input.GetAxisRaw("Horizontal4"), 0);
-
-                if (Input.GetAxisRaw("Horizontal4") > 0)
-                {
-                    anim.SetBool("isWalkingLeft", false);
-                    anim.SetBool("isWalkingRight", true);
-                }
-                else if (Input.GetAxisRaw("Horizontal4") < 0)
-                {
-                    anim.SetBool("isWalkingRight", false);
-                    anim.SetBool("isWalkingLeft", true);
-                }
-                else
-                {
-                    anim.SetBool("isWalkingLeft", false);
-                    anim.SetBool("isWalkingRight", false);
-                }
-
-                if (Input.GetButtonDown("Jump4") && Mathf.Abs(velocity.y) < 1f)//jump
-                {
-                    velocity.y = jumpVelocity;
-                }
-
-                if (Mathf.Abs(velocity.y) > 1)//change to jump animation
-                {
-                    anim.SetBool("isJumping", true);
-                }
-                else if (controller.collisions.below == true)
-                {
-                    anim.SetBool("isJumping", false);
-                }
-
-                if (Input.GetButtonDown("ShootLeft4"))
-                {
-                    shootLeft();
-                }
-
-                if (Input.GetButtonDown("ShootRight4"))
-                {
-                    shootRight();
-                }
+                shootLeft();
             }
-            //smooth movements
-            float targetVelocityX = input.x * moveSpeed;
-            //                                                                                 if player is on the ground use ATGrounded, if in the air use ATAirbourne
-            velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
+
+            if (Input.GetButtonDown("ShootRight1"))
+            {
+                shootRight();
+            }
         }
+
+        //Player #2
+        else if (playerNumber == 2 && gVar.player2Exists == true)
+        {
+            gVar.location2 = this.GetComponent<Transform>().position;
+            input = new Vector2(Input.GetAxisRaw("Horizontal2"), 0);
+
+            if (Input.GetAxisRaw("Horizontal2") > 0)
+            {
+                anim.SetBool("isWalkingLeft", false);
+                anim.SetBool("isWalkingRight", true);
+            }
+            else if (Input.GetAxisRaw("Horizontal2") < 0)
+            {
+                anim.SetBool("isWalkingRight", false);
+                anim.SetBool("isWalkingLeft", true);
+            }
+            else
+            {
+                anim.SetBool("isWalkingLeft", false);
+                anim.SetBool("isWalkingRight", false);
+            }
+
+            if (Input.GetButtonDown("Jump2") && Mathf.Abs(velocity.y) < 1f)//jump
+            {
+                velocity.y = jumpVelocity;
+            }
+
+            if (Mathf.Abs(velocity.y) > 1)//change to jump animation
+            {
+                anim.SetBool("isJumping", true);
+            }
+            else if (controller.collisions.below == true)
+            {
+                anim.SetBool("isJumping", false);
+            }
+
+            if (Input.GetButtonDown("ShootLeft2"))
+            {
+                shootLeft();
+            }
+
+            if (Input.GetButtonDown("ShootRight2"))
+            {
+                shootRight();
+            }
+
+        }
+
+        //Player #3
+        else if (playerNumber == 3 && gVar.player3Exists == true)
+        {
+            gVar.location3 = this.GetComponent<Transform>().position;
+            input = new Vector2(Input.GetAxisRaw("Horizontal3"), 0);
+
+            if (Input.GetAxisRaw("Horizontal3") > 0)
+            {
+                anim.SetBool("isWalkingLeft", false);
+                anim.SetBool("isWalkingRight", true);
+            }
+            else if (Input.GetAxisRaw("Horizontal3") < 0)
+            {
+                anim.SetBool("isWalkingRight", false);
+                anim.SetBool("isWalkingLeft", true);
+            }
+            else
+            {
+                anim.SetBool("isWalkingLeft", false);
+                anim.SetBool("isWalkingRight", false);
+            }
+
+            if (Input.GetButtonDown("Jump3") && Mathf.Abs(velocity.y) < 1f)//jump
+            {
+                velocity.y = jumpVelocity;
+            }
+
+            if (Mathf.Abs(velocity.y) > 1)//change to jump animation
+            {
+                anim.SetBool("isJumping", true);
+            }
+            else if (controller.collisions.below == true)
+            {
+                anim.SetBool("isJumping", false);
+            }
+
+            if (Input.GetButtonDown("ShootLeft3"))
+            {
+                shootLeft();
+            }
+
+            if (Input.GetButtonDown("ShootRight3"))
+            {
+                shootRight();
+            }
+        }
+
+        //Player #4
+        else if (playerNumber == 4 && gVar.player4Exists == true)
+        {
+            gVar.location2 = this.GetComponent<Transform>().position;
+            input = new Vector2(Input.GetAxisRaw("Horizontal4"), 0);
+
+            if (Input.GetAxisRaw("Horizontal4") > 0)
+            {
+                anim.SetBool("isWalkingLeft", false);
+                anim.SetBool("isWalkingRight", true);
+            }
+            else if (Input.GetAxisRaw("Horizontal4") < 0)
+            {
+                anim.SetBool("isWalkingRight", false);
+                anim.SetBool("isWalkingLeft", true);
+            }
+            else
+            {
+                anim.SetBool("isWalkingLeft", false);
+                anim.SetBool("isWalkingRight", false);
+            }
+
+            if (Input.GetButtonDown("Jump4") && Mathf.Abs(velocity.y) < 1f)//jump
+            {
+                velocity.y = jumpVelocity;
+            }
+
+            if (Mathf.Abs(velocity.y) > 1)//change to jump animation
+            {
+                anim.SetBool("isJumping", true);
+            }
+            else if (controller.collisions.below == true)
+            {
+                anim.SetBool("isJumping", false);
+            }
+
+            if (Input.GetButtonDown("ShootLeft4"))
+            {
+                shootLeft();
+            }
+
+            if (Input.GetButtonDown("ShootRight4"))
+            {
+                shootRight();
+            }
+        }
+        //smooth movements
+        float targetVelocityX = input.x * moveSpeed;
+        //                                                                                 if player is on the ground use ATGrounded, if in the air use ATAirbourne
+        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
         this.GetComponent<Rigidbody2D>().velocity = new Vector2(0, this.GetComponent<Rigidbody2D>().velocity.y);
@@ -440,59 +434,78 @@ public class Player : MonoBehaviour
 
     void shootLeft()//shoot ball left (shootRight is the same with directions changed)
     {
+        if (hurt == true)//if player has shield make bufferdistance further away than if no shield is present
+        {
+            bufferDistance = 1.6f;
+        }
+        else
+        {
+            bufferDistance = 0.9f;
+        }
+
         gVar.direction = "left";
         if (color == 0 && gVar.greenShots > 0)
         {//if color is green and green has more than one shot left
             gVar.greenShots--;//drop shots by one
-            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x - 0.95f, this.transform.position.y), Quaternion.identity);//create green ball moving left
+            //create green ball moving left that starts bufferDistance away from player
+            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x - bufferDistance, this.transform.position.y), Quaternion.identity);
             shotRocket.GetComponent<Rocket>().color(color);//color ball green
         }
         else if (color == 1 && gVar.redShots > 0)
         {
             gVar.redShots--;
-            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x - 0.95f, this.transform.position.y), Quaternion.identity);
+            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x - bufferDistance, this.transform.position.y), Quaternion.identity);
             shotRocket.GetComponent<Rocket>().color(color);
         }
         else if (color == 2 && gVar.blueShots > 0)
         {
             gVar.blueShots--;
-            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x - 0.95f, this.transform.position.y), Quaternion.identity);
+            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x - bufferDistance, this.transform.position.y), Quaternion.identity);
             shotRocket.GetComponent<Rocket>().color(color);
         }
         else if (color == 3 && gVar.purpleShots > 0)
         {
             gVar.purpleShots--;
-            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x - 0.95f, this.transform.position.y), Quaternion.identity);
+            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x - bufferDistance, this.transform.position.y), Quaternion.identity);
             shotRocket.GetComponent<Rocket>().color(color);
         }
         anim.SetInteger("isShooting", 1);
     }
 
-    void shootRight()
+    void shootRight()//same as left but right
     {
+        if (hurt == true)
+        {
+            bufferDistance = 1.6f;
+        }
+        else
+        {
+            bufferDistance = 0.9f;
+        }
+
         gVar.direction = "right";
         if (color == 0 && gVar.greenShots > 0)
         {
             gVar.greenShots--;
-            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x + 0.95f, this.transform.position.y), Quaternion.identity);
+            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x + bufferDistance, this.transform.position.y), Quaternion.identity);
             shotRocket.GetComponent<Rocket>().color(color);
         }
         else if (color == 1 && gVar.redShots > 0)
         {
             gVar.redShots--;
-            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x + 0.95f, this.transform.position.y), Quaternion.identity);
+            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x + bufferDistance, this.transform.position.y), Quaternion.identity);
             shotRocket.GetComponent<Rocket>().color(color);
         }
         else if (color == 2 && gVar.blueShots > 0)
         {
             gVar.blueShots--;
-            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x + 0.95f, this.transform.position.y), Quaternion.identity);
+            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x + bufferDistance, this.transform.position.y), Quaternion.identity);
             shotRocket.GetComponent<Rocket>().color(color);
         }
         else if (color == 3 && gVar.purpleShots > 0)
         {
             gVar.purpleShots--;
-            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x + 0.95f, this.transform.position.y), Quaternion.identity);
+            GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x + bufferDistance, this.transform.position.y), Quaternion.identity);
             shotRocket.GetComponent<Rocket>().color(color);
         }
         anim.SetInteger("isShooting", 2);
@@ -515,6 +528,7 @@ public class Player : MonoBehaviour
                 //reset player location and lose health
                 this.GetComponent<Transform>().position = startLocation;
                 loseHealth();
+                hurt = true;
 
                 //create shield for player
                 GameObject playerShield = (GameObject)Instantiate(shield, this.GetComponent<Transform>().position, Quaternion.identity);
