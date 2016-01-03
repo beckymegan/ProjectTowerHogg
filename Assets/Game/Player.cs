@@ -8,21 +8,22 @@ public class Player : MonoBehaviour
     public float jumpHeight = 4;
     public float timeToJumpApex = .4f;
     public float startX, startY;
-    public int stunTime, playerNumber;
+    public int stunTime, playerNumber, color;
 
     public AudioClip pickupsound;
-    public GameObject playerParticleSystem, rocket, objLives;
+    public GameObject playerParticleSystem, rocket, objLives, shield;
     public CanvasGroup gameOverScreen;
-    public Sprite blueSprite, redSprite, greenSprite, purpleSprite;
+    public Sprite greenSprite, redSprite, blueSprite, purpleSprite;
     public Material materialSelf;
 
     float accelerationTimeAirborne = .2f;
     float accelerationTimeGrounded = .1f;
+    float hurtTimer;
     float gravity;
     float jumpVelocity;
     float velocityXSmoothing;
     float moveSpeed = 6;
-    int lives = 5, color;
+    int lives = 5;
     int stunTimer;
     bool hurt = false;
 
@@ -33,6 +34,7 @@ public class Player : MonoBehaviour
     Material material;
     Renderer rend;
     Object shotRocket;
+    Shield playerShield;
     Animator anim;
     AudioSource audio;
     Color GREEN, RED, BLUE, PURPLE;
@@ -211,19 +213,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        anim.SetInteger("isShooting", 0);//timer to 
-
-        //count through hit timer, revert to un hurt after finished
-        if (stunTimer != stunTime)
-        {
-            stunTimer++;
-            hurt = true;
-
-        }
-        else
-        {
-            hurt = false;
-        }
+        anim.SetInteger("isShooting", 0);
 
         //is player hitting roof or on ground
         if (controller.collisions.above || controller.collisions.below)
@@ -232,7 +222,6 @@ public class Player : MonoBehaviour
         }
 
         this.health(); //calculate health
-
 
         if (hurt == false)
         {
@@ -430,10 +419,6 @@ public class Player : MonoBehaviour
             //                                                                                 if player is on the ground use ATGrounded, if in the air use ATAirbourne
             velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
         }
-        else
-        {
-            velocity.x = input.x * 1.5f;
-        }
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
         this.GetComponent<Rigidbody2D>().velocity = new Vector2(0, this.GetComponent<Rigidbody2D>().velocity.y);
@@ -446,6 +431,11 @@ public class Player : MonoBehaviour
             Time.timeScale = 1;
         }
 
+    }
+
+    public void Unhurt()
+    {
+        hurt = false;
     }
 
     void shootLeft()//shoot ball left (shootRight is the same with directions changed)
@@ -517,11 +507,18 @@ public class Player : MonoBehaviour
             audio.PlayOneShot(pickupsound, 1f);
             if (coll.gameObject.gameObject.GetComponent<Rocket>().colorShot != this.color)//if player color doesn't match ball color, lose health
             {
+                //create particle system for player dying
                 GameObject particles = (GameObject)Instantiate(playerParticleSystem, this.GetComponent<Transform>().position, Quaternion.identity);
                 particles.GetComponent<Renderer>().material = particleColor;
                 Destroy(particles, 1f);
+
+                //reset player location and lose health
                 this.GetComponent<Transform>().position = startLocation;
                 loseHealth();
+
+                //create shield for player
+                GameObject playerShield = (GameObject)Instantiate(shield, this.GetComponent<Transform>().position, Quaternion.identity);
+                playerShield.GetComponent<Shield>().setPlayer(this.gameObject);
             }
         }
     }

@@ -9,7 +9,7 @@ public class Rocket : MonoBehaviour
     public Sprite gRocket, rRocket, bRocket, pRocket;
     public GameObject ballParticleSystem;
     public Material shotColor;
-    
+
     private string direction;
     private Color GREEN, RED, BLUE, PURPLE;
     private bool wallcheck = false;
@@ -64,13 +64,12 @@ public class Rocket : MonoBehaviour
             this.GetComponent<Rigidbody2D>().AddForce(-this.transform.right * shootSpeed);
             wallcheck = true;
         }
-
     }
 
     void OnCollisionEnter2D(Collision2D coll)
     {
         Material particleColor = new Material(shotColor);
-        if (coll.gameObject.tag.Equals("Player"))
+        if (coll.gameObject.tag.Equals("Player"))//hit player
         {
             if (colorShot == 0)//if ball is green increase greenshots by one
             {
@@ -92,6 +91,34 @@ public class Rocket : MonoBehaviour
                 gVar.purpleShots++;
                 particleColor.SetColor("_EmissionColor", PURPLE);
             }
+            GameObject particles = (GameObject)Instantiate(ballParticleSystem, this.GetComponent<Transform>().position, Quaternion.identity);
+            particles.GetComponent<Renderer>().material = particleColor;
+            Destroy(particles, 0.5f);
+            Destroy(gameObject);
+        }
+        else if (coll.gameObject.tag.Equals("Shield"))//hit shield
+        {
+            if (colorShot == 0)//if ball is green increase greenshots by one
+            {
+                gVar.greenShots++;
+                particleColor.SetColor("_EmissionColor", GREEN);
+            }
+            else if (colorShot == 1)
+            {
+                gVar.redShots++;
+                particleColor.SetColor("_EmissionColor", RED);
+            }
+            else if (colorShot == 2)
+            {
+                gVar.blueShots++;
+                particleColor.SetColor("_EmissionColor", BLUE);
+            }
+            else if (colorShot == 3)
+            {
+                gVar.purpleShots++;
+                particleColor.SetColor("_EmissionColor", PURPLE);
+            }
+
             GameObject particles = (GameObject)Instantiate(ballParticleSystem, this.GetComponent<Transform>().position, Quaternion.identity);
             particles.GetComponent<Renderer>().material = particleColor;
             Destroy(particles, 0.5f);

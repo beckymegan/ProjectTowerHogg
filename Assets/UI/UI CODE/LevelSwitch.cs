@@ -9,7 +9,7 @@ public class LevelSwitch : MonoBehaviour
     public AudioClip switchLevel, selectLevel;
 
     private Transform l1, l5, l4, l3, l2;
-    
+
     private int level;
     private string loadingDir;
     private bool canChange, switchToCharacter;
@@ -67,7 +67,7 @@ public class LevelSwitch : MonoBehaviour
             audio.PlayOneShot(switchLevel, 1f);
         }
         //left arrow button OR left bumper on controller OR left arrow is pressed and levels are not currently in rotation ROTATE RIGHT
-        else if (((Input.GetButtonDown("Horizontal1") && Input.GetAxisRaw("Horizontal1") == -1) || direction.Equals("left") || 
+        else if (((Input.GetButtonDown("Horizontal1") && Input.GetAxisRaw("Horizontal1") == -1) || direction.Equals("left") ||
             (Input.GetButtonDown("GMenu") && Input.GetAxisRaw("GMenu") == -1)) && canChange == true)
         {
             //leftSlider.sprite = lSlidePressed;
