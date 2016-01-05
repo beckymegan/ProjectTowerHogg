@@ -440,7 +440,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            bufferDistance = 0.9f;
+            bufferDistance = 1f;
         }
 
         gVar.direction = "left";
@@ -480,7 +480,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            bufferDistance = 0.9f;
+            bufferDistance = 1f;
         }
 
         gVar.direction = "right";
