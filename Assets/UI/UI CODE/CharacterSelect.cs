@@ -4,7 +4,6 @@ using System.Collections;
 
 public class CharacterSelect : MonoBehaviour
 {
-    public CharacterSelectLogic logic;
     public int playerNumber;
     public Sprite oriSprite, selectedSprite;
     public AudioClip switchCharacter, selectCharacter;
@@ -160,7 +159,7 @@ public class CharacterSelect : MonoBehaviour
             }
 
             //select character "i'm ready to play"
-            if (Input.GetButton("Jump2") && isReadyToPlay == false)
+            if (Input.GetButtonDown("Jump2") && isReadyToPlay == false)
             {
                 //play select sound
                 audio.PlayOneShot(selectCharacter, 1f);
@@ -261,9 +260,6 @@ public class CharacterSelect : MonoBehaviour
             }
             else if (Input.GetButtonDown("Horizontal4Menu") && Input.GetAxisRaw("Horizontal4Menu") == -1)
             {
-                //play switching sound
-                audio.PlayOneShot(switchCharacter, 1f);
-
                 isReadyToPlay = false;//moved selection therefore not ready to play
                 this.GetComponent<SpriteRenderer>().sprite = oriSprite;
                 locationP4--;

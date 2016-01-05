@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     public float startX, startY;
     public int stunTime, playerNumber, color;
 
-    public AudioClip pickupsound;
+    public AudioClip pickupAudio, throwAudio;
     public GameObject playerParticleSystem, rocket, objLives, shield;
     public CanvasGroup gameOverScreen;
     public Sprite greenSprite, redSprite, blueSprite, purpleSprite;
@@ -450,24 +450,28 @@ public class Player : MonoBehaviour
             //create green ball moving left that starts bufferDistance away from player
             GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x - bufferDistance, this.transform.position.y), Quaternion.identity);
             shotRocket.GetComponent<Rocket>().color(color);//color ball green
+            audio.PlayOneShot(throwAudio, 1f); //play throw sound
         }
         else if (color == 1 && gVar.redShots > 0)
         {
             gVar.redShots--;
             GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x - bufferDistance, this.transform.position.y), Quaternion.identity);
             shotRocket.GetComponent<Rocket>().color(color);
+            audio.PlayOneShot(throwAudio, 1f); //play throw sound
         }
         else if (color == 2 && gVar.blueShots > 0)
         {
             gVar.blueShots--;
             GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x - bufferDistance, this.transform.position.y), Quaternion.identity);
             shotRocket.GetComponent<Rocket>().color(color);
+            audio.PlayOneShot(throwAudio, 1f); //play throw sound
         }
         else if (color == 3 && gVar.purpleShots > 0)
         {
             gVar.purpleShots--;
             GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x - bufferDistance, this.transform.position.y), Quaternion.identity);
             shotRocket.GetComponent<Rocket>().color(color);
+            audio.PlayOneShot(throwAudio, 1f); //play throw sound
         }
         anim.SetInteger("isShooting", 1);
     }
@@ -489,24 +493,28 @@ public class Player : MonoBehaviour
             gVar.greenShots--;
             GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x + bufferDistance, this.transform.position.y), Quaternion.identity);
             shotRocket.GetComponent<Rocket>().color(color);
+            audio.PlayOneShot(throwAudio, 1f); //play throw sound
         }
         else if (color == 1 && gVar.redShots > 0)
         {
             gVar.redShots--;
             GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x + bufferDistance, this.transform.position.y), Quaternion.identity);
             shotRocket.GetComponent<Rocket>().color(color);
+            audio.PlayOneShot(throwAudio, 1f); //play throw sound
         }
         else if (color == 2 && gVar.blueShots > 0)
         {
             gVar.blueShots--;
             GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x + bufferDistance, this.transform.position.y), Quaternion.identity);
             shotRocket.GetComponent<Rocket>().color(color);
+            audio.PlayOneShot(throwAudio, 1f); //play throw sound
         }
         else if (color == 3 && gVar.purpleShots > 0)
         {
             gVar.purpleShots--;
             GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x + bufferDistance, this.transform.position.y), Quaternion.identity);
             shotRocket.GetComponent<Rocket>().color(color);
+            audio.PlayOneShot(throwAudio, 1f); //play throw sound
         }
         anim.SetInteger("isShooting", 2);
     }
@@ -517,7 +525,7 @@ public class Player : MonoBehaviour
         particleColor.SetColor("_EmissionColor", colorSelf);
         if (coll.gameObject.tag.Equals("Ball"))
         {
-            audio.PlayOneShot(pickupsound, 1f);
+            audio.PlayOneShot(pickupAudio, 1f);
             if (coll.gameObject.gameObject.GetComponent<Rocket>().colorShot != this.color)//if player color doesn't match ball color, lose health
             {
                 //create particle system for player dying
