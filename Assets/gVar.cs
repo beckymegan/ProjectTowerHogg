@@ -25,6 +25,8 @@ public class gVar : MonoBehaviour
     public static int blueShots = 0;
     public static int purpleShots = 0;
 
+    public static float volume = 1f;
+
     public static Vector2 location1, location2, location3, location4;
 
     public static void resetVars()//reset all gVars
