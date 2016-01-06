@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     public float startX, startY;
     public int stunTime, playerNumber, color;
 
-    public AudioClip pickupAudio, throwAudio;
+    public AudioClip pickupAudio, painAudio, throwAudio;
     public GameObject playerParticleSystem, rocket, objLives, shield;
     public CanvasGroup gameOverScreen;
     public Sprite greenSprite, redSprite, blueSprite, purpleSprite;
@@ -525,9 +525,11 @@ public class Player : MonoBehaviour
         particleColor.SetColor("_EmissionColor", colorSelf);
         if (coll.gameObject.tag.Equals("Ball"))
         {
-            audio.PlayOneShot(pickupAudio, 1f);
             if (coll.gameObject.gameObject.GetComponent<Rocket>().colorShot != this.color)//if player color doesn't match ball color, lose health
             {
+                //play pain audio
+                audio.PlayOneShot(painAudio, 1f);
+
                 //create particle system for player dying
                 GameObject particles = (GameObject)Instantiate(playerParticleSystem, this.GetComponent<Transform>().position, Quaternion.identity);
                 particles.GetComponent<Renderer>().material = particleColor;
@@ -541,6 +543,11 @@ public class Player : MonoBehaviour
                 //create shield for player
                 GameObject playerShield = (GameObject)Instantiate(shield, this.GetComponent<Transform>().position, Quaternion.identity);
                 playerShield.GetComponent<Shield>().setPlayer(this.gameObject);
+            }
+            else //player color matches ball color
+            {
+                //play pickup audio
+                audio.PlayOneShot(pickupAudio, 1f);
             }
         }
     }

@@ -13,13 +13,11 @@ public class LevelSwitch : MonoBehaviour
     private int level;
     private string loadingDir;
     private bool canChange, switchToCharacter;
-    private AudioSource audio;
 
 
     // Use this for initialization
     void Start()
     {
-        audio = GetComponent<AudioSource>();
         l1 = level1.GetComponent<Transform>();
         l5 = level5.GetComponent<Transform>();
         l4 = level4.GetComponent<Transform>();
@@ -39,12 +37,12 @@ public class LevelSwitch : MonoBehaviour
         if (Input.GetButtonDown("GStart"))//level select, go to character select
         {
             //play select sound
-            audio.PlayOneShot(selectLevel, 1f);
+            GetComponent<AudioSource>().PlayOneShot(selectLevel, 1f);
             switchToCharacter = true;
         }
 
         //switch to character select after sound is finished
-        if (!audio.isPlaying && switchToCharacter)
+        if (!GetComponent<AudioSource>().isPlaying && switchToCharacter)
         {
             gVar.level = gVar.currentLocation;
             SceneManager.LoadScene("Character Select");
@@ -64,7 +62,7 @@ public class LevelSwitch : MonoBehaviour
             canChange = false;
 
             //play switching sound
-            audio.PlayOneShot(switchLevel, 1f);
+            GetComponent<AudioSource>().PlayOneShot(switchLevel, 1f);
         }
         //left arrow button OR left bumper on controller OR left arrow is pressed and levels are not currently in rotation ROTATE RIGHT
         else if (((Input.GetButtonDown("Horizontal1") && Input.GetAxisRaw("Horizontal1") == -1) || direction.Equals("left") ||
@@ -76,7 +74,7 @@ public class LevelSwitch : MonoBehaviour
             canChange = false;
 
             //play switching sound
-            audio.PlayOneShot(switchLevel, 1f);
+            GetComponent<AudioSource>().PlayOneShot(switchLevel, 1f);
         }
 
         //loops level select so gVar.currentLocation must be 1-5
