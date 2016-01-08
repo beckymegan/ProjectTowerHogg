@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
 
     public AudioClip pickupAudio, painAudio, throwAudio, jumpAudio;
     public GameObject playerParticleSystem, rocket, objLives, shield;
-    public CanvasGroup gameOverScreen;
+    public CanvasGroup gameOverScreen, optionsScreen;
     public Sprite greenSprite, redSprite, blueSprite, purpleSprite;
     public Material materialSelf;
 
@@ -219,6 +219,13 @@ public class Player : MonoBehaviour
         }
 
         this.health(); //calculate health
+
+        //press options button, pauses game
+        if (Input.GetButtonDown("GOptions"))
+        {
+            optionsScreen.alpha = 1;
+            Time.timeScale = 0;
+        }
 
         //Player 1
         if (playerNumber == 1 && gVar.player1Exists == true)
