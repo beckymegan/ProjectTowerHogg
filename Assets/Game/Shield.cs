@@ -6,6 +6,7 @@ public class Shield : MonoBehaviour
 
     public int shieldTime, color;
     public Sprite greenShield, redShield, blueShield, purpleShield;
+    public AudioClip shieldAudio;
 
     private float hurtTimer;
     private GameObject player;
@@ -61,12 +62,20 @@ public class Shield : MonoBehaviour
             this.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
             this.GetComponent<Collider2D>().enabled = true;
         }
-
-        //follow players location
-        this.GetComponent<Transform>().position = player.GetComponent<Transform>().position;
+            //follow players location
+            this.GetComponent<Transform>().position = player.GetComponent<Transform>().position;
     }
 
-    public void setPlayer(GameObject player)
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        if (coll.gameObject.tag.Equals("Ball"))//ball hits shield
+        {
+            //play audio when rocket hits shield
+            GetComponent<AudioSource>().PlayOneShot(shieldAudio, gVar.volume);
+        }
+    }
+
+public void setPlayer(GameObject player)
     {
         this.player = player;
     }

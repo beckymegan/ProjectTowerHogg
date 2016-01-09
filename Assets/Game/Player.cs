@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
     public bool isInvisible = false;
     public float jumpHeight = 4;
     public float timeToJumpApex = .4f;
-    public float startX, startY, gVar.volume;
+    public float startX, startY;
     public int stunTime, playerNumber, color;
 
     public AudioClip pickupAudio, painAudio, throwAudio, jumpAudio;
@@ -210,6 +210,8 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        gVar.optionTime++;
+
         anim.SetInteger("isShooting", 0);
 
         //is player hitting roof or on ground
@@ -223,228 +225,227 @@ public class Player : MonoBehaviour
         //press options button, pauses game
         if (Input.GetButtonDown("GOptions"))
         {
+            optionsScreen.interactable = true;
             optionsScreen.alpha = 1;
             Time.timeScale = 0;
         }
+            //Player 1
+            if (playerNumber == 1 && gVar.player1Exists == true)
+            {
+                //move player and set animations for movement
+                gVar.location1 = this.GetComponent<Transform>().position;
+                input = new Vector2(Input.GetAxisRaw("Horizontal1"), 0);
 
-        //Player 1
-        if (playerNumber == 1 && gVar.player1Exists == true)
-        {
-            //move player and set animations for movement
-            gVar.location1 = this.GetComponent<Transform>().position;
-            input = new Vector2(Input.GetAxisRaw("Horizontal1"), 0);
+                if (Input.GetAxisRaw("Horizontal1") > 0)
+                {
+                    anim.SetBool("isWalkingLeft", false);
+                    anim.SetBool("isWalkingRight", true);
+                }
+                else if (Input.GetAxisRaw("Horizontal1") < 0)
+                {
+                    anim.SetBool("isWalkingRight", false);
+                    anim.SetBool("isWalkingLeft", true);
+                }
+                else
+                {
+                    anim.SetBool("isWalkingLeft", false);
+                    anim.SetBool("isWalkingRight", false);
+                }
 
-            if (Input.GetAxisRaw("Horizontal1") > 0)
-            {
-                anim.SetBool("isWalkingLeft", false);
-                anim.SetBool("isWalkingRight", true);
-            }
-            else if (Input.GetAxisRaw("Horizontal1") < 0)
-            {
-                anim.SetBool("isWalkingRight", false);
-                anim.SetBool("isWalkingLeft", true);
-            }
-            else
-            {
-                anim.SetBool("isWalkingLeft", false);
-                anim.SetBool("isWalkingRight", false);
+                if (Input.GetButtonDown("Jump1") && Mathf.Abs(velocity.y) < 1f)//jump
+                {
+                    //play jump audio
+                    audio.PlayOneShot(jumpAudio, gVar.volume * 0.85f);
+
+                    velocity.y = jumpVelocity;
+                }
+
+                if (Mathf.Abs(velocity.y) > 1)//change to jump animation
+                {
+                    anim.SetBool("isJumping", true);
+                }
+                else if (controller.collisions.below == true)
+                {
+                    anim.SetBool("isJumping", false);
+                }
+
+                if (Input.GetButtonDown("ShootLeft1"))
+                {
+                    shootLeft();
+                }
+
+                if (Input.GetButtonDown("ShootRight1"))
+                {
+                    shootRight();
+                }
             }
 
-            if (Input.GetButtonDown("Jump1") && Mathf.Abs(velocity.y) < 1f)//jump
+            //Player #2
+            else if (playerNumber == 2 && gVar.player2Exists == true)
             {
-                //play jump audio
-                audio.PlayOneShot(jumpAudio, gVar.volume);
+                gVar.location2 = this.GetComponent<Transform>().position;
+                input = new Vector2(Input.GetAxisRaw("Horizontal2"), 0);
 
-                velocity.y = jumpVelocity;
+                if (Input.GetAxisRaw("Horizontal2") > 0)
+                {
+                    anim.SetBool("isWalkingLeft", false);
+                    anim.SetBool("isWalkingRight", true);
+                }
+                else if (Input.GetAxisRaw("Horizontal2") < 0)
+                {
+                    anim.SetBool("isWalkingRight", false);
+                    anim.SetBool("isWalkingLeft", true);
+                }
+                else
+                {
+                    anim.SetBool("isWalkingLeft", false);
+                    anim.SetBool("isWalkingRight", false);
+                }
+
+                if (Input.GetButtonDown("Jump2") && Mathf.Abs(velocity.y) < 1f && gVar.optionTime > 25)//jump if jump is pressed, velocity is 0, and suffient time has passed since options menu close
+                {
+                    //play jump audio
+                    audio.PlayOneShot(jumpAudio, gVar.volume * 0.85f);
+
+                    velocity.y = jumpVelocity;
+                }
+
+                if (Mathf.Abs(velocity.y) > 1)//change to jump animation
+                {
+                    anim.SetBool("isJumping", true);
+                }
+                else if (controller.collisions.below == true)
+                {
+                    anim.SetBool("isJumping", false);
+                }
+
+                if (Input.GetButtonDown("ShootLeft2"))
+                {
+                    shootLeft();
+                }
+
+                if (Input.GetButtonDown("ShootRight2"))
+                {
+                    shootRight();
+                }
+
             }
 
-            if (Mathf.Abs(velocity.y) > 1)//change to jump animation
+            //Player #3
+            else if (playerNumber == 3 && gVar.player3Exists == true)
             {
-                anim.SetBool("isJumping", true);
-            }
-            else if (controller.collisions.below == true)
-            {
-                anim.SetBool("isJumping", false);
+                gVar.location3 = this.GetComponent<Transform>().position;
+                input = new Vector2(Input.GetAxisRaw("Horizontal3"), 0);
+
+                if (Input.GetAxisRaw("Horizontal3") > 0)
+                {
+                    anim.SetBool("isWalkingLeft", false);
+                    anim.SetBool("isWalkingRight", true);
+                }
+                else if (Input.GetAxisRaw("Horizontal3") < 0)
+                {
+                    anim.SetBool("isWalkingRight", false);
+                    anim.SetBool("isWalkingLeft", true);
+                }
+                else
+                {
+                    anim.SetBool("isWalkingLeft", false);
+                    anim.SetBool("isWalkingRight", false);
+                }
+
+                if (Input.GetButtonDown("Jump3") && Mathf.Abs(velocity.y) < 1f)//jump
+                {
+                    //play jump audio
+                    audio.PlayOneShot(jumpAudio, gVar.volume * 0.85f);
+
+                    velocity.y = jumpVelocity;
+                }
+
+                if (Mathf.Abs(velocity.y) > 1)//change to jump animation
+                {
+                    anim.SetBool("isJumping", true);
+                }
+                else if (controller.collisions.below == true)
+                {
+                    anim.SetBool("isJumping", false);
+                }
+
+                if (Input.GetButtonDown("ShootLeft3"))
+                {
+                    shootLeft();
+                }
+
+                if (Input.GetButtonDown("ShootRight3"))
+                {
+                    shootRight();
+                }
             }
 
-            if (Input.GetButtonDown("ShootLeft1"))
+            //Player #4
+            else if (playerNumber == 4 && gVar.player4Exists == true)
             {
-                shootLeft();
-            }
+                gVar.location2 = this.GetComponent<Transform>().position;
+                input = new Vector2(Input.GetAxisRaw("Horizontal4"), 0);
 
-            if (Input.GetButtonDown("ShootRight1"))
+                if (Input.GetAxisRaw("Horizontal4") > 0)
+                {
+                    anim.SetBool("isWalkingLeft", false);
+                    anim.SetBool("isWalkingRight", true);
+                }
+                else if (Input.GetAxisRaw("Horizontal4") < 0)
+                {
+                    anim.SetBool("isWalkingRight", false);
+                    anim.SetBool("isWalkingLeft", true);
+                }
+                else
+                {
+                    anim.SetBool("isWalkingLeft", false);
+                    anim.SetBool("isWalkingRight", false);
+                }
+
+                if (Input.GetButtonDown("Jump4") && Mathf.Abs(velocity.y) < 1f)//jump
+                {
+                    //play jump audio
+                    audio.PlayOneShot(jumpAudio, gVar.volume * 0.85f);
+
+                    velocity.y = jumpVelocity;
+                }
+
+                if (Mathf.Abs(velocity.y) > 1)//change to jump animation
+                {
+                    anim.SetBool("isJumping", true);
+                }
+                else if (controller.collisions.below == true)
+                {
+                    anim.SetBool("isJumping", false);
+                }
+
+                if (Input.GetButtonDown("ShootLeft4"))
+                {
+                    shootLeft();
+                }
+
+                if (Input.GetButtonDown("ShootRight4"))
+                {
+                    shootRight();
+                }
+            }
+            //smooth movements
+            float targetVelocityX = input.x * moveSpeed;
+            //                                                                                 if player is on the ground use ATGrounded, if in the air use ATAirbourne
+            velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
+            velocity.y += gravity * Time.deltaTime;
+            controller.Move(velocity * Time.deltaTime);
+            this.GetComponent<Rigidbody2D>().velocity = new Vector2(0, this.GetComponent<Rigidbody2D>().velocity.y);
+
+            //Reset level if health is equal to 0 and A/Space is pressed
+            if (Input.GetButton("GStart") && lives == 0)
             {
-                shootRight();
+                gVar.resetVars();
+                SceneManager.LoadScene("Level Select");
+                Time.timeScale = 1;
             }
         }
-
-        //Player #2
-        else if (playerNumber == 2 && gVar.player2Exists == true)
-        {
-            gVar.location2 = this.GetComponent<Transform>().position;
-            input = new Vector2(Input.GetAxisRaw("Horizontal2"), 0);
-
-            if (Input.GetAxisRaw("Horizontal2") > 0)
-            {
-                anim.SetBool("isWalkingLeft", false);
-                anim.SetBool("isWalkingRight", true);
-            }
-            else if (Input.GetAxisRaw("Horizontal2") < 0)
-            {
-                anim.SetBool("isWalkingRight", false);
-                anim.SetBool("isWalkingLeft", true);
-            }
-            else
-            {
-                anim.SetBool("isWalkingLeft", false);
-                anim.SetBool("isWalkingRight", false);
-            }
-
-            if (Input.GetButtonDown("Jump2") && Mathf.Abs(velocity.y) < 1f)//jump
-            {
-                //play jump audio
-                audio.PlayOneShot(jumpAudio, gVar.volume);
-
-                velocity.y = jumpVelocity;
-            }
-
-            if (Mathf.Abs(velocity.y) > 1)//change to jump animation
-            {
-                anim.SetBool("isJumping", true);
-            }
-            else if (controller.collisions.below == true)
-            {
-                anim.SetBool("isJumping", false);
-            }
-
-            if (Input.GetButtonDown("ShootLeft2"))
-            {
-                shootLeft();
-            }
-
-            if (Input.GetButtonDown("ShootRight2"))
-            {
-                shootRight();
-            }
-
-        }
-
-        //Player #3
-        else if (playerNumber == 3 && gVar.player3Exists == true)
-        {
-            gVar.location3 = this.GetComponent<Transform>().position;
-            input = new Vector2(Input.GetAxisRaw("Horizontal3"), 0);
-
-            if (Input.GetAxisRaw("Horizontal3") > 0)
-            {
-                anim.SetBool("isWalkingLeft", false);
-                anim.SetBool("isWalkingRight", true);
-            }
-            else if (Input.GetAxisRaw("Horizontal3") < 0)
-            {
-                anim.SetBool("isWalkingRight", false);
-                anim.SetBool("isWalkingLeft", true);
-            }
-            else
-            {
-                anim.SetBool("isWalkingLeft", false);
-                anim.SetBool("isWalkingRight", false);
-            }
-
-            if (Input.GetButtonDown("Jump3") && Mathf.Abs(velocity.y) < 1f)//jump
-            {
-                //play jump audio
-                audio.PlayOneShot(jumpAudio, gVar.volume);
-
-                velocity.y = jumpVelocity;
-            }
-
-            if (Mathf.Abs(velocity.y) > 1)//change to jump animation
-            {
-                anim.SetBool("isJumping", true);
-            }
-            else if (controller.collisions.below == true)
-            {
-                anim.SetBool("isJumping", false);
-            }
-
-            if (Input.GetButtonDown("ShootLeft3"))
-            {
-                shootLeft();
-            }
-
-            if (Input.GetButtonDown("ShootRight3"))
-            {
-                shootRight();
-            }
-        }
-
-        //Player #4
-        else if (playerNumber == 4 && gVar.player4Exists == true)
-        {
-            gVar.location2 = this.GetComponent<Transform>().position;
-            input = new Vector2(Input.GetAxisRaw("Horizontal4"), 0);
-
-            if (Input.GetAxisRaw("Horizontal4") > 0)
-            {
-                anim.SetBool("isWalkingLeft", false);
-                anim.SetBool("isWalkingRight", true);
-            }
-            else if (Input.GetAxisRaw("Horizontal4") < 0)
-            {
-                anim.SetBool("isWalkingRight", false);
-                anim.SetBool("isWalkingLeft", true);
-            }
-            else
-            {
-                anim.SetBool("isWalkingLeft", false);
-                anim.SetBool("isWalkingRight", false);
-            }
-
-            if (Input.GetButtonDown("Jump4") && Mathf.Abs(velocity.y) < 1f)//jump
-            {
-                //play jump audio
-                audio.PlayOneShot(jumpAudio, gVar.volume);
-
-                velocity.y = jumpVelocity;
-            }
-
-            if (Mathf.Abs(velocity.y) > 1)//change to jump animation
-            {
-                anim.SetBool("isJumping", true);
-            }
-            else if (controller.collisions.below == true)
-            {
-                anim.SetBool("isJumping", false);
-            }
-
-            if (Input.GetButtonDown("ShootLeft4"))
-            {
-                shootLeft();
-            }
-
-            if (Input.GetButtonDown("ShootRight4"))
-            {
-                shootRight();
-            }
-        }
-        //smooth movements
-        float targetVelocityX = input.x * moveSpeed;
-        //                                                                                 if player is on the ground use ATGrounded, if in the air use ATAirbourne
-        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
-        velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
-        this.GetComponent<Rigidbody2D>().velocity = new Vector2(0, this.GetComponent<Rigidbody2D>().velocity.y);
-
-        //Reset level if health is equal to 0 and A/Space is pressed
-        if (Input.GetButton("GStart") && lives == 0)
-        {
-            gVar.resetVars();
-            SceneManager.LoadScene("Level Select");
-            Time.timeScale = 1;
-        }
-
-    }
 
     public void Unhurt()
     {
