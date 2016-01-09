@@ -252,7 +252,7 @@ public class Player : MonoBehaviour
                     anim.SetBool("isWalkingRight", false);
                 }
 
-                if (Input.GetButtonDown("Jump1") && Mathf.Abs(velocity.y) < 1f)//jump
+                if (Input.GetButtonDown("Jump1") && Mathf.Abs(velocity.y) < 1f && gVar.optionTime > 25)//jump
                 {
                     //play jump audio
                     audio.PlayOneShot(jumpAudio, gVar.volume * 0.85f);
@@ -353,7 +353,7 @@ public class Player : MonoBehaviour
                     anim.SetBool("isWalkingRight", false);
                 }
 
-                if (Input.GetButtonDown("Jump3") && Mathf.Abs(velocity.y) < 1f)//jump
+                if (Input.GetButtonDown("Jump3") && Mathf.Abs(velocity.y) < 1f && gVar.optionTime > 25)//jump
                 {
                     //play jump audio
                     audio.PlayOneShot(jumpAudio, gVar.volume * 0.85f);
@@ -403,7 +403,7 @@ public class Player : MonoBehaviour
                     anim.SetBool("isWalkingRight", false);
                 }
 
-                if (Input.GetButtonDown("Jump4") && Mathf.Abs(velocity.y) < 1f)//jump
+                if (Input.GetButtonDown("Jump4") && Mathf.Abs(velocity.y) < 1f && gVar.optionTime > 25)//jump
                 {
                     //play jump audio
                     audio.PlayOneShot(jumpAudio, gVar.volume * 0.85f);
