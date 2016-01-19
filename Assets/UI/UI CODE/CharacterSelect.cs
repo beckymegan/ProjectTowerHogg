@@ -12,6 +12,7 @@ public class CharacterSelect : MonoBehaviour
     private bool isReadyToPlay = false;
     private bool changedMind = false; //prevents infinite changes to readyPlayers if a player selects a character then moves again
     private AudioSource audio;
+    private int menuCounter = 0;
 
     void Start()
     {
@@ -21,6 +22,7 @@ public class CharacterSelect : MonoBehaviour
     void Update()
     {
         checkPlayers();
+        menuCounter++;//increase counter
 
         if (gVar.readyPlayers == gVar.requiredReadyPlayers && gVar.requiredReadyPlayers > 1 && Input.GetButton("GStart")) //more than one player have joined and all joined players are ready to play
         {
@@ -49,8 +51,10 @@ public class CharacterSelect : MonoBehaviour
         //player 1
         if (playerNumber == 1 && gVar.player1Exists)
         {
-            if (Input.GetButtonDown("Horizontal1") && Input.GetAxisRaw("Horizontal1") == 1)
+            if (Input.GetAxisRaw("Horizontal1") > 0 && menuCounter >= 20)
             {
+                menuCounter = 0;//reset counter
+
                 //play switching sound
                 audio.PlayOneShot(switchCharacter, 1f);
 
@@ -60,8 +64,10 @@ public class CharacterSelect : MonoBehaviour
                 if (locationP1 > 4) { locationP1 = 1; }
 
             }
-            else if (Input.GetButtonDown("Horizontal1") && Input.GetAxisRaw("Horizontal1") == -1)
+            if (Input.GetAxisRaw("Horizontal1") < 0 && menuCounter >= 20)
             {
+                menuCounter = 0;//reset counter
+
                 //play switching sound
                 audio.PlayOneShot(switchCharacter, 1f);
 
@@ -115,8 +121,10 @@ public class CharacterSelect : MonoBehaviour
         //Player 2
         else if (playerNumber == 2 && gVar.player2Exists)
         {
-            if (Input.GetButtonDown("Horizontal2Menu") && Input.GetAxisRaw("Horizontal2Menu") == 1)
+            if(Input.GetAxis("Horizontal2") == 1 && menuCounter >= 20)
             {
+                menuCounter = 0;//reset counter
+
                 //play switching sound
                 audio.PlayOneShot(switchCharacter, 1f);
 
@@ -126,8 +134,10 @@ public class CharacterSelect : MonoBehaviour
                 if (locationP2 > 4) { locationP2 = 1; }
 
             }
-            else if (Input.GetButtonDown("Horizontal2Menu") && Input.GetAxisRaw("Horizontal2Menu") == -1)
+            else if (Input.GetAxis("Horizontal2") == -1 && menuCounter >= 20)
             {
+                menuCounter = 0;//reset counter
+
                 //play switching sound
                 audio.PlayOneShot(switchCharacter, 1f);
 
@@ -181,8 +191,10 @@ public class CharacterSelect : MonoBehaviour
         //player 3
         else if (playerNumber == 3 && gVar.player3Exists)
         {
-            if (Input.GetButtonDown("Horizontal3Menu") && Input.GetAxisRaw("Horizontal3Menu") == 1)
+            if (Input.GetAxis("Horizontal3") == 1 && menuCounter >= 20)
             {
+                menuCounter = 0;//reset counter
+
                 //play switching sound
                 audio.PlayOneShot(switchCharacter, 1f);
 
@@ -192,8 +204,10 @@ public class CharacterSelect : MonoBehaviour
                 if (locationP3 > 4) { locationP3 = 1; }
 
             }
-            else if (Input.GetButtonDown("Horizontal3Menu") && Input.GetAxisRaw("Horizontal3Menu") == -1)
+            else if (Input.GetAxis("Horizontal3") == -1 && menuCounter >= 20)
             {
+                menuCounter = 0;//reset counter
+
                 //play switching sound
                 audio.PlayOneShot(switchCharacter, 1f);
 
@@ -247,8 +261,10 @@ public class CharacterSelect : MonoBehaviour
         //player 4
         else if (playerNumber == 4 && gVar.player4Exists)
         {
-            if (Input.GetButtonDown("Horizontal4Menu") && Input.GetAxisRaw("Horizontal4Menu") == 1)
+            if (Input.GetAxis("Horizontal4") == 1 && menuCounter >= 20)
             {
+                menuCounter = 0;//reset counter
+
                 //play switching sound
                 audio.PlayOneShot(switchCharacter, 1f);
 
@@ -258,8 +274,13 @@ public class CharacterSelect : MonoBehaviour
                 if (locationP4 > 4) { locationP4 = 1; }
 
             }
-            else if (Input.GetButtonDown("Horizontal4Menu") && Input.GetAxisRaw("Horizontal4Menu") == -1)
+            else if (Input.GetAxis("Horizontal4") == -1 && menuCounter >= 20)
             {
+                menuCounter = 0;//reset counter
+
+                //play switching sound
+                audio.PlayOneShot(switchCharacter, 1f);
+
                 isReadyToPlay = false;//moved selection therefore not ready to play
                 this.GetComponent<SpriteRenderer>().sprite = oriSprite;
                 locationP4--;
