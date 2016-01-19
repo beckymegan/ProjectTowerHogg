@@ -6,7 +6,7 @@ public class Shield : MonoBehaviour
 
     public int shieldTime, color;
     public Sprite greenShield, redShield, blueShield, purpleShield;
-    public AudioClip badShieldAudio, goodShieldAudio;
+    public AudioClip shieldAudio;
 
     private float hurtTimer;
     private GameObject player;
@@ -70,15 +70,8 @@ public class Shield : MonoBehaviour
     {
         if (coll.gameObject.tag.Equals("Ball"))//ball hits shield
         {
-            //play audio when ball hits shield, bad audio if ball color is not shield color, good audio if ball color is shield color
-            if(coll.gameObject.GetComponent<Rocket>().colorShot == color)
-            {
-                GetComponent<AudioSource>().PlayOneShot(goodShieldAudio, gVar.volume);
-            }
-            else
-            {
-                GetComponent<AudioSource>().PlayOneShot(badShieldAudio, gVar.volume);
-            }
+            //play audio when rocket hits shield
+            GetComponent<AudioSource>().PlayOneShot(shieldAudio, gVar.volume);
         }
     }
 
