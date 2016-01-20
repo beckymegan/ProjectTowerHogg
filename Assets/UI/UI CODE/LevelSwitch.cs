@@ -10,7 +10,7 @@ public class LevelSwitch : MonoBehaviour
 
     private Transform l1, l5, l4, l3, l2;
 
-    private int level;
+    private int level, menuCounter;
     private string loadingDir;
     private bool canChange, switchToCharacter;
 
@@ -18,6 +18,8 @@ public class LevelSwitch : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        menuCounter = 0;
+
         l1 = level1.GetComponent<Transform>();
         l5 = level5.GetComponent<Transform>();
         l4 = level4.GetComponent<Transform>();
@@ -32,8 +34,8 @@ public class LevelSwitch : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        menuCounter++;
         levelPressed("stop");
-
         if (Input.GetButtonDown("GStart"))//level select, go to character select
         {
             //play select sound
@@ -52,10 +54,14 @@ public class LevelSwitch : MonoBehaviour
 
     public void levelPressed(string direction)
     {
+
         //right arrow button OR right bumper on controller OR right arrow is pressed and levels are not currently in rotation ROTATE LEFT
-        if (((Input.GetButtonDown("Horizontal1") && Input.GetAxisRaw("Horizontal1") == 1) || direction.Equals("right") ||
-            (Input.GetButtonDown("GMenu") && Input.GetAxisRaw("GMenu") == 1)) && canChange == true)
+        if ((((Input.GetAxisRaw("Horizontal1") > 0 || Input.GetAxisRaw("Horizontal2") > 0 || Input.GetAxisRaw("Horizontal3") > 0 || Input.GetAxisRaw("Horizontal4") > 0) && menuCounter >= 20)
+            || direction.Equals("right")) && canChange == true)
         {
+            //reset counter for controllers
+            menuCounter = 0;
+
             //rightSlider.sprite = rSlidePressed;
             gVar.currentLocation++;
             loadingDir = "left";
@@ -65,9 +71,12 @@ public class LevelSwitch : MonoBehaviour
             GetComponent<AudioSource>().PlayOneShot(switchLevel, 1f);
         }
         //left arrow button OR left bumper on controller OR left arrow is pressed and levels are not currently in rotation ROTATE RIGHT
-        else if (((Input.GetButtonDown("Horizontal1") && Input.GetAxisRaw("Horizontal1") == -1) || direction.Equals("left") ||
-            (Input.GetButtonDown("GMenu") && Input.GetAxisRaw("GMenu") == -1)) && canChange == true)
+        else if ((((Input.GetAxisRaw("Horizontal1") < 0 || Input.GetAxisRaw("Horizontal2") < 0 || Input.GetAxisRaw("Horizontal3") < 0 || Input.GetAxisRaw("Horizontal4") < 0) && menuCounter >= 20)
+            || direction.Equals("left")) && canChange == true)
         {
+            //reset counter for controllers
+            menuCounter = 0;
+
             //leftSlider.sprite = lSlidePressed;
             gVar.currentLocation--;
             loadingDir = "right";
