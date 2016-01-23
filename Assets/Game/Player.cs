@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     public float jumpHeight = 4;
     public float timeToJumpApex = .4f;
     public float startX, startY;
-    public int stunTime, playerNumber, color;
+    public int stunTime, playerNumber, color=1;
 
     public AudioClip pickupAudio, painAudio, throwAudio, jumpAudio;
     public GameObject playerParticleSystem, rocket, objLives, shield;
@@ -60,7 +60,6 @@ public class Player : MonoBehaviour
         jumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
 
         SpriteRenderer rend = this.GetComponent<SpriteRenderer>();
-
         //character selection
         if (playerNumber == 1 && gVar.player1Exists == true)//if player is player1 and player1 exists
         {
@@ -69,7 +68,7 @@ public class Player : MonoBehaviour
                 //if green, change sprite to green, increase number of possible green team shots by one, set particle color and start
                 rend.sprite = greenSprite;
                 gVar.greenShots++;
-                anim.SetInteger("Color", 0);
+                anim.SetInteger("Color", 1);
                 color = 0;
                 colorSelf = GREEN;
             }
@@ -77,7 +76,7 @@ public class Player : MonoBehaviour
             {
                 rend.sprite = redSprite;
                 gVar.redShots++;
-                anim.SetInteger("Color", 1);
+                anim.SetInteger("Color", 2);
                 color = 1;
                 colorSelf = RED;
             }
@@ -85,7 +84,7 @@ public class Player : MonoBehaviour
             {
                 rend.sprite = blueSprite;
                 gVar.blueShots++;
-                anim.SetInteger("Color", 2);
+                anim.SetInteger("Color", 3);
                 color = 2;
                 colorSelf = BLUE;
             }
@@ -93,7 +92,7 @@ public class Player : MonoBehaviour
             {
                 rend.sprite = purpleSprite;
                 gVar.purpleShots++;
-                anim.SetInteger("Color", 3);
+                anim.SetInteger("Color", 4);
                 color = 3;
                 colorSelf = PURPLE;
             }
@@ -104,7 +103,7 @@ public class Player : MonoBehaviour
             {
                 rend.sprite = greenSprite;
                 gVar.greenShots++;
-                anim.SetInteger("Color", 0);
+                anim.SetInteger("Color", 1);
                 color = 0;
                 colorSelf = GREEN;
             }
@@ -112,7 +111,7 @@ public class Player : MonoBehaviour
             {
                 rend.sprite = redSprite;
                 gVar.redShots++;
-                anim.SetInteger("Color", 1);
+                anim.SetInteger("Color", 2);
                 color = 1;
                 colorSelf = RED;
             }
@@ -120,7 +119,7 @@ public class Player : MonoBehaviour
             {
                 rend.sprite = blueSprite;
                 gVar.blueShots++;
-                anim.SetInteger("Color", 2);
+                anim.SetInteger("Color", 3);
                 color = 2;
                 colorSelf = BLUE;
             }
@@ -128,7 +127,7 @@ public class Player : MonoBehaviour
             {
                 rend.sprite = purpleSprite;
                 gVar.purpleShots++;
-                anim.SetInteger("Color", 3);
+                anim.SetInteger("Color", 4);
                 color = 3;
                 colorSelf = PURPLE;
             }
@@ -139,7 +138,7 @@ public class Player : MonoBehaviour
             {
                 rend.sprite = greenSprite;
                 gVar.greenShots++;
-                anim.SetInteger("Color", 0);
+                anim.SetInteger("Color", 1);
                 color = 0;
                 colorSelf = GREEN;
             }
@@ -147,7 +146,7 @@ public class Player : MonoBehaviour
             {
                 rend.sprite = redSprite;
                 gVar.redShots++;
-                anim.SetInteger("Color", 1);
+                anim.SetInteger("Color", 2);
                 color = 1;
                 colorSelf = RED;
             }
@@ -155,7 +154,7 @@ public class Player : MonoBehaviour
             {
                 rend.sprite = blueSprite;
                 gVar.blueShots++;
-                anim.SetInteger("Color", 2);
+                anim.SetInteger("Color", 3);
                 color = 2;
                 colorSelf = BLUE;
             }
@@ -163,7 +162,7 @@ public class Player : MonoBehaviour
             {
                 rend.sprite = purpleSprite;
                 gVar.purpleShots++;
-                anim.SetInteger("Color", 3);
+                anim.SetInteger("Color", 4);
                 color = 3;
                 colorSelf = PURPLE;
             }
@@ -174,7 +173,7 @@ public class Player : MonoBehaviour
             {
                 rend.sprite = greenSprite;
                 gVar.greenShots++;
-                anim.SetInteger("Color", 0);
+                anim.SetInteger("Color", 1);
                 color = 0;
                 colorSelf = GREEN;
             }
@@ -182,7 +181,7 @@ public class Player : MonoBehaviour
             {
                 rend.sprite = redSprite;
                 gVar.redShots++;
-                anim.SetInteger("Color", 1);
+                anim.SetInteger("Color", 2);
                 color = 1;
                 colorSelf = RED;
             }
@@ -190,7 +189,7 @@ public class Player : MonoBehaviour
             {
                 rend.sprite = blueSprite;
                 gVar.blueShots++;
-                anim.SetInteger("Color", 2);
+                anim.SetInteger("Color", 3);
                 color = 2;
                 colorSelf = BLUE;
             }
@@ -198,11 +197,12 @@ public class Player : MonoBehaviour
             {
                 rend.sprite = purpleSprite;
                 gVar.purpleShots++;
-                anim.SetInteger("Color", 3);
+                anim.SetInteger("Color", 4);
                 color = 3;
                 colorSelf = PURPLE;
             }
         }
+
         //set player to standing by making both isWalkingLeft and isWalkingRight false
         anim.SetBool("isWalkingLeft", false);
         anim.SetBool("isWalkingRight", false);

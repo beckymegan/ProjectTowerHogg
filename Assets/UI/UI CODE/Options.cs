@@ -4,29 +4,29 @@ using System.Collections;
 
 public class Options : MonoBehaviour {
 
-    public CanvasGroup optionsMenu, audioMenu;
+    public CanvasGroup pauseMenu, audioMenu;
 
     //resume game
 	public void resume()
     {
         gVar.optionTime = 0;
-        optionsMenu.GetComponent<CanvasGroup>().alpha = 0;
+        pauseMenu.GetComponent<CanvasGroup>().alpha = 0;
         Time.timeScale = 1;
-        optionsMenu.GetComponent<CanvasGroup>().interactable = false;
+        pauseMenu.GetComponent<CanvasGroup>().interactable = false;
     }
 
     //open audio menu
     public void audio()
     {
         gVar.optionTime = 0;
-        optionsMenu.GetComponent<CanvasGroup>().alpha = 0;
-        optionsMenu.GetComponent<CanvasGroup>().interactable = false;
+        pauseMenu.GetComponent<CanvasGroup>().alpha = 0;
+        pauseMenu.GetComponent<CanvasGroup>().interactable = false;
         audioMenu.GetComponent<CanvasGroup>().alpha = 1;
         audioMenu.GetComponent<CanvasGroup>().interactable = true;
     }
 
     //return to level select menu
-    public void menu()
+    public void quit()
     {
         gVar.optionTime = 0;
         gVar.optionTime = 0;
@@ -40,7 +40,7 @@ public class Options : MonoBehaviour {
         gVar.optionTime = 0;
         audioMenu.GetComponent<CanvasGroup>().alpha = 0;
         audioMenu.GetComponent<CanvasGroup>().interactable = false;
-        optionsMenu.GetComponent<CanvasGroup>().alpha = 1;
-        optionsMenu.GetComponent<CanvasGroup>().interactable = true;
+        pauseMenu.GetComponent<CanvasGroup>().alpha = 1;
+        pauseMenu.GetComponent<CanvasGroup>().interactable = true;
     }
 }
