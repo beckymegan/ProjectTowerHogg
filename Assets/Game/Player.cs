@@ -229,6 +229,9 @@ public class Player : MonoBehaviour
             optionsScreen.alpha = 1;
             Time.timeScale = 0;
         }
+
+        if (Time.timeScale == 1)
+        {
             //Player 1
             if (playerNumber == 1 && gVar.player1Exists == true)
             {
@@ -445,6 +448,7 @@ public class Player : MonoBehaviour
                 SceneManager.LoadScene("Level Select");
                 Time.timeScale = 1;
             }
+        }
         }
 
     public void Unhurt()

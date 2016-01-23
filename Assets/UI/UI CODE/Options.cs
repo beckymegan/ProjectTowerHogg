@@ -5,14 +5,15 @@ using System.Collections;
 public class Options : MonoBehaviour {
 
     public CanvasGroup pauseMenu, audioMenu;
+    public GameObject eventSystem, resumeButton;
 
     //resume game
 	public void resume()
     {
         gVar.optionTime = 0;
         pauseMenu.GetComponent<CanvasGroup>().alpha = 0;
-        Time.timeScale = 1;
         pauseMenu.GetComponent<CanvasGroup>().interactable = false;
+        Time.timeScale = 1;
     }
 
     //open audio menu
@@ -29,10 +30,9 @@ public class Options : MonoBehaviour {
     public void quit()
     {
         gVar.optionTime = 0;
-        gVar.optionTime = 0;
         gVar.resetVars();
-        SceneManager.LoadScene("Level Select");
         Time.timeScale = 1;
+        SceneManager.LoadScene("Level Select");
     }
 
     public void backAudio()

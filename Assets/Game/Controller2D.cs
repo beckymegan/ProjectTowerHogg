@@ -29,25 +29,28 @@ public class Controller2D : MonoBehaviour
 
     public void Move(Vector3 velocity)
     {
-        UpdateRaycastOrigins();
-        collisions.Reset();
-        collisions.velocityOld = velocity;
+        if (Time.timeScale != 0)
+        {
+            UpdateRaycastOrigins();
+            collisions.Reset();
+            collisions.velocityOld = velocity;
 
-        if (velocity.y < 0)
-        {
-            DescendSlope(ref velocity);
-        }
-        if (velocity.x != 0)
-        {
-            HorizontalCollisions(ref velocity);
-        }
-        if (velocity.y != 0)
-        {
-            VerticalCollisions(ref velocity);
-        }
-        if(Time.timeScale != 0)
-        {
-            transform.Translate(velocity);
+            if (velocity.y < 0)
+            {
+                DescendSlope(ref velocity);
+            }
+            if (velocity.x != 0)
+            {
+                HorizontalCollisions(ref velocity);
+            }
+            if (velocity.y != 0)
+            {
+                VerticalCollisions(ref velocity);
+            }
+            if (Time.timeScale != 0)
+            {
+                transform.Translate(velocity);
+            }
         }
     }
 
