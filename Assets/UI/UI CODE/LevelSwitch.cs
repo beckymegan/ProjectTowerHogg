@@ -18,6 +18,7 @@ public class LevelSwitch : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        Time.timeScale = 1;
         menuCounter = 0;
 
         l1 = level1.GetComponent<Transform>();
@@ -34,20 +35,25 @@ public class LevelSwitch : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        menuCounter++;
-        levelPressed("stop");
-        if (Input.GetButtonDown("GStart"))//level select, go to character select
-        {
-            //play select sound
-            GetComponent<AudioSource>().PlayOneShot(selectLevel, 1f);
-            switchToCharacter = true;
-        }
+        gVar.optionTime++;
 
-        //switch to character select after sound is finished
-        if (!GetComponent<AudioSource>().isPlaying && switchToCharacter)
+        if (Time.timeScale == 1)
         {
-            gVar.level = gVar.currentLocation;
-            SceneManager.LoadScene("Character Select");
+            menuCounter++;
+            levelPressed("stop");
+            if (Input.GetButtonDown("GSelect") && gVar.optionTime > 25)//level select, go to character select
+            {
+                //play select sound
+                GetComponent<AudioSource>().PlayOneShot(selectLevel, 1f);
+                switchToCharacter = true;
+            }
+
+            //switch to character select after sound is finished
+            if (!GetComponent<AudioSource>().isPlaying && switchToCharacter && gVar.optionTime > 25)
+            {
+                gVar.level = gVar.currentLocation;
+                SceneManager.LoadScene("Character Select");
+            }
         }
 
     }

@@ -8,11 +8,11 @@ public class Player : MonoBehaviour
     public float jumpHeight = 4;
     public float timeToJumpApex = .4f;
     public float startX, startY;
-    public int stunTime, playerNumber, color=1;
+    public int stunTime, playerNumber, color = 1;
 
     public AudioClip pickupAudio, painAudio, throwAudio, jumpAudio;
     public GameObject playerParticleSystem, rocket, objLives, shield;
-    public CanvasGroup gameOverScreen, optionsScreen;
+    public CanvasGroup gameOverScreen;
     public Sprite greenSprite, redSprite, blueSprite, purpleSprite;
     public Material materialSelf;
 
@@ -221,14 +221,6 @@ public class Player : MonoBehaviour
         }
 
         this.health(); //calculate health
-
-        //press options button, pauses game
-        if (Input.GetButtonDown("GOptions"))
-        {
-            optionsScreen.interactable = true;
-            optionsScreen.alpha = 1;
-            Time.timeScale = 0;
-        }
 
         if (Time.timeScale == 1)
         {
@@ -449,7 +441,7 @@ public class Player : MonoBehaviour
                 Time.timeScale = 1;
             }
         }
-        }
+    }
 
     public void Unhurt()
     {

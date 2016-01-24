@@ -21,6 +21,7 @@ public class gVar : MonoBehaviour
     public static int requiredReadyPlayers = 0;
 
     public static int optionTime = 0;
+    public static int readyCounter = 0;
 
     public static int greenShots = 0;
     public static int redShots = 0;
@@ -28,6 +29,7 @@ public class gVar : MonoBehaviour
     public static int purpleShots = 0;
 
     public static float volume = 1f;
+    public static float musicVolume = 1f;
 
     public static Vector2 location1, location2, location3, location4;
 

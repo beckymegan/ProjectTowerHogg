@@ -1,13 +1,43 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
-public class Options : MonoBehaviour {
+public class Options : MonoBehaviour
+{
 
-    public CanvasGroup pauseMenu, audioMenu, videoMenu;
-    
+    public CanvasGroup pauseMenu;
+    public Dropdown fullscreenDropdown;
+    public Slider musicSlider, sfxSlider;
+
+    private int screenSizeWidth, screenSizeHeight;
+    private Resolution[] resolutions;
+
+    void Start()
+    {
+        //find max resolution
+        resolutions = Screen.resolutions;
+        screenSizeWidth = resolutions[resolutions.Length - 1].width;
+        screenSizeHeight = resolutions[resolutions.Length - 1].height;
+
+        //set fullscreen dropdown to match current settings
+        if (Screen.fullScreen == true)
+        {
+            fullscreenDropdown.value = 0;
+        }
+        else if (Screen.fullScreen == false)
+        {
+            fullscreenDropdown.value = 1;
+        }
+
+        //set sliders to current values
+        musicSlider.value = gVar.musicVolume;
+        sfxSlider.value = gVar.volume;
+
+    }
+
     //resume game
-	public void resume()
+    public void resume()
     {
         gVar.optionTime = 0;
         pauseMenu.GetComponent<CanvasGroup>().alpha = 0;
@@ -15,44 +45,29 @@ public class Options : MonoBehaviour {
         Time.timeScale = 1;
     }
 
-    //open audio menu
-    public void audio()
+    //change to/from fullscreen
+    public void changeFullscreen(int fullscreenOption)
     {
-        gVar.optionTime = 0;
-        pauseMenu.GetComponent<CanvasGroup>().alpha = 0;
-        pauseMenu.GetComponent<CanvasGroup>().interactable = false;
-        audioMenu.GetComponent<CanvasGroup>().alpha = 1;
-        audioMenu.GetComponent<CanvasGroup>().interactable = true;
+        if (fullscreenOption == 0)//fullscreen
+        {
+            Screen.SetResolution(screenSizeWidth, screenSizeHeight, true);
+        }
+        else if (fullscreenOption == 1)//not fullscreen
+        {
+            Screen.SetResolution(1280, 720, false);
+        }
     }
 
-    //back out of audio menu (to pause menu)
-    public void backAudio()
+    //change music volume
+    public void musicVolume(float volume)
     {
-        gVar.optionTime = 0;
-        audioMenu.GetComponent<CanvasGroup>().alpha = 0;
-        audioMenu.GetComponent<CanvasGroup>().interactable = false;
-        pauseMenu.GetComponent<CanvasGroup>().alpha = 1;
-        pauseMenu.GetComponent<CanvasGroup>().interactable = true;
+        gVar.musicVolume = volume;
     }
 
-    //open video menu
-    public void video()
+    //change SFX volume
+    public void sfxVolume(float volume)
     {
-        gVar.optionTime = 0;
-        pauseMenu.GetComponent<CanvasGroup>().alpha = 0;
-        pauseMenu.GetComponent<CanvasGroup>().interactable = false;
-        videoMenu.GetComponent<CanvasGroup>().alpha = 1;
-        videoMenu.GetComponent<CanvasGroup>().interactable = true;
-    }
-
-    //back out of video menu (to pause menu)
-    public void backVideo()
-    {
-        gVar.optionTime = 0;
-        videoMenu.GetComponent<CanvasGroup>().alpha = 0;
-        videoMenu.GetComponent<CanvasGroup>().interactable = false;
-        pauseMenu.GetComponent<CanvasGroup>().alpha = 1;
-        pauseMenu.GetComponent<CanvasGroup>().interactable = true;
+        gVar.volume = volume;
     }
 
     //return to level select menu
