@@ -71,11 +71,17 @@ public class Options : MonoBehaviour
     }
 
     //return to level select menu
-    public void quit()
+    public void menu()
     {
         gVar.optionTime = 0;
         gVar.resetVars();
         Time.timeScale = 1;
         SceneManager.LoadScene("Level Select");
+    }
+
+    //quit game
+    public void quit()
+    {
+        Application.Quit();
     }
 }
