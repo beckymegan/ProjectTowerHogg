@@ -432,14 +432,6 @@ public class Player : MonoBehaviour
             velocity.y += gravity * Time.deltaTime;
             controller.Move(velocity * Time.deltaTime);
             this.GetComponent<Rigidbody2D>().velocity = new Vector2(0, this.GetComponent<Rigidbody2D>().velocity.y);
-
-            //Reset level if health is equal to 0 and A/Space is pressed
-            if (Input.GetButton("GStart") && lives == 0)
-            {
-                gVar.resetVars();
-                SceneManager.LoadScene("Level Select");
-                Time.timeScale = 1;
-            }
         }
     }
 
