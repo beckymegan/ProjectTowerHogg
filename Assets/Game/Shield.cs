@@ -40,30 +40,37 @@ public class Shield : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //follow players location
-        this.GetComponent<Transform>().position = player.GetComponent<Transform>().position;
-
-        hurtTimer += 1.0F * Time.deltaTime;
-        if (hurtTimer >= shieldTime)
+        if (player != null)//if player exists
         {
-            //remove shield and make player unhurt
-            player.GetComponent<Player>().Unhurt();
-            GameObject.Destroy(gameObject);
-        }
-        //start blinking to suggest that shield was going to disappear
-        else if ((hurtTimer >= shieldTime - 1.25 && hurtTimer <= shieldTime - 1) || (hurtTimer >= shieldTime - .75 && hurtTimer <= shieldTime - 0.60) || (hurtTimer >= shieldTime - .45 && hurtTimer <= shieldTime - 0.35)
-             || (hurtTimer >= shieldTime - .25 && hurtTimer <= shieldTime - 0.15) || (hurtTimer >= shieldTime - .15 && hurtTimer <= shieldTime - 0.05))
-        {
-            this.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0f);
-            this.GetComponent<Collider2D>().enabled = false;
-        }
-        else
-        {
-            this.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
-            this.GetComponent<Collider2D>().enabled = true;
-        }
             //follow players location
             this.GetComponent<Transform>().position = player.GetComponent<Transform>().position;
+
+            hurtTimer += 1.0F * Time.deltaTime;
+            if (hurtTimer >= shieldTime)
+            {
+                //remove shield and make player unhurt
+                player.GetComponent<Player>().Unhurt();
+                GameObject.Destroy(gameObject);
+            }
+            //start blinking to suggest that shield was going to disappear
+            else if ((hurtTimer >= shieldTime - 1.25 && hurtTimer <= shieldTime - 1) || (hurtTimer >= shieldTime - .75 && hurtTimer <= shieldTime - 0.60) || (hurtTimer >= shieldTime - .45 && hurtTimer <= shieldTime - 0.35)
+                 || (hurtTimer >= shieldTime - .25 && hurtTimer <= shieldTime - 0.15) || (hurtTimer >= shieldTime - .15 && hurtTimer <= shieldTime - 0.05))
+            {
+                this.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0f);
+                this.GetComponent<Collider2D>().enabled = false;
+            }
+            else
+            {
+                this.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+                this.GetComponent<Collider2D>().enabled = true;
+            }
+            //follow players location
+            this.GetComponent<Transform>().position = player.GetComponent<Transform>().position;
+        }
+        else//if player doesn't exist, destory self
+        {
+            Destroy(gameObject);
+        }
     }
 
     void OnCollisionEnter2D(Collision2D coll)

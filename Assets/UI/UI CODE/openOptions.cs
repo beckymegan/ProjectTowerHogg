@@ -27,7 +27,7 @@ public class openOptions : MonoBehaviour
         if (Input.GetButtonDown("Options1") || Input.GetButtonDown("Options2") || Input.GetButtonDown("Options3") || Input.GetButtonDown("Options4"))
         {
             //if options is pressed in either menu color grey
-            if(SceneManager.GetActiveScene().name == "Character Select" || SceneManager.GetActiveScene().name == "Level Select")
+            if (SceneManager.GetActiveScene().name == "Character Select" || SceneManager.GetActiveScene().name == "Level Select")
             {
                 optionsPanel.GetComponent<Image>().color = GREY;
             }

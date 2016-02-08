@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
@@ -7,9 +8,14 @@ public class CharacterSelect : MonoBehaviour
     public int playerNumber;
     public Sprite oriSprite, selectedSprite;
     public AudioClip switchCharacter, selectCharacter;
+    public CanvasGroup playButtonCanvas;
+    public EventSystem eventSystem;
+    public GameObject first;
 
     private int locationP1 = 1, locationP2 = 1, locationP3 = 1, locationP4 = 1;
+    private int selectButtonPress = 1;//last player to press start
     private bool isReadyToPlay = false;
+    private bool startGame = false;
     private bool changedMind = false; //prevents infinite changes to readyPlayers if a player selects a character then moves again
     private AudioSource audio;
     private int menuCounter = 0;
@@ -18,6 +24,8 @@ public class CharacterSelect : MonoBehaviour
     {
         Time.timeScale = 1;
         audio = GetComponent<AudioSource>();
+        playButtonCanvas.interactable = false;
+        eventSystem.SetSelectedGameObject(first);
     }
 
     void Update()
@@ -320,13 +328,50 @@ public class CharacterSelect : MonoBehaviour
                     }
                 }
             }
+
+            if (Input.GetButtonDown("Jump1")) { selectButtonPress = 1;  }
+            else if (Input.GetButtonDown("Jump2")) { selectButtonPress = 2; }
+            else if (Input.GetButtonDown("Jump3")) { selectButtonPress = 3; }
+            else if (Input.GetButtonDown("Jump4")) { selectButtonPress = 4; }
+
             readyToPlay();
         }
     }
 
     void readyToPlay()
     {
-        if (gVar.readyPlayers == gVar.requiredReadyPlayers && gVar.requiredReadyPlayers > 1 && Input.GetButton("GSelect") && gVar.readyCounter > 120 && gVar.optionTime > 120) //more than one player have joined and all joined players are ready to play
+        if (gVar.readyPlayers == gVar.requiredReadyPlayers && gVar.requiredReadyPlayers > 1 && gVar.pauseMenuOpen == false) //more than one player have joined and all joined players are ready to play
+        {
+            playButtonCanvas.interactable = true;
+        }
+        else
+        {
+            playButtonCanvas.interactable = false;
+        }
+    }
+
+    //check to make sure controller clicking play is a player that's in the game (and ready) and then load level
+    public void playGame()
+    {
+        Update();
+        if (selectButtonPress == 1 && gVar.player1Exists == true)
+        {
+            startGame = true;
+        }
+        else if (selectButtonPress == 2 && gVar.player2Exists == true)
+        {
+            startGame = true;
+        }
+        else if (selectButtonPress == 3 && gVar.player3Exists == true)
+        {
+            startGame = true;
+        }
+        else if (selectButtonPress == 4 && gVar.player4Exists == true)
+        {
+            startGame = true;
+        }
+
+        if (startGame == true)
         {
             if (gVar.currentLocation == 1)
             {

@@ -12,7 +12,6 @@ public class Player : MonoBehaviour
 
     public AudioClip pickupAudio, painAudio, throwAudio, jumpAudio;
     public GameObject playerParticleSystem, rocket, objLives, shield;
-    public CanvasGroup gameOverScreen;
     public Sprite greenSprite, redSprite, blueSprite, purpleSprite;
     public Material materialSelf;
 
@@ -39,6 +38,9 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        //set number of players
+        gVar.numberPlayers = gVar.readyPlayers;
+
         //set start location
         startLocation = new Vector2(startX, startY);
 
@@ -50,7 +52,6 @@ public class Player : MonoBehaviour
 
         audio = GetComponent<AudioSource>();
         Time.timeScale = 1;//start time
-        gameOverScreen.alpha = 0;
         anim = this.GetComponent<Animator>();
 
         controller = GetComponent<Controller2D>();
@@ -570,10 +571,28 @@ public class Player : MonoBehaviour
         }
         else if (lives == 0)
         {
+            gVar.numberPlayers--;
+            
+            //remove shots according to players color
+            if(color == 0)
+            {
+                gVar.greenShots--;
+            }
+            else if (color == 1)
+            {
+                gVar.redShots--;
+            }
+            else if (color == 2)
+            {
+                gVar.blueShots--;
+            }
+            else if (color == 3)
+            {
+                gVar.purpleShots--;
+            }
+
             Destroy(objLives);
-            Time.timeScale = 0;
-            gameOverScreen.alpha = 1;
-            this.transform.Translate(-50, -50, 0);
+            Destroy(gameObject);
         }
     }
 

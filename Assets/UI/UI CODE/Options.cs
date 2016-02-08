@@ -1,17 +1,20 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 using System.Collections;
 
 public class Options : MonoBehaviour
 {
-
     public CanvasGroup pauseMenu;
     public Dropdown fullscreenDropdown;
     public Slider musicSlider, sfxSlider;
+    public GameObject first;
+    public EventSystem eventSystem;
 
     private int maxGameWidth, maxGameHeight;
     private Resolution[] resolutions;
+    private GameObject pause;
 
     void Start()
     {
@@ -48,6 +51,20 @@ public class Options : MonoBehaviour
         //set sliders to current values
         musicSlider.value = gVar.musicVolume;
         sfxSlider.value = gVar.volume;
+    }
+
+    void Update()
+    {
+        if (pauseMenu.alpha == 1 && gVar.pauseMenuOpen == false)
+        {
+            gVar.pauseMenuOpen = true;
+            eventSystem.SetSelectedGameObject(first);
+            Debug.Log("what");
+        }
+        else if (pauseMenu.alpha == 0)
+        {
+            gVar.pauseMenuOpen = false;
+        }
     }
 
     //resume game

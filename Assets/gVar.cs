@@ -16,11 +16,13 @@ public class gVar : MonoBehaviour
     public static bool player4Exists = false;
 
     public static bool justOpened = true;
+    public static bool pauseMenuOpen = false;
 
     public static int level = 1;
     public static int currentLocation = 1;
     public static int readyPlayers = 0;
     public static int requiredReadyPlayers = 0;
+    public static int numberPlayers = 0;
 
     public static int optionTime = 0;
     public static int readyCounter = 0;
@@ -55,7 +57,16 @@ public class gVar : MonoBehaviour
         currentLocation = 1;
         readyPlayers = 0;
         requiredReadyPlayers = 0;
+        numberPlayers = 0;
 
+        greenShots = 0;
+        redShots = 0;
+        blueShots = 0;
+        purpleShots = 0;
+    }
+
+    public static void softReset()
+    {
         greenShots = 0;
         redShots = 0;
         blueShots = 0;
