@@ -65,7 +65,6 @@ public class Player : MonoBehaviour
             {
                 //if green, change sprite to green, increase number of possible green team shots by one, set particle color and start
                 rend.sprite = greenSprite;
-                gVar.greenShots++;
                 anim.SetInteger("Color", 1);
                 color = 0;
                 colorSelf = GREEN;
@@ -73,7 +72,6 @@ public class Player : MonoBehaviour
             else if (gVar.player1 == "Red")
             {
                 rend.sprite = redSprite;
-                gVar.redShots++;
                 anim.SetInteger("Color", 2);
                 color = 1;
                 colorSelf = RED;
@@ -81,7 +79,6 @@ public class Player : MonoBehaviour
             else if (gVar.player1 == "Blue")
             {
                 rend.sprite = blueSprite;
-                gVar.blueShots++;
                 anim.SetInteger("Color", 3);
                 color = 2;
                 colorSelf = BLUE;
@@ -89,7 +86,6 @@ public class Player : MonoBehaviour
             else if (gVar.player1 == "Purple")
             {
                 rend.sprite = purpleSprite;
-                gVar.purpleShots++;
                 anim.SetInteger("Color", 4);
                 color = 3;
                 colorSelf = PURPLE;
@@ -100,7 +96,6 @@ public class Player : MonoBehaviour
             if (gVar.player2 == "Green")
             {
                 rend.sprite = greenSprite;
-                gVar.greenShots++;
                 anim.SetInteger("Color", 1);
                 color = 0;
                 colorSelf = GREEN;
@@ -108,7 +103,6 @@ public class Player : MonoBehaviour
             else if (gVar.player2 == "Red")
             {
                 rend.sprite = redSprite;
-                gVar.redShots++;
                 anim.SetInteger("Color", 2);
                 color = 1;
                 colorSelf = RED;
@@ -116,7 +110,6 @@ public class Player : MonoBehaviour
             else if (gVar.player2 == "Blue")
             {
                 rend.sprite = blueSprite;
-                gVar.blueShots++;
                 anim.SetInteger("Color", 3);
                 color = 2;
                 colorSelf = BLUE;
@@ -124,7 +117,6 @@ public class Player : MonoBehaviour
             else if (gVar.player2 == "Purple")
             {
                 rend.sprite = purpleSprite;
-                gVar.purpleShots++;
                 anim.SetInteger("Color", 4);
                 color = 3;
                 colorSelf = PURPLE;
@@ -135,7 +127,6 @@ public class Player : MonoBehaviour
             if (gVar.player3 == "Green")
             {
                 rend.sprite = greenSprite;
-                gVar.greenShots++;
                 anim.SetInteger("Color", 1);
                 color = 0;
                 colorSelf = GREEN;
@@ -143,7 +134,6 @@ public class Player : MonoBehaviour
             else if (gVar.player3 == "Red")
             {
                 rend.sprite = redSprite;
-                gVar.redShots++;
                 anim.SetInteger("Color", 2);
                 color = 1;
                 colorSelf = RED;
@@ -151,7 +141,6 @@ public class Player : MonoBehaviour
             else if (gVar.player3 == "Blue")
             {
                 rend.sprite = blueSprite;
-                gVar.blueShots++;
                 anim.SetInteger("Color", 3);
                 color = 2;
                 colorSelf = BLUE;
@@ -159,7 +148,6 @@ public class Player : MonoBehaviour
             else if (gVar.player3 == "Purple")
             {
                 rend.sprite = purpleSprite;
-                gVar.purpleShots++;
                 anim.SetInteger("Color", 4);
                 color = 3;
                 colorSelf = PURPLE;
@@ -170,7 +158,6 @@ public class Player : MonoBehaviour
             if (gVar.player4 == "Green")
             {
                 rend.sprite = greenSprite;
-                gVar.greenShots++;
                 anim.SetInteger("Color", 1);
                 color = 0;
                 colorSelf = GREEN;
@@ -178,7 +165,6 @@ public class Player : MonoBehaviour
             else if (gVar.player4 == "Red")
             {
                 rend.sprite = redSprite;
-                gVar.redShots++;
                 anim.SetInteger("Color", 2);
                 color = 1;
                 colorSelf = RED;
@@ -186,7 +172,6 @@ public class Player : MonoBehaviour
             else if (gVar.player4 == "Blue")
             {
                 rend.sprite = blueSprite;
-                gVar.blueShots++;
                 anim.SetInteger("Color", 3);
                 color = 2;
                 colorSelf = BLUE;
@@ -194,7 +179,6 @@ public class Player : MonoBehaviour
             else if (gVar.player4 == "Purple")
             {
                 rend.sprite = purpleSprite;
-                gVar.purpleShots++;
                 anim.SetInteger("Color", 4);
                 color = 3;
                 colorSelf = PURPLE;
