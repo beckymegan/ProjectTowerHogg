@@ -9,7 +9,7 @@ public class Options : MonoBehaviour
     public CanvasGroup pauseMenu;
     public Dropdown fullscreenDropdown;
     public Slider musicSlider, sfxSlider;
-    public GameObject first;
+    public GameObject resumeButton, playButton;
     public EventSystem eventSystem;
 
     private int maxGameWidth, maxGameHeight;
@@ -58,12 +58,13 @@ public class Options : MonoBehaviour
         if (pauseMenu.alpha == 1 && gVar.pauseMenuOpen == false)
         {
             gVar.pauseMenuOpen = true;
-            eventSystem.SetSelectedGameObject(first);
-            Debug.Log("what");
+            eventSystem.SetSelectedGameObject(resumeButton);
         }
-        else if (pauseMenu.alpha == 0)
+        else if (pauseMenu.alpha == 0 && gVar.pauseMenuOpen == true)
         {
             gVar.pauseMenuOpen = false;
+            if(playButton != null) { eventSystem.SetSelectedGameObject(playButton); }
+            
         }
     }
 

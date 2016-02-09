@@ -549,9 +549,13 @@ public class Player : MonoBehaviour
                 loseHealth();
                 hurt = true;
 
-                //create shield for player
-                GameObject playerShield = (GameObject)Instantiate(shield, this.GetComponent<Transform>().position, Quaternion.identity);
-                playerShield.GetComponent<Shield>().setPlayer(this.gameObject);
+                //create shield for player if shield does not currently exist
+                if (GameObject.Find(color + "shield") == null)
+                {
+                    GameObject playerShield = (GameObject)Instantiate(shield, this.GetComponent<Transform>().position, Quaternion.identity);
+                    playerShield.name = color + "shield";
+                    playerShield.GetComponent<Shield>().setPlayer(this.gameObject);
+                }
             }
             else //player color matches ball color
             {
