@@ -329,6 +329,7 @@ public class CharacterSelect : MonoBehaviour
                 }
             }
 
+            //store which button was last selected
             if (Input.GetButtonDown("Jump1")) { selectButtonPress = 1;  }
             else if (Input.GetButtonDown("Jump2")) { selectButtonPress = 2; }
             else if (Input.GetButtonDown("Jump3")) { selectButtonPress = 3; }
@@ -340,7 +341,7 @@ public class CharacterSelect : MonoBehaviour
 
     void readyToPlay()
     {
-        if (gVar.readyPlayers == gVar.requiredReadyPlayers && gVar.requiredReadyPlayers > 1 && gVar.pauseMenuOpen == false) //more than one player have joined and all joined players are ready to play
+        if (gVar.readyPlayers == gVar.requiredReadyPlayers && gVar.requiredReadyPlayers > 1 && gVar.pauseMenuOpen == false && multipleCharacters()) //more than one player have joined and all joined players are ready to play
         {
             playButtonCanvas.interactable = true;
         }
@@ -350,10 +351,26 @@ public class CharacterSelect : MonoBehaviour
         }
     }
 
+    //check to see if there are multiple colors ready to play, eg can't start game with just greens
+    bool multipleCharacters()
+    {
+        if ((gVar.player1 != "Grey") && ((gVar.player1 != gVar.player2 && gVar.player2 != "Grey") || (gVar.player1 != gVar.player3 && gVar.player3 != "Grey") 
+            || (gVar.player1 != gVar.player4 && gVar.player4 != "Grey"))) { return true; }
+        else if ((gVar.player2 != "Grey") && ((gVar.player2 != gVar.player1 && gVar.player1 != "Grey") || (gVar.player2 != gVar.player3 && gVar.player3 != "Grey")
+            || (gVar.player2 != gVar.player4 && gVar.player4 != "Grey"))) { return true; }
+        else if ((gVar.player3 != "Grey") && ((gVar.player3 != gVar.player2 && gVar.player2 != "Grey") || (gVar.player3 != gVar.player1 && gVar.player1 != "Grey")
+            || (gVar.player3 != gVar.player4 && gVar.player4 != "Grey"))) { return true; }
+        else if ((gVar.player4 != "Grey") && ((gVar.player4 != gVar.player2 && gVar.player2 != "Grey") || (gVar.player4 != gVar.player3 && gVar.player3 != "Grey")
+            || (gVar.player4 != gVar.player1 && gVar.player1 != "Grey"))) { return true; }
+        else { return false; }
+    }
+
     //check to make sure controller clicking play is a player that's in the game (and ready) and then load level
     public void playGame()
     {
         Update();
+
+        //check to see which character pressed the play button and whether they exist as a player
         if (selectButtonPress == 1 && gVar.player1Exists == true)
         {
             startGame = true;
@@ -371,6 +388,7 @@ public class CharacterSelect : MonoBehaviour
             startGame = true;
         }
 
+        //load level if player that pressed the button also exists
         if (startGame == true)
         {
             if (gVar.currentLocation == 1)

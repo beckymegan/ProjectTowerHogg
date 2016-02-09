@@ -4,10 +4,10 @@ using System.Collections;
 public class gVar : MonoBehaviour
 {
 
-    public static string player1 = "Green";
-    public static string player2 = "Red";
-    public static string player3 = "Purple";
-    public static string player4 = "Blue";
+    public static string player1 = "Grey";
+    public static string player2 = "Grey";
+    public static string player3 = "Grey";
+    public static string player4 = "Grey";
     public static string direction = "up";
 
     public static bool player1Exists = false;
@@ -42,10 +42,10 @@ public class gVar : MonoBehaviour
     
     public static void resetVars()//reset all gVars
     {
-        player1 = "Green";
-        player2 = "Red";
-        player3 = "Purple";
-        player4 = "Blue";
+        player1 = "Grey";
+        player2 = "Grey";
+        player3 = "Grey";
+        player4 = "Grey";
         direction = "up";
 
         player1Exists = false;
