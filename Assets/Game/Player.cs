@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     public GameObject playerParticleSystem, rocket, objLives, shield;
     public Sprite greenSprite, redSprite, blueSprite, purpleSprite;
     public Material materialSelf;
+    public Vector3[] possibleRespawnLocations = new Vector3[5];
 
     float accelerationTimeAirborne = .2f;
     float accelerationTimeGrounded = .1f;
@@ -25,7 +26,6 @@ public class Player : MonoBehaviour
 
     Controller2D controller;
     Vector2 input = new Vector2(0, 0);
-    Vector2 startLocation;
     Vector3 velocity;
     Material material;
     Renderer rend;
@@ -40,9 +40,6 @@ public class Player : MonoBehaviour
     {
         //set number of players
         gVar.numberPlayers = gVar.readyPlayers;
-
-        //set start location
-        startLocation = new Vector2(startX, startY);
 
         //set colors
         GREEN = new Color(0.435f, 0.768f, 0.662f);
@@ -544,8 +541,8 @@ public class Player : MonoBehaviour
                 particles.GetComponent<Renderer>().material = particleColor;
                 Destroy(particles, 1f);
 
-                //reset player location and lose health
-                this.GetComponent<Transform>().position = startLocation;
+                //respawn player and lose health
+                respawnPlayer();
                 loseHealth();
                 hurt = true;
 
@@ -576,9 +573,9 @@ public class Player : MonoBehaviour
         else if (lives == 0)
         {
             gVar.numberPlayers--;
-            
+
             //remove shots according to players color
-            if(color == 0)
+            if (color == 0)
             {
                 gVar.greenShots--;
             }
@@ -598,6 +595,52 @@ public class Player : MonoBehaviour
             Destroy(objLives);
             Destroy(gameObject);
         }
+    }
+
+    //respawn the player in the best location, chosen randomly. (Best location = furthest away from other players as possible
+    void respawnPlayer()
+    {
+        bool canRespawn = false;
+        int numLoops = 0;
+        int respawnLocation = 0;
+
+        GameObject[] otherPlayers = GameObject.FindGameObjectsWithTag("Player");
+
+        while (canRespawn == false && numLoops <= 10) //loop until player can respawn (or until it's looped 10 times) best case scenario, more than 9 units away
+        {
+            canRespawn = true;
+            respawnLocation = (Random.Range(0, 5));//choose a random spawn location
+
+            for (int i = 0; i < otherPlayers.Length; i++)//check all players against spawn location
+            {
+                //if player is less than 5 units away from potential spawn (eg don't spawn there)
+                if (Vector3.Distance(otherPlayers[i].GetComponent<Transform>().position, possibleRespawnLocations[respawnLocation]) < 9)
+                {
+                    canRespawn = false;
+                }
+            }
+            numLoops++;
+        }
+
+        numLoops = 0;
+
+        while (canRespawn == false && numLoops <= 10) //loop until player can respawn (or until it's looped 10 times) worst case scenario, more than 4 units away
+        {
+            canRespawn = true;
+            respawnLocation = (Random.Range(0, 5));//choose a random spawn location
+
+            for (int i = 0; i < otherPlayers.Length; i++)//check all players against spawn location
+            {
+                //if player is less than 5 units away from potential spawn (eg don't spawn there)
+                if (Vector3.Distance(otherPlayers[i].GetComponent<Transform>().position, possibleRespawnLocations[respawnLocation]) < 4)
+                {
+                    canRespawn = false;
+                }
+            }
+            numLoops++;
+        }
+
+        this.GetComponent<Transform>().position = possibleRespawnLocations[respawnLocation];
     }
 
     void OnBecameInvisible()//if invisible loop to other x/y direction

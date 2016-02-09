@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class LRButton : MonoBehaviour {
@@ -23,7 +24,7 @@ public class LRButton : MonoBehaviour {
         {
             continueButton.sprite = cPressed;
             gVar.level = gVar.currentLocation;
-            Application.LoadLevel("Character Select");
+            SceneManager.LoadScene("Character Select");
         }
     }
 }
