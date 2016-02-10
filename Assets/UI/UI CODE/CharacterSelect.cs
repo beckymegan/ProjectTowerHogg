@@ -35,7 +35,7 @@ public class CharacterSelect : MonoBehaviour
     {
         gVar.optionTime++;//prevent inputs for several frames after closing menus
 
-        
+
 
         if (Time.timeScale == 1 && gVar.optionTime > 25)
         {
@@ -486,10 +486,7 @@ public class CharacterSelect : MonoBehaviour
         {
             return false;
         }
-        else
-        {
-            return true;
-        }
+        return true;
     }
 
     //check to make sure controller clicking play is a player that's in the game (and ready) and then load level
@@ -518,26 +515,7 @@ public class CharacterSelect : MonoBehaviour
         //load level if player that pressed the button also exists
         if (startGame == true)
         {
-            if (gVar.currentLocation == 1)
-            {
-                SceneManager.LoadScene("Level 1");
-            }
-            else if (gVar.currentLocation == 2)
-            {
-                SceneManager.LoadScene("Level 2");
-            }
-            else if (gVar.currentLocation == 3)
-            {
-                SceneManager.LoadScene("Level 3");
-            }
-            else if (gVar.currentLocation == 4)
-            {
-                SceneManager.LoadScene("Level 4");
-            }
-            else if (gVar.currentLocation == 5)
-            {
-                SceneManager.LoadScene("Level 5");
-            }
+            SceneManager.LoadScene("Loading Screen");
         }
     }
 
