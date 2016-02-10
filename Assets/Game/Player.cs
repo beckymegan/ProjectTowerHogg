@@ -41,6 +41,12 @@ public class Player : MonoBehaviour
         //set number of players
         gVar.numberPlayers = gVar.readyPlayers;
 
+        //store number of shots for soft reset
+        gVar.greenShotsStored = gVar.greenShots;
+        gVar.redShotsStored = gVar.redShots;
+        gVar.blueShotsStored = gVar.blueShots;
+        gVar.purpleShotsStored = gVar.purpleShots;
+
         //set colors
         GREEN = new Color(0.435f, 0.768f, 0.662f);
         RED = new Color(0.945f, 0.611f, 0.717f);

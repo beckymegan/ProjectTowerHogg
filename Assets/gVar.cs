@@ -35,6 +35,11 @@ public class gVar : MonoBehaviour
     public static int blueShots = 0;
     public static int purpleShots = 0;
 
+    public static int greenShotsStored = 0;
+    public static int redShotsStored = 0;
+    public static int blueShotsStored = 0;
+    public static int purpleShotsStored = 0;
+
     public static float volume = 1f;
     public static float musicVolume = 1f;
 
@@ -67,9 +72,9 @@ public class gVar : MonoBehaviour
 
     public static void softReset()
     {
-        greenShots = 0;
-        redShots = 0;
-        blueShots = 0;
-        purpleShots = 0;
+        greenShots = greenShotsStored;
+        redShots = redShotsStored;
+        blueShots = blueShotsStored;
+        purpleShots = purpleShotsStored;
     }
 }

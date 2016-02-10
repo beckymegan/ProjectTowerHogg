@@ -37,7 +37,6 @@ public class LoadingGame : MonoBehaviour
 
         while (!async.isDone)
         {
-            Debug.Log("loading");
             yield return null;
         }
     }

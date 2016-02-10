@@ -381,13 +381,16 @@ public class CharacterSelect : MonoBehaviour
 
     void readyToPlay()
     {
-        if (gVar.readyPlayers == gVar.requiredReadyPlayers && gVar.requiredReadyPlayers > 1 && isReadyToPlay == true && gVar.pauseMenuOpen == false && multipleCharacters()) //more than one player have joined and all joined players are ready to play
+        if (playerNumber == 1)
         {
-            playButtonCanvas.interactable = true;
-        }
-        else
-        {
-            playButtonCanvas.interactable = false;
+            if (gVar.readyPlayers == gVar.requiredReadyPlayers && gVar.requiredReadyPlayers > 1 && isReadyToPlay == true && gVar.pauseMenuOpen == false && multipleCharacters()) //more than one player have joined and all joined players are ready to play
+            {
+                playButtonCanvas.interactable = true;
+            }
+            else
+            {
+                playButtonCanvas.interactable = false;
+            }
         }
     }
 
@@ -493,7 +496,6 @@ public class CharacterSelect : MonoBehaviour
     public void playGame()
     {
         Update();
-
         //check to see which character pressed the play button and whether they exist as a player
         if (selectButtonPress == 1 && gVar.player1Exists == true)
         {

@@ -110,7 +110,7 @@ public class Options : MonoBehaviour
         Time.timeScale = 1;
         SceneManager.LoadScene("Level Select");
     }
-
+    
     //quit game
     public void quit()
     {
