@@ -50,17 +50,17 @@ public class CharacterSelect : MonoBehaviour
                 p1wasTrue = false;
                 setPlayerColor(1, -1);
             }
-            else if (gVar.player2Exists && (Input.GetAxis("Horizontal2") > 0.5f || Input.GetAxis("Horizontal2") < -0.5f || Input.GetButton("Back2")) && p2wasTrue == true)
+            else if (gVar.player2Exists && (((Input.GetAxis("Horizontal2") == 1 || Input.GetAxis("Horizontal2") == -1) && menuCounter >= 20) || Input.GetButton("Back2")) && p2wasTrue == true)
             {
                 p2wasTrue = false;
                 setPlayerColor(2, -1);
             }
-            else if (gVar.player3Exists && (Input.GetAxis("Horizontal3") > 0.5f || Input.GetAxis("Horizontal3") < -0.5f || Input.GetButton("Back3")) && p3wasTrue == true)
+            else if (gVar.player3Exists && (((Input.GetAxis("Horizontal3") == 1 || Input.GetAxis("Horizontal3") == -1) && menuCounter >= 20) || Input.GetButton("Back3")) && p3wasTrue == true)
             {
                 p3wasTrue = false;
                 setPlayerColor(3, -1);
             }
-            else if (gVar.player4Exists && (Input.GetAxis("Horizontal4") > 0.5f || Input.GetAxis("Horizontal4") < -0.5f || Input.GetButton("Back4")) && p4wasTrue == true)
+            else if (gVar.player4Exists && (((Input.GetAxis("Horizontal4") == 1 || Input.GetAxis("Horizontal4") == -1) && menuCounter >= 20) || Input.GetButton("Back4")) && p4wasTrue == true)
             {
                 p4wasTrue = false;
                 setPlayerColor(4, -1);
@@ -375,13 +375,13 @@ public class CharacterSelect : MonoBehaviour
             else if (Input.GetButtonDown("Jump2")) { selectButtonPress = 2; }
             else if (Input.GetButtonDown("Jump3")) { selectButtonPress = 3; }
             else if (Input.GetButtonDown("Jump4")) { selectButtonPress = 4; }
-            readyToPlay();
+            readyToPlay(selectButtonPress);//send in last character that joined (eg ensuring that the player that is then going to be run through the readyToPlay if statement exists)
         }
     }
 
-    void readyToPlay()
+    void readyToPlay(int characterNum)
     {
-        if (playerNumber == 1)
+        if (playerNumber == characterNum)//ensure running only once
         {
             if (gVar.readyPlayers == gVar.requiredReadyPlayers && gVar.requiredReadyPlayers > 1 && isReadyToPlay == true && gVar.pauseMenuOpen == false && multipleCharacters()) //more than one player have joined and all joined players are ready to play
             {
@@ -394,85 +394,86 @@ public class CharacterSelect : MonoBehaviour
         }
     }
 
-    public void setPlayerColor(int playerNumber, int incDec)
+    public void setPlayerColor(int numOfPlayer, int incDec)
     {
-        if (playerNumber == 1)
-        {
-            if (gVar.player1 == "Green")
+            if (numOfPlayer == 1)
             {
-                gVar.greenShots += incDec;
+                if (gVar.player1 == "Green")
+                {
+                    gVar.greenShots += incDec;
+                }
+                else if (gVar.player1 == "Red")
+                {
+                    gVar.redShots += incDec;
+                }
+                else if (gVar.player1 == "Blue")
+                {
+                    gVar.blueShots += incDec;
+                }
+                else if (gVar.player1 == "Purple")
+                {
+                    gVar.purpleShots += incDec;
+                }
             }
-            else if (gVar.player1 == "Red")
+            else if (numOfPlayer == 2)
             {
-                gVar.redShots += incDec;
+                if (gVar.player2 == "Green")
+                {
+                    gVar.greenShots += incDec;
+                }
+                else if (gVar.player2 == "Red")
+                {
+                    gVar.redShots += incDec;
+                }
+                else if (gVar.player2 == "Blue")
+                {
+                    gVar.blueShots += incDec;
+                }
+                else if (gVar.player2 == "Purple")
+                {
+                    gVar.purpleShots += incDec;
+                }
             }
-            else if (gVar.player1 == "Blue")
+            else if (numOfPlayer == 3)
             {
-                gVar.blueShots += incDec;
+                if (gVar.player3 == "Green")
+                {
+                    gVar.greenShots += incDec;
+                }
+                else if (gVar.player3 == "Red")
+                {
+                    gVar.redShots += incDec;
+                }
+                else if (gVar.player3 == "Blue")
+                {
+                    gVar.blueShots += incDec;
+                }
+                else if (gVar.player3 == "Purple")
+                {
+                    gVar.purpleShots += incDec;
+                }
             }
-            else if (gVar.player1 == "Purple")
+            else if (numOfPlayer == 4)
             {
-                gVar.purpleShots += incDec;
+                if (gVar.player4 == "Green")
+                {
+                    gVar.greenShots += incDec;
+                }
+                else if (gVar.player4 == "Red")
+                {
+                    gVar.redShots += incDec;
+                }
+                else if (gVar.player4 == "Blue")
+                {
+                    gVar.blueShots += incDec;
+                }
+                else if (gVar.player4 == "Purple")
+                {
+                    gVar.purpleShots += incDec;
+                }
             }
+        Debug.Log(gVar.greenShots + " " + gVar.redShots + " " + gVar.purpleShots + " " + gVar.blueShots);
         }
-        else if (playerNumber == 2)
-        {
-            if (gVar.player2 == "Green")
-            {
-                gVar.greenShots += incDec;
-            }
-            else if (gVar.player2 == "Red")
-            {
-                gVar.redShots += incDec;
-            }
-            else if (gVar.player2 == "Blue")
-            {
-                gVar.blueShots += incDec;
-            }
-            else if (gVar.player2 == "Purple")
-            {
-                gVar.purpleShots += incDec;
-            }
-        }
-        else if (playerNumber == 3)
-        {
-            if (gVar.player3 == "Green")
-            {
-                gVar.greenShots += incDec;
-            }
-            else if (gVar.player3 == "Red")
-            {
-                gVar.redShots += incDec;
-            }
-            else if (gVar.player3 == "Blue")
-            {
-                gVar.blueShots += incDec;
-            }
-            else if (gVar.player3 == "Purple")
-            {
-                gVar.purpleShots += incDec;
-            }
-        }
-        else if (playerNumber == 4)
-        {
-            if (gVar.player4 == "Green")
-            {
-                gVar.greenShots += incDec;
-            }
-            else if (gVar.player4 == "Red")
-            {
-                gVar.redShots += incDec;
-            }
-            else if (gVar.player4 == "Blue")
-            {
-                gVar.blueShots += incDec;
-            }
-            else if (gVar.player4 == "Purple")
-            {
-                gVar.purpleShots += incDec;
-            }
-        }
-    }
 
     //check to see if there are multiple colors ready to play, eg can't start game with just greens
     bool multipleCharacters()

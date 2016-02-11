@@ -4,7 +4,6 @@ using System.Collections;
 
 public class CharacterSelectLogic : MonoBehaviour
 {
-
     public CharacterSelect characterSelectCode;
     public GameObject player1, player2, player3, player4;
     public AudioClip selectCharacter, backCharacter;
