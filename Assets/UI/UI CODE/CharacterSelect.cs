@@ -11,6 +11,7 @@ public class CharacterSelect : MonoBehaviour
     public CanvasGroup playButtonCanvas;
     public EventSystem eventSystem;
     public GameObject first;
+    public Vector2[] locations = new Vector2[4];
 
     private int locationP1 = 1, locationP2 = 1, locationP3 = 1, locationP4 = 1;
     private int selectButtonPress = 1;//last player to press start
@@ -19,14 +20,14 @@ public class CharacterSelect : MonoBehaviour
     private bool changedMind = false; //prevents infinite changes to readyPlayers if a player selects a character then moves again
     private int menuCounter = 0;
     private int greenPlayers, redPlayers, bluePlayers, purplePlayers;
-    bool p1wasTrue = false, p2wasTrue = false, p3wasTrue = false, p4wasTrue = false;
+    private bool p1wasTrue = false, p2wasTrue = false, p3wasTrue = false, p4wasTrue = false;
 
-    private AudioSource audio;
+    private AudioSource aud;
 
     void Start()
     {
         Time.timeScale = 1;
-        audio = GetComponent<AudioSource>();
+        aud = GetComponent<AudioSource>();
         playButtonCanvas.interactable = false;
         eventSystem.SetSelectedGameObject(first);
     }
@@ -34,9 +35,6 @@ public class CharacterSelect : MonoBehaviour
     void Update()
     {
         gVar.optionTime++;//prevent inputs for several frames after closing menus
-
-
-
         if (Time.timeScale == 1 && gVar.optionTime > 25)
         {
             gVar.readyCounter++;
@@ -76,7 +74,7 @@ public class CharacterSelect : MonoBehaviour
                     menuCounter = 0;//reset counter
 
                     //play switching sound
-                    audio.PlayOneShot(switchCharacter, 1f);
+                    aud.PlayOneShot(switchCharacter, 1f);
 
                     isReadyToPlay = false;//moved selection therefore not ready to play
                     this.GetComponent<SpriteRenderer>().sprite = oriSprite;
@@ -89,7 +87,7 @@ public class CharacterSelect : MonoBehaviour
                     menuCounter = 0;//reset counter
 
                     //play switching sound
-                    audio.PlayOneShot(switchCharacter, 1f);
+                    aud.PlayOneShot(switchCharacter, 1f);
 
                     isReadyToPlay = false;//moved selection therefore not ready to play
                     this.GetComponent<SpriteRenderer>().sprite = oriSprite;
@@ -98,25 +96,22 @@ public class CharacterSelect : MonoBehaviour
                 }
 
                 //set character depending on location of player
+                this.transform.position = locations[locationP1 - 1];
                 if (locationP1 == 1)
                 {
                     gVar.player1 = "Green";
-                    this.transform.position = new Vector2(-6f, this.transform.position.y);
                 }
                 else if (locationP1 == 2)
                 {
                     gVar.player1 = "Red";
-                    this.transform.position = new Vector2(-2f, this.transform.position.y);
                 }
                 else if (locationP1 == 3)
                 {
                     gVar.player1 = "Blue";
-                    this.transform.position = new Vector2(2f, this.transform.position.y);
                 }
                 else if (locationP1 == 4)
                 {
                     gVar.player1 = "Purple";
-                    this.transform.position = new Vector2(6f, this.transform.position.y);
                 }
 
                 //select character "i'm ready to play"
@@ -128,7 +123,7 @@ public class CharacterSelect : MonoBehaviour
                     setPlayerColor(1, 1);
 
                     //play select sound
-                    audio.PlayOneShot(selectCharacter, 1f);
+                    aud.PlayOneShot(selectCharacter, 1f);
 
                     this.GetComponent<SpriteRenderer>().sprite = selectedSprite;
                     isReadyToPlay = true; changedMind = true;
@@ -152,7 +147,7 @@ public class CharacterSelect : MonoBehaviour
                     menuCounter = 0;//reset counter
 
                     //play switching sound
-                    audio.PlayOneShot(switchCharacter, 1f);
+                    aud.PlayOneShot(switchCharacter, 1f);
 
                     isReadyToPlay = false;//moved selection therefore not ready to play
                     this.GetComponent<SpriteRenderer>().sprite = oriSprite;
@@ -165,7 +160,7 @@ public class CharacterSelect : MonoBehaviour
                     menuCounter = 0;//reset counter
 
                     //play switching sound
-                    audio.PlayOneShot(switchCharacter, 1f);
+                    aud.PlayOneShot(switchCharacter, 1f);
 
                     isReadyToPlay = false;//moved selection therefore not ready to play
                     this.GetComponent<SpriteRenderer>().sprite = oriSprite;
@@ -173,25 +168,23 @@ public class CharacterSelect : MonoBehaviour
                     if (locationP2 < 1) { locationP2 = 4; }
                 }
 
+                this.transform.position = locations[locationP2 - 1];
+
                 if (locationP2 == 1)
                 {
                     gVar.player2 = "Green";
-                    this.transform.position = new Vector2(-6f, this.transform.position.y);
                 }
                 else if (locationP2 == 2)
                 {
                     gVar.player2 = "Red";
-                    this.transform.position = new Vector2(-2f, this.transform.position.y);
                 }
                 else if (locationP2 == 3)
                 {
                     gVar.player2 = "Blue";
-                    this.transform.position = new Vector2(2f, this.transform.position.y);
                 }
                 else if (locationP2 == 4)
                 {
                     gVar.player2 = "Purple";
-                    this.transform.position = new Vector2(6f, this.transform.position.y);
                 }
 
                 //select character "i'm ready to play"
@@ -203,7 +196,7 @@ public class CharacterSelect : MonoBehaviour
                     setPlayerColor(2, 1);
 
                     //play select sound
-                    audio.PlayOneShot(selectCharacter, 1f);
+                    aud.PlayOneShot(selectCharacter, 1f);
 
                     this.GetComponent<SpriteRenderer>().sprite = selectedSprite;
                     isReadyToPlay = true; changedMind = true;
@@ -227,7 +220,7 @@ public class CharacterSelect : MonoBehaviour
                     menuCounter = 0;//reset counter
 
                     //play switching sound
-                    audio.PlayOneShot(switchCharacter, 1f);
+                    aud.PlayOneShot(switchCharacter, 1f);
 
                     isReadyToPlay = false;//moved selection therefore not ready to play
                     this.GetComponent<SpriteRenderer>().sprite = oriSprite;
@@ -240,7 +233,7 @@ public class CharacterSelect : MonoBehaviour
                     menuCounter = 0;//reset counter
 
                     //play switching sound
-                    audio.PlayOneShot(switchCharacter, 1f);
+                    aud.PlayOneShot(switchCharacter, 1f);
 
                     isReadyToPlay = false;//moved selection therefore not ready to play
                     this.GetComponent<SpriteRenderer>().sprite = oriSprite;
@@ -248,25 +241,23 @@ public class CharacterSelect : MonoBehaviour
                     if (locationP3 < 1) { locationP3 = 4; }
                 }
 
+                this.transform.position = locations[locationP3 - 1];
+
                 if (locationP3 == 1)
                 {
                     gVar.player3 = "Green";
-                    this.transform.position = new Vector2(-6f, this.transform.position.y);
                 }
                 else if (locationP3 == 2)
                 {
                     gVar.player3 = "Red";
-                    this.transform.position = new Vector2(-2f, this.transform.position.y);
                 }
                 else if (locationP3 == 3)
                 {
                     gVar.player3 = "Blue";
-                    this.transform.position = new Vector2(2f, this.transform.position.y);
                 }
                 else if (locationP3 == 4)
                 {
                     gVar.player3 = "Purple";
-                    this.transform.position = new Vector2(6f, this.transform.position.y);
                 }
 
                 //select character "i'm ready to play"
@@ -278,7 +269,7 @@ public class CharacterSelect : MonoBehaviour
                     setPlayerColor(3, 1);
 
                     //play select sound
-                    audio.PlayOneShot(selectCharacter, 1f);
+                    aud.PlayOneShot(selectCharacter, 1f);
 
                     this.GetComponent<SpriteRenderer>().sprite = selectedSprite;
                     isReadyToPlay = true; changedMind = true;
@@ -302,7 +293,7 @@ public class CharacterSelect : MonoBehaviour
                     menuCounter = 0;//reset counter
 
                     //play switching sound
-                    audio.PlayOneShot(switchCharacter, 1f);
+                    aud.PlayOneShot(switchCharacter, 1f);
 
                     isReadyToPlay = false;//moved selection therefore not ready to play
                     this.GetComponent<SpriteRenderer>().sprite = oriSprite;
@@ -315,7 +306,7 @@ public class CharacterSelect : MonoBehaviour
                     menuCounter = 0;//reset counter
 
                     //play switching sound
-                    audio.PlayOneShot(switchCharacter, 1f);
+                    aud.PlayOneShot(switchCharacter, 1f);
 
                     isReadyToPlay = false;//moved selection therefore not ready to play
                     this.GetComponent<SpriteRenderer>().sprite = oriSprite;
@@ -323,25 +314,23 @@ public class CharacterSelect : MonoBehaviour
                     if (locationP4 < 1) { locationP4 = 4; }
                 }
 
+                this.transform.position = locations[locationP4 - 1];
+
                 if (locationP4 == 1)
                 {
                     gVar.player4 = "Green";
-                    this.transform.position = new Vector2(-6f, this.transform.position.y);
                 }
                 else if (locationP4 == 2)
                 {
                     gVar.player4 = "Red";
-                    this.transform.position = new Vector2(-2f, this.transform.position.y);
                 }
                 else if (locationP4 == 3)
                 {
                     gVar.player4 = "Blue";
-                    this.transform.position = new Vector2(2f, this.transform.position.y);
                 }
                 else if (locationP4 == 4)
                 {
                     gVar.player4 = "Purple";
-                    this.transform.position = new Vector2(6f, this.transform.position.y);
                 }
 
                 //select character "i'm ready to play"
@@ -353,7 +342,7 @@ public class CharacterSelect : MonoBehaviour
                     setPlayerColor(4, 1);
 
                     //play select sound
-                    audio.PlayOneShot(selectCharacter, 1f);
+                    aud.PlayOneShot(selectCharacter, 1f);
 
                     this.GetComponent<SpriteRenderer>().sprite = selectedSprite;
                     isReadyToPlay = true; changedMind = true;
@@ -472,7 +461,6 @@ public class CharacterSelect : MonoBehaviour
                     gVar.purpleShots += incDec;
                 }
             }
-        Debug.Log(gVar.greenShots + " " + gVar.redShots + " " + gVar.purpleShots + " " + gVar.blueShots);
         }
 
     //check to see if there are multiple colors ready to play, eg can't start game with just greens

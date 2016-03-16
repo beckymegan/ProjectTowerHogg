@@ -43,8 +43,11 @@ public class ScrollingBackground : MonoBehaviour {
         {
             this.GetComponent<Transform>().position = new Vector3(19.67f, this.transform.position.y, 2);
         }
-
-        if((this.GetComponent<Transform>().position.x < -6) && (SceneManager.GetActiveScene().name.Equals("Level Select")))
+        else if ((this.GetComponent<Transform>().position.x < -20) && (SceneManager.GetActiveScene().name.Equals("Start Game")))
+        {
+            this.GetComponent<Transform>().position = new Vector3(23.07f, this.transform.position.y, 2);
+        }
+        else if ((this.GetComponent<Transform>().position.x < -6) && (SceneManager.GetActiveScene().name.Equals("Level Select")))
         {
             this.GetComponent<Transform>().position = new Vector3(5.9f, this.transform.position.y, 2);
         }

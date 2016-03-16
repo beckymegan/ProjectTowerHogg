@@ -3,7 +3,6 @@ using System.Collections;
 
 public class Rocket : MonoBehaviour
 {
-
     public int shootSpeed, colorShot;
     public float blastZone, xVelocity, yVelocity;
     public Sprite gRocket, rRocket, bRocket, pRocket;
@@ -12,18 +11,25 @@ public class Rocket : MonoBehaviour
 
     private string direction;
     private Color GREEN, RED, BLUE, PURPLE;
-    private bool wallcheck = false;
-
-
+    private bool wasShot = false;
+    
     // Use this for initialization
     void Start()
     {
         direction = gVar.direction;
+
         //set colors
         GREEN = new Color(0.435f, 0.768f, 0.662f);
         RED = new Color(0.945f, 0.611f, 0.717f);
         BLUE = new Color(0.553f, 0.710f, 0.906f);
         PURPLE = new Color(0.615f, 0.611f, 0.945f);
+
+        //if object spawns off the edge then reverse x
+        if (this.GetComponent<Transform>().position.x > 20 || this.GetComponent<Transform>().position.x < -20)
+        {
+            Vector3 location = new Vector3((-1) * (this.GetComponent<Transform>().position.x), this.GetComponent<Transform>().position.y, 0);
+            this.GetComponent<Transform>().position = location;
+        }
     }
 
     //render sprite image to match shooter
@@ -52,17 +58,22 @@ public class Rocket : MonoBehaviour
     void Update()
     {
         //if direction is right rotate rocket and shoot right
-        if (direction == "right" && wallcheck == false)
+        if (direction == "right" && wasShot == false)
         {
             this.GetComponent<Transform>().Rotate(new Vector3(0, 0, -330));
             this.GetComponent<Rigidbody2D>().AddForce(this.transform.right * shootSpeed);
-            wallcheck = true;
+            wasShot = true;
         }
-        else if (direction == "left" && wallcheck == false)
+        else if (direction == "left" && wasShot == false)
         {
             this.GetComponent<Transform>().Rotate(new Vector3(0, 0, 330));
             this.GetComponent<Rigidbody2D>().AddForce(-this.transform.right * shootSpeed);
-            wallcheck = true;
+            wasShot = true;
+        }
+        //check if ball is not moving (eg is stuck, or been stagnant for a long time)
+        if (this.GetComponent<Rigidbody2D>().velocity.x == 0 && this.GetComponent<Rigidbody2D>().velocity.y == 0)
+        {
+            BallDestroy();
         }
     }
 
@@ -126,6 +137,37 @@ public class Rocket : MonoBehaviour
         }
     }
 
+    //ball is destoryed because it got stuck in the wall
+    void BallDestroy()
+    {
+        Material particleColor = new Material(shotColor);
+        if (colorShot == 0)//if ball is green increase greenshots by one
+        {
+            gVar.greenShots++;
+            particleColor.SetColor("_EmissionColor", GREEN);
+        }
+        else if (colorShot == 1)
+        {
+            gVar.redShots++;
+            particleColor.SetColor("_EmissionColor", RED);
+        }
+        else if (colorShot == 2)
+        {
+            gVar.blueShots++;
+            particleColor.SetColor("_EmissionColor", BLUE);
+        }
+        else if (colorShot == 3)
+        {
+            gVar.purpleShots++;
+            particleColor.SetColor("_EmissionColor", PURPLE);
+        }
+
+        GameObject particles = (GameObject)Instantiate(ballParticleSystem, this.GetComponent<Transform>().position, Quaternion.identity);
+        particles.GetComponent<Renderer>().material = particleColor;
+        Destroy(particles, 0.5f);
+        Destroy(gameObject);
+    }
+
     public string Direction()
     {
         return direction;
@@ -133,12 +175,12 @@ public class Rocket : MonoBehaviour
 
     void OnBecameInvisible()//if invisible loop to other x/y direction
     {
-        if (this.GetComponent<Transform>().position.y > 10 || this.GetComponent<Transform>().position.y < -10)//if invisible and above 5/under -5 (eg top or bottom) reverse y
+        if (this.GetComponent<Transform>().position.y > 10 || this.GetComponent<Transform>().position.y < -10)//if invisible and above 10/under -10 (eg top or bottom) reverse y
         {
             Vector3 location = new Vector3(this.GetComponent<Transform>().position.x, (-1) * (this.GetComponent<Transform>().position.y), 0);
             this.GetComponent<Transform>().position = location;
         }
-        else //if invisible and  between 5 and -5 (eg left or right) reverse x
+        else //if invisible and  between 10 and -10 (eg left or right) reverse x
         {
             Vector3 location = new Vector3((-1) * (this.GetComponent<Transform>().position.x), this.GetComponent<Transform>().position.y, 0);
             this.GetComponent<Transform>().position = location;

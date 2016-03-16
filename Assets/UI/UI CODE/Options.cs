@@ -6,10 +6,12 @@ using System.Collections;
 
 public class Options : MonoBehaviour
 {
-    public CanvasGroup pauseMenu;
+    public int playerUsingMenu = 0;
+
+    public CanvasGroup pauseMenu, howToPlayCanvas;
     public Dropdown fullscreenDropdown;
     public Slider musicSlider, sfxSlider;
-    public GameObject resumeButton, playButton;
+    public GameObject resumeButton, playButton, startButton, backHowToButton;
     public EventSystem eventSystem;
 
     private int maxGameWidth, maxGameHeight;
@@ -55,41 +57,69 @@ public class Options : MonoBehaviour
 
     void Update()
     {
-        if (pauseMenu.alpha == 1 && gVar.pauseMenuOpen == false)
+        //if back button is pressed by player who opened it, close
+        if ((pauseMenu.alpha == 1) && ((playerUsingMenu == 1 && Input.GetButtonDown("Back1")) || (playerUsingMenu == 2 && Input.GetButtonDown("Back2"))
+            || (playerUsingMenu == 3 || Input.GetButtonDown("Back3")) || (playerUsingMenu == 4 && Input.GetButtonDown("Back4")) || (playerUsingMenu == 0 && Input.GetButtonDown("GBack"))))
         {
-            gVar.pauseMenuOpen = true;
-            eventSystem.SetSelectedGameObject(resumeButton);
+            resume();
         }
-        else if (pauseMenu.alpha == 0 && gVar.pauseMenuOpen == true)
+
+        if (SceneManager.GetActiveScene().name == "Start Game")
         {
-            gVar.pauseMenuOpen = false;
-            if(playButton != null) { eventSystem.SetSelectedGameObject(playButton); }
-            
+            if (pauseMenu.alpha == 1 && gVar.pauseMenuOpen == false)
+            {
+                gVar.pauseMenuOpen = true;
+                eventSystem.SetSelectedGameObject(resumeButton);
+            }
+            else if (pauseMenu.alpha == 0 && gVar.pauseMenuOpen == true && eventSystem.currentSelectedGameObject.Equals(backHowToButton) == false)
+            {
+                gVar.pauseMenuOpen = false;
+                eventSystem.SetSelectedGameObject(startButton);
+
+            }
+        }
+        else
+        {
+            if (pauseMenu.alpha == 1 && gVar.pauseMenuOpen == false)
+            {
+                gVar.pauseMenuOpen = true;
+                eventSystem.SetSelectedGameObject(resumeButton);
+            }
+            else if (pauseMenu.alpha == 0 && gVar.pauseMenuOpen == true && eventSystem.currentSelectedGameObject.Equals(backHowToButton) == false)
+            {
+                gVar.pauseMenuOpen = false;
+                if (playButton != null) { eventSystem.SetSelectedGameObject(playButton); }
+
+            }
         }
     }
 
     //resume game
     public void resume()
     {
+        eventSystem.GetComponent<StandaloneInputModule>().verticalAxis = "GVertical";
+        eventSystem.GetComponent<StandaloneInputModule>().submitButton = "GSelect";
         gVar.optionTime = 0;
         pauseMenu.GetComponent<CanvasGroup>().alpha = 0;
         pauseMenu.GetComponent<CanvasGroup>().interactable = false;
+        howToPlayCanvas.GetComponent<CanvasGroup>().alpha = 0;
+        howToPlayCanvas.GetComponent<CanvasGroup>().interactable = false;
         Time.timeScale = 1;
     }
 
     //change to/from fullscreen
-    public void changeFullscreen(int fullscreenOption)
+    public void changeFullscreen(Dropdown dropdown)
     {
-        if (fullscreenOption == 0)//fullscreen
+        if (dropdown.value == 0)//fullscreen
         {
             Screen.SetResolution(maxGameWidth, maxGameHeight, true);
         }
-        else if (fullscreenOption == 1)//not fullscreen
+        else if (dropdown.value == 1)//not fullscreen
         {
             Screen.SetResolution(gVar.gameWidth, gVar.gameHeight, false);
         }
     }
-
+    
     //change music volume
     public void musicVolume(float volume)
     {
@@ -105,12 +135,47 @@ public class Options : MonoBehaviour
     //return to level select menu
     public void menu()
     {
+        playerUsingMenu = 0; //any player can close
         gVar.optionTime = 0;
-        gVar.resetVars();
         Time.timeScale = 1;
         SceneManager.LoadScene("Level Select");
     }
-    
+
+    public void next()
+    {
+        gVar.optionTime = 0;
+        Time.timeScale = 1;
+        SceneManager.LoadScene("Character Select");
+    }
+
+    //restart level
+    public void restart()
+    {
+        gVar.softReset();
+        Scene scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(scene.name);
+    }
+
+    //open up how to play menu
+    public void howToPlay()
+    {
+        howToPlayCanvas.GetComponent<CanvasGroup>().alpha = 1;
+        howToPlayCanvas.GetComponent<CanvasGroup>().interactable = true;
+        pauseMenu.GetComponent<CanvasGroup>().alpha = 0;
+        pauseMenu.GetComponent<CanvasGroup>().interactable = false;
+        eventSystem.SetSelectedGameObject(backHowToButton);
+    }
+
+    //return to pause menu after closing howtoplay menu
+    public void resumeHowTo()
+    {
+        howToPlayCanvas.GetComponent<CanvasGroup>().alpha = 0;
+        howToPlayCanvas.GetComponent<CanvasGroup>().interactable = false;
+        pauseMenu.GetComponent<CanvasGroup>().alpha = 1;
+        pauseMenu.GetComponent<CanvasGroup>().interactable = true;
+        eventSystem.SetSelectedGameObject(resumeButton);
+    }
+
     //quit game
     public void quit()
     {

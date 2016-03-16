@@ -18,21 +18,25 @@ public class Shield : MonoBehaviour
         if (player.GetComponent<Player>().color == 0)//if color is green set sprite to green and set color to green
         {
             this.GetComponent<SpriteRenderer>().sprite = greenShield;
+            gameObject.layer = 12; //set shield layer to green
             color = 0;
         }
         else if (player.GetComponent<Player>().color == 1)
         {
             this.GetComponent<SpriteRenderer>().sprite = redShield;
+            gameObject.layer = 13;
             color = 1;
         }
         else if (player.GetComponent<Player>().color == 2)
         {
             this.GetComponent<SpriteRenderer>().sprite = blueShield;
+            gameObject.layer = 14;
             color = 2;
         }
         else if (player.GetComponent<Player>().color == 3)
         {
             this.GetComponent<SpriteRenderer>().sprite = purpleShield;
+            gameObject.layer = 15;
             color = 3;
         }
     }

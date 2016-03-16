@@ -1,0 +1,13 @@
+Only player can control pause menus
+
+Fixed teams not being able to win
+
+Can't get hurt when shield is on
+
+Plays can collide with each other, players collide with shields of differing colors
+
+Balls are destroyed when stuck in a wall
+
+Added logo and title animation (dropping balls)
+
+Added buttons/joysticks to some menus

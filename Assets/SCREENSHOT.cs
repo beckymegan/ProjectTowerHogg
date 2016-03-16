@@ -1,16 +1,15 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class SCREENSHOT : MonoBehaviour
 {
-    private static int screenshotNum = 0;
     void Update()
     {
-        if (Input.GetKeyDown("p"))
+        if (Input.GetKeyDown("p")|| Input.GetKeyDown("joystick button 5"))
         {
-            Application.CaptureScreenshot("Screenshot"+screenshotNum+".png");
-            Debug.Log("SCREENSHOT "+ screenshotNum);
-            screenshotNum++;
+            Application.CaptureScreenshot(SceneManager.GetActiveScene().name+" "+ System.DateTime.Now.Month+"-"+System.DateTime.Now.Day + "-" + System.DateTime.Now.Hour + "-" + System.DateTime.Now.Minute + "-" + System.DateTime.Now.Second + ".png");
+            Debug.Log(SceneManager.GetActiveScene().name + " " + System.DateTime.Now.Month + "-" + System.DateTime.Now.Day + "-" + System.DateTime.Now.Hour + "-" + System.DateTime.Now.Minute + "-" + System.DateTime.Now.Second);
         }
     }
 }
