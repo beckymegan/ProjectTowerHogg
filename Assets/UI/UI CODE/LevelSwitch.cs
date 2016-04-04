@@ -62,7 +62,7 @@ public class LevelSwitch : MonoBehaviour
             loadingDir = "left";
 
             //play switching sound
-            GetComponent<AudioSource>().PlayOneShot(switchLevel, 1f);
+            GetComponent<AudioSource>().PlayOneShot(switchLevel, gVar.sfxVolume);
         }
         //rotate levels left
         else if ((((Input.GetAxisRaw("Horizontal1") < 0 || Input.GetAxisRaw("Horizontal2") < 0 || Input.GetAxisRaw("Horizontal3") < 0 || Input.GetAxisRaw("Horizontal4") < 0) && menuCounter >= 20)))
@@ -74,7 +74,7 @@ public class LevelSwitch : MonoBehaviour
             loadingDir = "right";
 
             //play switching sound
-            GetComponent<AudioSource>().PlayOneShot(switchLevel, 1f);
+            GetComponent<AudioSource>().PlayOneShot(switchLevel, gVar.sfxVolume);
         }
 
         //loops level select so gVar.currentLocation must be 1-5

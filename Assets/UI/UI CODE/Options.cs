@@ -12,11 +12,13 @@ public class Options : MonoBehaviour
     public Dropdown fullscreenDropdown;
     public Slider musicSlider, sfxSlider;
     public GameObject resumeButton, playButton, startButton, backHowToButton;
+    public AudioClip switchNoise;
+    public AudioSource aud;
     public EventSystem eventSystem;
 
     private int maxGameWidth, maxGameHeight;
     private Resolution[] resolutions;
-    private GameObject pause;
+    private GameObject pause, oldButton, newButton;
 
     void Start()
     {
@@ -52,46 +54,68 @@ public class Options : MonoBehaviour
 
         //set sliders to current values
         musicSlider.value = gVar.musicVolume;
-        sfxSlider.value = gVar.volume;
+        sfxSlider.value = gVar.sfxVolume;
     }
 
     void Update()
     {
-        //if back button is pressed by player who opened it, close
-        if ((pauseMenu.alpha == 1) && ((playerUsingMenu == 1 && Input.GetButtonDown("Back1")) || (playerUsingMenu == 2 && Input.GetButtonDown("Back2"))
-            || (playerUsingMenu == 3 || Input.GetButtonDown("Back3")) || (playerUsingMenu == 4 && Input.GetButtonDown("Back4")) || (playerUsingMenu == 0 && Input.GetButtonDown("GBack"))))
+           if (eventSystem.currentSelectedGameObject != null)//prevent mouse clicking on UI elements
         {
-            resume();
-        }
+            newButton = eventSystem.currentSelectedGameObject.gameObject;
 
-        if (SceneManager.GetActiveScene().name == "Start Game")
-        {
-            if (pauseMenu.alpha == 1 && gVar.pauseMenuOpen == false)
-            {
-                gVar.pauseMenuOpen = true;
-                eventSystem.SetSelectedGameObject(resumeButton);
-            }
-            else if (pauseMenu.alpha == 0 && gVar.pauseMenuOpen == true && eventSystem.currentSelectedGameObject.Equals(backHowToButton) == false)
-            {
-                gVar.pauseMenuOpen = false;
-                eventSystem.SetSelectedGameObject(startButton);
+            //if back button is pressed by player who opened it, close
+            if ((pauseMenu.alpha == 1) && ((playerUsingMenu == 1 && Input.GetButtonDown("Back1")) || (playerUsingMenu == 2 && Input.GetButtonDown("Back2"))
+                    || (playerUsingMenu == 3 || Input.GetButtonDown("Back3")) || (playerUsingMenu == 4 && Input.GetButtonDown("Back4")) || (playerUsingMenu == 0 && Input.GetButtonDown("GBack"))))
+                {
+                    resume();
+                }
 
-            }
-        }
-        else
-        {
-            if (pauseMenu.alpha == 1 && gVar.pauseMenuOpen == false)
-            {
-                gVar.pauseMenuOpen = true;
-                eventSystem.SetSelectedGameObject(resumeButton);
-            }
-            else if (pauseMenu.alpha == 0 && gVar.pauseMenuOpen == true && eventSystem.currentSelectedGameObject.Equals(backHowToButton) == false)
-            {
-                gVar.pauseMenuOpen = false;
-                if (playButton != null) { eventSystem.SetSelectedGameObject(playButton); }
+                //play noise if button is switched
+                if (!newButton.Equals(oldButton) && !aud.isPlaying && Time.timeSinceLevelLoad > 0.5f)
+                {
+                    if(eventSystem.firstSelectedGameObject.name.Equals("Resume")==false)//menu screen
+                {
+                    aud.PlayOneShot(switchNoise, gVar.sfxVolume);
+                }
+                    else if (pauseMenu.alpha == 1)//not menu screen but pause menu is open
+                {
+                    aud.PlayOneShot(switchNoise, gVar.sfxVolume);
+                }
+                }
 
+                if (SceneManager.GetActiveScene().name == "Start Game")
+                {
+                    if (pauseMenu.alpha == 1 && gVar.pauseMenuOpen == false)
+                    {
+                        gVar.pauseMenuOpen = true;
+                        eventSystem.SetSelectedGameObject(resumeButton);
+                    }
+                    else if (pauseMenu.alpha == 0 && gVar.pauseMenuOpen == true && eventSystem.currentSelectedGameObject.Equals(backHowToButton) == false)
+                    {
+                        gVar.pauseMenuOpen = false;
+                        eventSystem.SetSelectedGameObject(startButton);
+
+                    }
+                }
+                else
+                {
+                    if (pauseMenu.alpha == 1 && gVar.pauseMenuOpen == false)
+                    {
+                        gVar.pauseMenuOpen = true;
+                        eventSystem.SetSelectedGameObject(resumeButton);
+                    }
+                    else if (pauseMenu.alpha == 0 && gVar.pauseMenuOpen == true && eventSystem.currentSelectedGameObject.Equals(backHowToButton) == false)
+                    {
+                        gVar.pauseMenuOpen = false;
+                        if (playButton != null) { eventSystem.SetSelectedGameObject(playButton); }
+                    }
+                }
+                oldButton = eventSystem.currentSelectedGameObject.gameObject;
             }
-        }
+            else//reset pointer if mouse was clicked
+            {
+                eventSystem.SetSelectedGameObject(newButton);
+            }
     }
 
     //resume game
@@ -119,17 +143,18 @@ public class Options : MonoBehaviour
             Screen.SetResolution(gVar.gameWidth, gVar.gameHeight, false);
         }
     }
-    
+
     //change music volume
     public void musicVolume(float volume)
     {
-        gVar.musicVolume = volume;
+        gVar.musicVolume = musicSlider.value;
     }
 
     //change SFX volume
     public void sfxVolume(float volume)
     {
-        gVar.volume = volume;
+        gVar.sfxVolume = sfxSlider.value;
+        eventSystem.GetComponent<AudioSource>().volume = gVar.sfxVolume;
     }
 
     //return to level select menu

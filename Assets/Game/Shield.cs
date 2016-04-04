@@ -81,7 +81,7 @@ public class Shield : MonoBehaviour
         if (coll.gameObject.tag.Equals("Ball"))//ball hits shield
         {
             //play audio when rocket hits shield
-            GetComponent<AudioSource>().PlayOneShot(shieldAudio, gVar.volume);
+            GetComponent<AudioSource>().PlayOneShot(shieldAudio, gVar.sfxVolume);
         }
     }
 

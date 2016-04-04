@@ -87,7 +87,7 @@ public class CharacterSelect : MonoBehaviour
                     menuCounter = 0;//reset counter
 
                     //play switching sound
-                    aud.PlayOneShot(switchCharacter, 1f);
+                    aud.PlayOneShot(switchCharacter, gVar.sfxVolume*0.5f);
 
                     isReadyToPlay = false;//moved selection therefore not ready to play
                     this.GetComponent<SpriteRenderer>().sprite = oriSprite;
@@ -123,7 +123,7 @@ public class CharacterSelect : MonoBehaviour
                     setPlayerColor(1, 1);
 
                     //play select sound
-                    aud.PlayOneShot(selectCharacter, 1f);
+                    aud.PlayOneShot(selectCharacter, gVar.sfxVolume*0.5f);
 
                     this.GetComponent<SpriteRenderer>().sprite = selectedSprite;
                     isReadyToPlay = true; changedMind = true;
@@ -147,7 +147,7 @@ public class CharacterSelect : MonoBehaviour
                     menuCounter = 0;//reset counter
 
                     //play switching sound
-                    aud.PlayOneShot(switchCharacter, 1f);
+                    aud.PlayOneShot(switchCharacter, gVar.sfxVolume*0.5f);
 
                     isReadyToPlay = false;//moved selection therefore not ready to play
                     this.GetComponent<SpriteRenderer>().sprite = oriSprite;
@@ -160,7 +160,7 @@ public class CharacterSelect : MonoBehaviour
                     menuCounter = 0;//reset counter
 
                     //play switching sound
-                    aud.PlayOneShot(switchCharacter, 1f);
+                    aud.PlayOneShot(switchCharacter, gVar.sfxVolume*0.5f);
 
                     isReadyToPlay = false;//moved selection therefore not ready to play
                     this.GetComponent<SpriteRenderer>().sprite = oriSprite;
@@ -196,7 +196,7 @@ public class CharacterSelect : MonoBehaviour
                     setPlayerColor(2, 1);
 
                     //play select sound
-                    aud.PlayOneShot(selectCharacter, 1f);
+                    aud.PlayOneShot(selectCharacter, gVar.sfxVolume*0.5f);
 
                     this.GetComponent<SpriteRenderer>().sprite = selectedSprite;
                     isReadyToPlay = true; changedMind = true;
@@ -220,7 +220,7 @@ public class CharacterSelect : MonoBehaviour
                     menuCounter = 0;//reset counter
 
                     //play switching sound
-                    aud.PlayOneShot(switchCharacter, 1f);
+                    aud.PlayOneShot(switchCharacter, gVar.sfxVolume*0.5f);
 
                     isReadyToPlay = false;//moved selection therefore not ready to play
                     this.GetComponent<SpriteRenderer>().sprite = oriSprite;
@@ -233,7 +233,7 @@ public class CharacterSelect : MonoBehaviour
                     menuCounter = 0;//reset counter
 
                     //play switching sound
-                    aud.PlayOneShot(switchCharacter, 1f);
+                    aud.PlayOneShot(switchCharacter, gVar.sfxVolume*0.5f);
 
                     isReadyToPlay = false;//moved selection therefore not ready to play
                     this.GetComponent<SpriteRenderer>().sprite = oriSprite;
@@ -269,7 +269,7 @@ public class CharacterSelect : MonoBehaviour
                     setPlayerColor(3, 1);
 
                     //play select sound
-                    aud.PlayOneShot(selectCharacter, 1f);
+                    aud.PlayOneShot(selectCharacter, gVar.sfxVolume*0.5f);
 
                     this.GetComponent<SpriteRenderer>().sprite = selectedSprite;
                     isReadyToPlay = true; changedMind = true;
@@ -306,7 +306,7 @@ public class CharacterSelect : MonoBehaviour
                     menuCounter = 0;//reset counter
 
                     //play switching sound
-                    aud.PlayOneShot(switchCharacter, 1f);
+                    aud.PlayOneShot(switchCharacter, gVar.sfxVolume*0.5f);
 
                     isReadyToPlay = false;//moved selection therefore not ready to play
                     this.GetComponent<SpriteRenderer>().sprite = oriSprite;
@@ -342,7 +342,7 @@ public class CharacterSelect : MonoBehaviour
                     setPlayerColor(4, 1);
 
                     //play select sound
-                    aud.PlayOneShot(selectCharacter, 1f);
+                    aud.PlayOneShot(selectCharacter, gVar.sfxVolume*0.5f);
 
                     this.GetComponent<SpriteRenderer>().sprite = selectedSprite;
                     isReadyToPlay = true; changedMind = true;

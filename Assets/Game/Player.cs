@@ -252,7 +252,7 @@ public class Player : MonoBehaviour
                 if (Input.GetButtonDown("Jump1") && Mathf.Abs(velocity.y) < 1f && gVar.optionTime > 25)//jump
                 {
                     //play jump aud
-                    aud.PlayOneShot(jumpAudio, gVar.volume * 0.85f);
+                    aud.PlayOneShot(jumpAudio, gVar.sfxVolume * 0.85f);
 
                     velocity.y = jumpVelocity;
                 }
@@ -303,7 +303,7 @@ public class Player : MonoBehaviour
                 if (Input.GetButtonDown("Jump2") && Mathf.Abs(velocity.y) < 1f && gVar.optionTime > 25)
                 {
                     //play jump aud
-                    aud.PlayOneShot(jumpAudio, gVar.volume * 0.85f);
+                    aud.PlayOneShot(jumpAudio, gVar.sfxVolume * 0.85f);
 
                     velocity.y = jumpVelocity;
                 }
@@ -354,7 +354,7 @@ public class Player : MonoBehaviour
                 if (Input.GetButtonDown("Jump3") && Mathf.Abs(velocity.y) < 1f && gVar.optionTime > 25)//jump
                 {
                     //play jump aud
-                    aud.PlayOneShot(jumpAudio, gVar.volume * 0.85f);
+                    aud.PlayOneShot(jumpAudio, gVar.sfxVolume * 0.85f);
 
                     velocity.y = jumpVelocity;
                 }
@@ -404,7 +404,7 @@ public class Player : MonoBehaviour
                 if (Input.GetButtonDown("Jump4") && Mathf.Abs(velocity.y) < 1f && gVar.optionTime > 25)//jump
                 {
                     //play jump aud
-                    aud.PlayOneShot(jumpAudio, gVar.volume * 0.85f);
+                    aud.PlayOneShot(jumpAudio, gVar.sfxVolume * 0.85f);
 
                     velocity.y = jumpVelocity;
                 }
@@ -462,28 +462,28 @@ public class Player : MonoBehaviour
             //create green ball moving left that starts bufferDistance away from player
             GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x - bufferDistance, this.transform.position.y), Quaternion.identity);
             shotRocket.GetComponent<Rocket>().color(color);//color ball green
-            aud.PlayOneShot(throwAudio, gVar.volume); //play throw sound
+            aud.PlayOneShot(throwAudio, gVar.sfxVolume); //play throw sound
         }
         else if (color == 1 && gVar.redShots > 0)
         {
             gVar.redShots--;
             GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x - bufferDistance, this.transform.position.y), Quaternion.identity);
             shotRocket.GetComponent<Rocket>().color(color);
-            aud.PlayOneShot(throwAudio, gVar.volume); //play throw sound
+            aud.PlayOneShot(throwAudio, gVar.sfxVolume); //play throw sound
         }
         else if (color == 2 && gVar.blueShots > 0)
         {
             gVar.blueShots--;
             GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x - bufferDistance, this.transform.position.y), Quaternion.identity);
             shotRocket.GetComponent<Rocket>().color(color);
-            aud.PlayOneShot(throwAudio, gVar.volume); //play throw sound
+            aud.PlayOneShot(throwAudio, gVar.sfxVolume); //play throw sound
         }
         else if (color == 3 && gVar.purpleShots > 0)
         {
             gVar.purpleShots--;
             GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x - bufferDistance, this.transform.position.y), Quaternion.identity);
             shotRocket.GetComponent<Rocket>().color(color);
-            aud.PlayOneShot(throwAudio, gVar.volume); //play throw sound
+            aud.PlayOneShot(throwAudio, gVar.sfxVolume); //play throw sound
         }
         anim.SetInteger("isShooting", 1);
     }
@@ -505,28 +505,28 @@ public class Player : MonoBehaviour
             gVar.greenShots--;
             GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x + bufferDistance, this.transform.position.y), Quaternion.identity);
             shotRocket.GetComponent<Rocket>().color(color);
-            aud.PlayOneShot(throwAudio, gVar.volume); //play throw sound
+            aud.PlayOneShot(throwAudio, gVar.sfxVolume); //play throw sound
         }
         else if (color == 1 && gVar.redShots > 0)
         {
             gVar.redShots--;
             GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x + bufferDistance, this.transform.position.y), Quaternion.identity);
             shotRocket.GetComponent<Rocket>().color(color);
-            aud.PlayOneShot(throwAudio, gVar.volume); //play throw sound
+            aud.PlayOneShot(throwAudio, gVar.sfxVolume); //play throw sound
         }
         else if (color == 2 && gVar.blueShots > 0)
         {
             gVar.blueShots--;
             GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x + bufferDistance, this.transform.position.y), Quaternion.identity);
             shotRocket.GetComponent<Rocket>().color(color);
-            aud.PlayOneShot(throwAudio, gVar.volume); //play throw sound
+            aud.PlayOneShot(throwAudio, gVar.sfxVolume); //play throw sound
         }
         else if (color == 3 && gVar.purpleShots > 0)
         {
             gVar.purpleShots--;
             GameObject shotRocket = (GameObject)Instantiate(rocket, new Vector3(this.transform.position.x + bufferDistance, this.transform.position.y), Quaternion.identity);
             shotRocket.GetComponent<Rocket>().color(color);
-            aud.PlayOneShot(throwAudio, gVar.volume); //play throw sound
+            aud.PlayOneShot(throwAudio, gVar.sfxVolume); //play throw sound
         }
         anim.SetInteger("isShooting", 2);
     }
@@ -541,7 +541,7 @@ public class Player : MonoBehaviour
             if (coll.gameObject.gameObject.GetComponent<Rocket>().colorShot != this.color && GameObject.Find(color + "shield") == null)
             {
                 //play pain audio
-                aud.PlayOneShot(painAudio, gVar.volume);
+                aud.PlayOneShot(painAudio, gVar.sfxVolume);
 
                 //create particle system for player dying
                 GameObject particles = (GameObject)Instantiate(playerParticleSystem, this.GetComponent<Transform>().position, Quaternion.identity);
@@ -561,7 +561,7 @@ public class Player : MonoBehaviour
             else //player color matches ball color
             {
                 //play pickup aud
-                aud.PlayOneShot(pickupAudio, gVar.volume);
+                aud.PlayOneShot(pickupAudio, gVar.sfxVolume);
             }
         }
     }

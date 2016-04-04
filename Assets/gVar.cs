@@ -40,7 +40,7 @@ public class gVar : MonoBehaviour
     public static int blueShotsStored = 0;
     public static int purpleShotsStored = 0;
 
-    public static float volume = 1f;
+    public static float sfxVolume = 1f;
     public static float musicVolume = 1f;
 
     public static Vector2 location1, location2, location3, location4;

@@ -11,5 +11,9 @@ public class SCREENSHOT : MonoBehaviour
             Application.CaptureScreenshot(SceneManager.GetActiveScene().name+" "+ System.DateTime.Now.Month+"-"+System.DateTime.Now.Day + "-" + System.DateTime.Now.Hour + "-" + System.DateTime.Now.Minute + "-" + System.DateTime.Now.Second + ".png");
             Debug.Log(SceneManager.GetActiveScene().name + " " + System.DateTime.Now.Month + "-" + System.DateTime.Now.Day + "-" + System.DateTime.Now.Hour + "-" + System.DateTime.Now.Minute + "-" + System.DateTime.Now.Second);
         }
+        else if (Input.GetKeyDown("k"))
+        {
+            SceneManager.LoadScene("Loading Screen");
+        }
     }
 }
