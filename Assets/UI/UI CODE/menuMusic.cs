@@ -6,11 +6,9 @@ public class menuMusic : MonoBehaviour
 {
     public AudioClip music1, music2, music3, music4, music5, musicMenu;
 
-    private bool isMenuMusicPlaying = false;
-
     void Awake()
     {
-            this.GetComponent<AudioSource>().Play();
+        this.GetComponent<AudioSource>().Play();
         DontDestroyOnLoad(gameObject);
     }
 

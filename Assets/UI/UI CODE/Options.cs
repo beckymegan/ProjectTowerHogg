@@ -75,11 +75,11 @@ public class Options : MonoBehaviour
                 {
                     if(eventSystem.firstSelectedGameObject.name.Equals("Resume")==false)//menu screen
                 {
-                    aud.PlayOneShot(switchNoise, gVar.sfxVolume);
+                    aud.PlayOneShot(switchNoise, gVar.sfxVolume * 1.1f);
                 }
                     else if (pauseMenu.alpha == 1)//not menu screen but pause menu is open
                 {
-                    aud.PlayOneShot(switchNoise, gVar.sfxVolume);
+                    aud.PlayOneShot(switchNoise, gVar.sfxVolume * 1.1f);
                 }
                 }
 
